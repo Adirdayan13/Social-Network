@@ -13,40 +13,96 @@ export default class Reset extends React.Component {
         });
     }
     submit() {
+        console.log("this.state: ", this.state);
+        console.log("this.state.step: ", this.state.step);
         axios
             .post("/reset/start", {
                 email: this.state.email
             })
             .then(({ data }) => {
-                console.log("data: ", data);
+                console.log("data.success: ", data.success);
                 if (data.success) {
-                    console.log("success !");
+                    this.setState({ step: 2 });
                 } else {
-                    console.log("false !");
+                    this.setState({ step: undefined, success: false });
                 }
             })
             .catch(err => {
                 console.log("erro from POST reset: ", err);
             });
     }
+    changePass() {
+        console.log("this.state: ", this.state);
+
+        axios
+            .post("/reset/verify", {
+                state: this.state
+            })
+            .then(results => {
+                console.log("results from POST reset/verify: ", results);
+                console.log("data.success: ", results.data.success);
+                if (results.data.success) {
+                    this.setState({ step: 3 });
+                } else {
+                    this.setState({ step: 2 });
+                }
+            })
+            .catch(err => {
+                console.log("error from POST reset/verify", err);
+            });
+    }
     render() {
         return (
             <div>
-                <p>We are in reset</p>
-                <input
-                    className="email"
-                    name="email"
-                    placeholder="Email"
-                    onChange={e => this.handleChange(e)}
-                />
-                <br></br>
-                <button
-                    className="submit-btn-reset"
-                    onClick={() => this.submit()}
-                >
-                    Reset password &nbsp;&nbsp;
-                    <i className="fas fa-users"></i>
-                </button>
+                {this.success == false && <p>something went wrong</p>}
+                {this.state.step == undefined && (
+                    <div>
+                        <p>Reset your password</p>
+                        <input
+                            className="email"
+                            name="email"
+                            placeholder="Email"
+                            onChange={e => this.handleChange(e)}
+                        />
+                        <br></br>
+                        <button
+                            className="submit-btn-reset"
+                            onClick={() => this.submit()}
+                        >
+                            Reset password &nbsp;&nbsp;
+                            <i className="fas fa-users"></i>
+                        </button>
+                    </div>
+                )}
+                {this.state.step == 2 && (
+                    <div>
+                        <p>Please enter the code you recieved</p>
+                        <input
+                            className="code"
+                            name="code"
+                            placeholder="Code"
+                            onChange={e => this.handleChange(e)}
+                        />
+                        <br></br>
+                        <p>Please enter your new password</p>
+                        <input
+                            className="new-password"
+                            name="newpassword"
+                            type="password"
+                            placeholder="Password"
+                            onChange={e => this.handleChange(e)}
+                        />
+                        <br></br>
+                        <button
+                            className="submit-btn-reset"
+                            onClick={() => this.changePass()}
+                        >
+                            Reset password &nbsp;&nbsp;
+                            <i className="fas fa-users"></i>
+                        </button>
+                    </div>
+                )}
+                {this.state.step == 3 && <p>Step 3 !</p>}
             </div>
         );
     }

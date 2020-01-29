@@ -70,6 +70,7 @@ app.post("/register", (req, res) => {
             .then(hashedPass => {
                 db.addUser(first, last, email, hashedPass)
                     .then(results => {
+                        console.log("hashedPass: ", hashedPass);
                         req.session.userId = results.rows[0].id;
                         res.json({ success: true });
                     })
@@ -123,9 +124,7 @@ app.post("/reset/start", (req, res) => {
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
-            console.log("results: ", results.rows[0]);
             if (results.rows[0] == undefined) {
-                /// render string and add to the new table
                 res.json({ success: false });
             } else {
                 db.reset(email, secretCode)
@@ -141,6 +140,7 @@ app.post("/reset/start", (req, res) => {
                                     "results from emailCode: ",
                                     resultEmailCode
                                 );
+                                res.json({ success: true });
                             })
                             .catch(err => {
                                 console.log("error from sendEmail", err);
@@ -149,18 +149,42 @@ app.post("/reset/start", (req, res) => {
                     .catch(err => {
                         console.log("error from reset email:", err);
                     });
-                // secretCode()
-                //     .then(result => {
-                //         console.log("result from secretCode: ", result);
-                //     })
-                //     .catch(err => {
-                //         console.log("error from secretCode: ", err);
-                //     });
-                res.json({ success: true });
             }
         })
         .catch(err => {
             console.log("error from POST reset: ", err);
+        });
+});
+
+app.post("/reset/verify", (req, res) => {
+    let email = req.body.state.email;
+    let code = req.body.state.code;
+    let newPassword = req.body.state.newpassword;
+    console.log("email :", email);
+    console.log("code: ", code);
+    console.log("newPassword :", newPassword);
+    console.log("req.body: ", req.body);
+    db.getResetCode(email)
+        .then(results => {
+            console.log("results from getResetCode: ", results.rows[0]);
+            if (results.rows[0].emailcode == code) {
+                console.log("there is a match !");
+                ///// HASH THE PASSWORD !!!
+                db.updatePassword(email, newPassword)
+                    .then(results => {
+                        console.log("results from updatePassword: ", results);
+                        res.json({ success: true });
+                    })
+                    .catch(err => {
+                        console.log("error from updatePassword: ", err);
+                    });
+            } else {
+                res.json({ success: false });
+            }
+        })
+        .catch(err => {
+            res.json({ success: false });
+            console.log("error from POST reset/verify getResetCode: ", err);
         });
 });
 

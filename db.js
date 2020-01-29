@@ -26,3 +26,17 @@ exports.reset = function(email, emailcode) {
         [email, emailcode]
     );
 };
+
+exports.getResetCode = function(email) {
+    return db.query(
+        `SELECT * FROM reset WHERE email = $1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'`,
+        [email]
+    );
+};
+
+exports.updatePassword = function(email, password) {
+    return db.query(
+        `UPDATE users SET email = $1, password = $2 WHERE email = $1`,
+        [email, password]
+    );
+};
