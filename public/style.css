@@ -19,14 +19,14 @@ input {
     border: 1px solid black;
     border-radius: 20px;
     text-align: center;
-    font-family: "Patua One";
+    font-family: "Patua One", cursive;
     width: 150px;
     height: 20px;
     margin-bottom: 10px;
 }
 
 p {
-    font-family: "Patua One";
+    font-family: "Patua One", cursive;
 }
 
 .main {
@@ -47,27 +47,30 @@ p {
     transform: translate(-50%, 10px);
 }
 
-.logo-img-register {
+.logo-img-register,
+.logo-img-welcome {
     width: 350px;
     margin-top: 50px;
 }
 
-.logo-img-welcome {
+/* {
     width: 80px;
     margin: 10px;
-}
+} */
 
-.registration-inputs {
+.registration-inputs,
+.inputs-login {
     position: absolute;
     display: flex;
     flex-direction: column;
     transform: translate(-50%, -95%);
     left: 50%;
     top: 95%;
-    width: 150px;
+    width: 35%;
     text-align: center;
     color: #30475e;
     align-items: center;
+    font-family: "Patua One", cursive;
 }
 
 .submit-btn-register {
@@ -174,6 +177,19 @@ p {
         width: 100%;
         margin-top: 10%;
     }
+    .registration-inputs {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        transform: translate(-50%, -95%);
+        left: 50%;
+        top: 88%;
+        width: 80%;
+        text-align: center;
+        color: #30475e;
+        align-items: center;
+        margin-top: 10%;
+    }
 }
 
 @media screen and (max-height: 380px) {
@@ -198,7 +214,7 @@ p {
         transform: translate(-50%, -95%);
         left: 50%;
         top: 88%;
-        width: 150px;
+        width: 80%;
         text-align: center;
         color: #30475e;
         align-items: center;

@@ -1,6 +1,6 @@
 const db = require("./db");
 const bcrypt = require("./bcrypt");
-// const csurf = require("csurf");
+const csurf = require("csurf");
 const express = require("express");
 const app = express();
 const compression = require("compression");
@@ -17,9 +17,9 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+app.use(compression());
 app.use(express.json());
 app.use(express.static("./public"));
-app.use(compression());
 
 app.use(
     cookieSession({
@@ -28,13 +28,12 @@ app.use(
     })
 );
 
-// app.use(csurf());
-//
-// app.use(function(req, res, next) {
-//     res.set("x-frame-options", "DENY");
-//     res.locals.csrfToken = req.csrfToken();
-//     next();
-// });
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 ///// ROUTES
 app.post("/register", (req, res) => {
@@ -87,6 +86,32 @@ app.get("/welcome", function(req, res) {
     } else {
         res.sendFile(__dirname + "/index.html");
     }
+});
+
+app.post("/login", function(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+    db.getUser(email)
+        .then(results => {
+            bcrypt
+                .compare(password, results.rows[0].password)
+                .then(result => {
+                    if (result) {
+                        req.session.userId = results.rows[0].id;
+                        res.json({ success: true });
+                    } else {
+                        res.json({ success: false });
+                    }
+                })
+                .catch(err => {
+                    console.log("error from bcrypt compare POST login: ", err);
+                    res.json({ success: false });
+                });
+        })
+        .catch(err => {
+            console.log("error from getUser POST login: ", err);
+            res.json({ success: false });
+        });
 });
 
 // LAST rounte in app !

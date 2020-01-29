@@ -6,7 +6,14 @@ let elem;
 if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <img className="logo-img-welcome" src="/pictures/logo.png" />;
+    elem = (
+        <div>
+            <div>
+                <img className="logo-img-welcome" src="/pictures/logo.png" />
+            </div>
+            <p>success</p>
+        </div>
+    );
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

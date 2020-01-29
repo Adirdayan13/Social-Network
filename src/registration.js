@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class Registration extends React.Component {
     constructor(props) {
@@ -8,10 +9,7 @@ export default class Registration extends React.Component {
     }
     handleChange(e) {
         this.setState({
-            [e.target.name]: e.target.value,
-            [e.target.last]: e.target.value,
-            [e.target.email]: e.target.value,
-            [e.target.password]: e.target.value
+            [e.target.name]: e.target.value
         });
     }
     submit() {
@@ -88,7 +86,7 @@ export default class Registration extends React.Component {
                     />
                     <button
                         className="submit-btn-register"
-                        onClick={e => this.submit()}
+                        onClick={() => this.submit()}
                     >
                         Register &nbsp;&nbsp;<i className="fas fa-users"></i>
                     </button>
@@ -98,6 +96,7 @@ export default class Registration extends React.Component {
                         <br></br>
                         It’s quick and easy.
                     </p>
+                    <Link to="/login">Click here to Log in!</Link>
                 </div>
             </div>
         );
