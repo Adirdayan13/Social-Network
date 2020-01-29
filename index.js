@@ -183,8 +183,8 @@ app.post("/reset/verify", (req, res) => {
             }
         })
         .catch(err => {
-            res.json({ success: false });
             console.log("error from POST reset/verify getResetCode: ", err);
+            res.json({ success: false });
         });
 });
 

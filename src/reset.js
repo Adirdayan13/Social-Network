@@ -23,7 +23,7 @@ export default class Reset extends React.Component {
                 console.log("data.success: ", data.success);
                 if (data.success) {
                     this.setState({ step: 2 });
-                } else {
+                } else if (data.success == false) {
                     this.setState({ step: undefined, success: false });
                 }
             })
@@ -41,9 +41,18 @@ export default class Reset extends React.Component {
             .then(results => {
                 console.log("results from POST reset/verify: ", results);
                 console.log("data.success: ", results.data.success);
+                console.log(
+                    "results data success == false: ",
+                    results.data.success == false
+                );
                 if (results.data.success) {
+                    console.log("step: 3");
                     this.setState({ step: 3 });
+                } else if (results.data.success == false) {
+                    console.log("error: true");
+                    this.setState({ error: true });
                 } else {
+                    console.log("step: 2");
                     this.setState({ step: 2 });
                 }
             })
@@ -54,7 +63,7 @@ export default class Reset extends React.Component {
     render() {
         return (
             <div>
-                {this.success == false && <p>something went wrong</p>}
+                {this.state.error && <p>something went wrong</p>}
                 {this.state.step == undefined && (
                     <div>
                         <p>Reset your password</p>
