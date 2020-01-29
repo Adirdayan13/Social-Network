@@ -27,6 +27,10 @@ exports.reset = function(email, emailcode) {
     );
 };
 
+exports.deleteEmailAndCode = function(email) {
+    return db.query(`DELETE FROM reset WHERE email = $1`, [email]);
+};
+
 exports.getResetCode = function(email) {
     return db.query(
         `SELECT * FROM reset WHERE email = $1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes'`,
