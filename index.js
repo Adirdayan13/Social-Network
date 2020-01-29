@@ -166,17 +166,29 @@ app.post("/reset/verify", (req, res) => {
     console.log("req.body: ", req.body);
     db.getResetCode(email)
         .then(results => {
+            console.log("results from getResetCode: ", results);
             console.log("results from getResetCode: ", results.rows[0]);
             if (results.rows[0].emailcode == code) {
                 console.log("there is a match !");
                 ///// HASH THE PASSWORD !!!
-                db.updatePassword(email, newPassword)
-                    .then(results => {
-                        console.log("results from updatePassword: ", results);
-                        res.json({ success: true });
+                bcrypt
+                    .hash(newPassword)
+                    .then(hashedPass => {
+                        console.log("we are in then hahsepass");
+                        db.updatePassword(email, hashedPass)
+                            .then(results => {
+                                console.log(
+                                    "results from updatePassword: ",
+                                    results
+                                );
+                                res.json({ success: true });
+                            })
+                            .catch(err => {
+                                console.log("error from updatePassword: ", err);
+                            });
                     })
                     .catch(err => {
-                        console.log("error from updatePassword: ", err);
+                        console.log("error from hash pass: ", err);
                     });
             } else {
                 res.json({ success: false });
