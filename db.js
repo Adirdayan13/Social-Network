@@ -16,3 +16,13 @@ exports.addUser = function(first, last, email, password) {
 exports.getUser = function(email) {
     return db.query(`SELECT password, id FROM users WHERE email = $1`, [email]);
 };
+
+exports.reset = function(email, emailcode) {
+    return db.query(
+        `INSERT INTO reset (email, emailcode)
+        VALUES ($1, $2)
+        ON CONFLICT (email)
+        DO UPDATE SET emailcode = $2 RETURNING emailcode`,
+        [email, emailcode]
+    );
+};

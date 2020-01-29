@@ -5,6 +5,11 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const cookieSession = require("cookie-session");
+const cryptoRandomString = require("crypto-random-string");
+const ses = require("./ses");
+const secretCode = cryptoRandomString({
+    length: 6
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -111,6 +116,51 @@ app.post("/login", function(req, res) {
         .catch(err => {
             console.log("error from getUser POST login: ", err);
             res.json({ success: false });
+        });
+});
+
+app.post("/reset/start", (req, res) => {
+    let email = req.body.email;
+    db.getUser(email)
+        .then(results => {
+            console.log("results: ", results.rows[0]);
+            if (results.rows[0] == undefined) {
+                /// render string and add to the new table
+                res.json({ success: false });
+            } else {
+                db.reset(email, secretCode)
+                    .then(resultReset => {
+                        let emailCode = resultReset.rows[0].emailcode;
+                        ses.sendEmail(
+                            "jade.player+funky@spicedling.email",
+                            emailCode,
+                            "Here is your code to reset your account"
+                        )
+                            .then(resultEmailCode => {
+                                console.log(
+                                    "results from emailCode: ",
+                                    resultEmailCode
+                                );
+                            })
+                            .catch(err => {
+                                console.log("error from sendEmail", err);
+                            });
+                    })
+                    .catch(err => {
+                        console.log("error from reset email:", err);
+                    });
+                // secretCode()
+                //     .then(result => {
+                //         console.log("result from secretCode: ", result);
+                //     })
+                //     .catch(err => {
+                //         console.log("error from secretCode: ", err);
+                //     });
+                res.json({ success: true });
+            }
+        })
+        .catch(err => {
+            console.log("error from POST reset: ", err);
         });
 });
 

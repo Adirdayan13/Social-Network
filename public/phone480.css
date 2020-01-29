@@ -1,0 +1,51 @@
+@media screen and (max-width: 480px) {
+    html {
+        background-color: orange;
+    }
+    .logo-div {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 10px);
+        width: 70%;
+        height: 40%;
+    }
+    .logo-img-register {
+        width: 100%;
+        margin-top: 10%;
+    }
+    .registration-inputs {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        transform: translate(-50%, -95%);
+        left: 50%;
+        top: 88%;
+        width: 80%;
+        text-align: center;
+        color: #30475e;
+        align-items: center;
+        margin-top: 10%;
+    }
+    .logo-img-welcome {
+        width: 100%;
+        margin-top: 10%;
+    }
+    .inputs-login {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        transform: translate(-50%, -90%);
+        left: 50%;
+        top: 90%;
+        width: 45%;
+        text-align: center;
+        color: #30475e;
+        align-items: center;
+        font-family: "Patua One", cursive;
+    }
+    .logo-img-after-login {
+        width: 50px;
+        margin: 10px;
+    }
+}

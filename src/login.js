@@ -67,7 +67,6 @@ export default class Login extends React.Component {
                         onChange={e => this.handleChange(e)}
                         required
                     />
-                    <br></br>
                     <button
                         className="submit-btn-register"
                         onClick={() => this.submit()}
@@ -75,7 +74,11 @@ export default class Login extends React.Component {
                         Login &nbsp;&nbsp;
                         <i className="fas fa-users"></i>
                     </button>
+                    <br></br>
                     <Link to="/">Click here to register!</Link>
+                    <Link to="/reset/start">
+                        Forgot your password ? Click here!
+                    </Link>
                 </div>
             </div>
         );
