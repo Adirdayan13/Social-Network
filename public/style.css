@@ -53,10 +53,10 @@ p {
     margin-top: 50px;
 }
 
-/* {
+.logo-img-after-login {
     width: 80px;
     margin: 10px;
-} */
+}
 
 .registration-inputs,
 .inputs-login {

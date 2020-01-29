@@ -9,7 +9,10 @@ if (location.pathname == "/welcome") {
     elem = (
         <div>
             <div>
-                <img className="logo-img-welcome" src="/pictures/logo.png" />
+                <img
+                    className="logo-img-after-login"
+                    src="/pictures/logo.png"
+                />
             </div>
             <p>success</p>
         </div>

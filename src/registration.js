@@ -51,6 +51,11 @@ export default class Registration extends React.Component {
                     ></img>
                 </div>
                 <div className="registration-inputs">
+                    <p>
+                        Sign Up
+                        <br></br>
+                        It’s quick and easy.
+                    </p>
                     {this.state.error && (
                         <p className="error">
                             Something went wrong, please try again.
@@ -91,11 +96,6 @@ export default class Registration extends React.Component {
                         Register &nbsp;&nbsp;<i className="fas fa-users"></i>
                     </button>
                     <br></br>
-                    <p>
-                        Sign Up
-                        <br></br>
-                        It’s quick and easy.
-                    </p>
                     <Link to="/login">Click here to Log in!</Link>
                 </div>
             </div>
