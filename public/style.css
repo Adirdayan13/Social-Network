@@ -44,13 +44,49 @@ h2 {
 
 .main-uploader {
     width: 400px;
-    height: 50%;
+    height: 20%;
     border: 1px solid black;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 10px);
     margin-top: 2%;
     text-align: center;
+    border-radius: 20px;
+}
+
+#file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+#file + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 120px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+#file + label * {
+    pointer-events: none;
+}
+
+#file:focus + label,
+#file + label:hover {
+    background-color: #30475e;
+    color: white;
+}
+
+#file:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
 }
 
 .change-profile-text {
@@ -65,7 +101,21 @@ h2 {
 
 .x {
     width: 40px;
-    margin-left: 90%;
+    margin-left: 88%;
+}
+
+.upload-btn {
+    background-color: transparent;
+    border: 1px solid black;
+    font-family: "Patua One", cursive;
+    border-radius: 20px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.upload-btn:hover {
+    background-color: #30475e;
+    color: white;
 }
 
 .profile-pic {
@@ -74,6 +124,8 @@ h2 {
     height: 70px;
     right: 20px;
     top: 15px;
+    border: 1px solid black;
+    border-radius: 40px;
 }
 
 .greets {

@@ -50,11 +50,21 @@ export default class Uploader extends React.Component {
                     <input
                         type="file"
                         name="file"
+                        id="file"
                         accept="image/*"
+                        data-multiple-caption="{count} files selected"
+                        multiple
                         onChange={e => this.grabFile(e)}
                     />
+                    <label htmlFor="file">Choose a file</label>
                     <br></br>
-                    <button onClick={e => this.clickHandler(e)}>Submit</button>
+                    <br></br>
+                    <button
+                        className="upload-btn"
+                        onClick={e => this.clickHandler(e)}
+                    >
+                        Submit
+                    </button>
                 </form>
             </div>
         );
