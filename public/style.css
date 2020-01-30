@@ -29,9 +29,35 @@ p {
     font-family: "Patua One", cursive;
 }
 
-.main {
+h1,
+h2 {
+    text-align: center;
+}
+
+.main,
+.sub-main,
+.all-login,
+.app {
     width: 100%;
     height: 100%;
+}
+
+.main-uploader {
+    width: 50%;
+    height: 50%;
+    border: 1px solid black;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 10px);
+}
+
+.profile-pic {
+    width: 10%;
+    position: absolute;
+    left: 98%;
+    top: 3%;
+    height: 10%;
+    transform: translate(-98%, -3%);
 }
 
 .registration-wrapper {
@@ -96,10 +122,11 @@ p {
     animation-iteration-count: 1;
     animation-direction: normal;
     position: absolute;
-    top: -40px;
+    top: 65%;
     display: flex;
-    width: 300px;
-    /* transform: translate(-50%, -55%); */
+    width: 35%;
+    left: 50%;
+    transform: translate(-50%, -65%);
 }
 
 @keyframes angry-animation {

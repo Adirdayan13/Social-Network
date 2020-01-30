@@ -7,6 +7,13 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
+const path = require("path");
+///upload
+const s3 = require("./s3");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const { s3Url } = require("./config");
+/// /upload
 const secretCode = cryptoRandomString({
     length: 6
 });
@@ -40,7 +47,44 @@ app.use(function(req, res, next) {
     next();
 });
 
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    // give unique name to each image - random 24 char name
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
+
 ///// ROUTES
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("*************** POST upload");
+    let email = req.session.email;
+    const imageUrl = s3Url + req.file.filename;
+    if (req.file) {
+        db.updateImage(email, imageUrl)
+            .then(function(results) {
+                console.log("results: ", results);
+                res.json(imageUrl);
+            })
+            .catch(function(err) {
+                console.log("error from POST upload :", err);
+                res.sendStatus(500);
+            });
+    }
+});
+
 app.post("/register", (req, res) => {
     console.log("*****************regsiter POST !");
     let first = req.body.first;
@@ -68,9 +112,10 @@ app.post("/register", (req, res) => {
         bcrypt
             .hash(password)
             .then(hashedPass => {
-                db.addUser(first, last, email, hashedPass)
+                db.addUser(first, last, email, hashedPass, null)
                     .then(results => {
                         console.log("hashedPass: ", hashedPass);
+                        req.session.email = email;
                         req.session.userId = results.rows[0].id;
                         res.json({ success: true });
                     })
@@ -95,6 +140,7 @@ app.get("/welcome", function(req, res) {
 });
 
 app.post("/login", function(req, res) {
+    console.log("********************POST login");
     const email = req.body.email;
     const password = req.body.password;
     db.getUser(email)
@@ -104,6 +150,7 @@ app.post("/login", function(req, res) {
                 .then(result => {
                     if (result) {
                         req.session.userId = results.rows[0].id;
+                        req.session.email = email;
                         res.json({ success: true });
                     } else {
                         res.json({ success: false });
@@ -121,6 +168,7 @@ app.post("/login", function(req, res) {
 });
 
 app.post("/reset/start", (req, res) => {
+    console.log("********************POST reset/start");
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
@@ -167,6 +215,7 @@ app.post("/reset/start", (req, res) => {
 });
 
 app.post("/reset/verify", (req, res) => {
+    console.log("********************POST reset/verify");
     let email = req.body.state.email;
     let code = req.body.state.code;
     let newPassword = req.body.state.newpassword;
@@ -209,7 +258,21 @@ app.post("/reset/verify", (req, res) => {
             res.json({ success: false });
         });
 });
-
+//////////
+app.get("/user", function(req, res) {
+    console.log("********************GET user");
+    // console.log("req.session: ", req.session);
+    let email = req.session.email;
+    db.getUser(email)
+        .then(results => {
+            results.rows[0].password = "Not today !";
+            res.json(results.rows[0]);
+        })
+        .catch(err => {
+            console.log("error from GET user: ", err);
+        });
+});
+//////////
 // LAST rounte in app !
 app.get("*", function(req, res) {
     console.log("************* GET *");

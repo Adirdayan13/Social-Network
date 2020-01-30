@@ -13,6 +13,7 @@ export default class Reset extends React.Component {
         });
     }
     submit() {
+        this.setState({ error: false });
         console.log("this.state: ", this.state);
         console.log("this.state.step: ", this.state.step);
         axios
@@ -24,7 +25,11 @@ export default class Reset extends React.Component {
                 if (data.success) {
                     this.setState({ step: 2 });
                 } else if (data.success == false) {
-                    this.setState({ step: undefined, success: false });
+                    this.setState({
+                        step: undefined,
+                        success: false,
+                        error: true
+                    });
                 }
             })
             .catch(err => {
@@ -62,10 +67,10 @@ export default class Reset extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="reset">
                 {this.state.error && <p>something went wrong</p>}
                 {this.state.step == undefined && (
-                    <div>
+                    <div className="no-step">
                         <p>Reset your password</p>
                         <input
                             className="email"

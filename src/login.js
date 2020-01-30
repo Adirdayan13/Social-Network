@@ -42,6 +42,11 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="all-login">
+                {this.state.error && (
+                    <p className="error">
+                        something went wrong, please try again.
+                    </p>
+                )}
                 <div className="logo-div">
                     <img
                         className="logo-img-welcome"
