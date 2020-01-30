@@ -51,6 +51,9 @@ export default class App extends React.Component {
                         setImageUrl={picture_url =>
                             this.setState({ picture_url })
                         }
+                        uploaderInvisible={() =>
+                            this.setState({ uploaderIsVisible: false })
+                        }
                     />
                 )}
             </div>

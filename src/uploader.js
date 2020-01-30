@@ -6,11 +6,16 @@ export default class Uploader extends React.Component {
         super(props);
         this.state = {};
         // const setImageUrl = props.setImageUrl;
+        console.log("this.props: ", this.props);
     }
     grabFile(e) {
         this.setState({
             [e.target.name]: e.target.files[0]
         });
+    }
+    closeModal() {
+        console.log("close modal");
+        this.props.uploaderInvisible();
     }
     clickHandler(e) {
         e.preventDefault();
@@ -31,7 +36,7 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div className="main-uploader">
-                <button>X</button>
+                <button onClick={() => this.closeModal()}>X</button>
                 <form>
                     <input
                         type="file"
