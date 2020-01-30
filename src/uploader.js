@@ -36,7 +36,16 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div className="main-uploader">
-                <button onClick={() => this.closeModal()}>X</button>
+                <img
+                    className="x"
+                    onClick={() => this.closeModal()}
+                    src="/pictures/x.gif"
+                />
+                <br></br>
+                <br></br>
+                <p className="change-profile-text">
+                    Want to change your profile picture ?
+                </p>
                 <form>
                     <input
                         type="file"
@@ -44,6 +53,7 @@ export default class Uploader extends React.Component {
                         accept="image/*"
                         onChange={e => this.grabFile(e)}
                     />
+                    <br></br>
                     <button onClick={e => this.clickHandler(e)}>Submit</button>
                 </form>
             </div>
@@ -51,3 +61,4 @@ export default class Uploader extends React.Component {
     }
 }
 // <button onClick={() => this.clickHandler()}></button>
+// <button onClick={() => this.closeModal()}>X</button>

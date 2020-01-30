@@ -43,21 +43,44 @@ h2 {
 }
 
 .main-uploader {
-    width: 50%;
+    width: 400px;
     height: 50%;
     border: 1px solid black;
     position: absolute;
     left: 50%;
     transform: translate(-50%, 10px);
+    margin-top: 2%;
+    text-align: center;
+}
+
+.change-profile-text {
+    margin: 0;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    width: 270px;
+    text-align: center;
+}
+
+.x {
+    width: 40px;
+    margin-left: 90%;
 }
 
 .profile-pic {
-    width: 10%;
+    width: 70px;
     position: absolute;
-    left: 98%;
-    top: 3%;
-    height: 10%;
-    transform: translate(-98%, -3%);
+    height: 70px;
+    right: 20px;
+    top: 15px;
+}
+
+.greets {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0px);
 }
 
 .registration-wrapper {
