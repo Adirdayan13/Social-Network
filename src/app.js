@@ -2,6 +2,8 @@ import React from "react";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
+import Profile from "./profile";
+import BioEditor from "./bioeditor";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -56,6 +58,37 @@ export default class App extends React.Component {
                             this.setState({ uploaderIsVisible: false })
                         }
                     />
+                )}
+
+                {!this.state.profileInvisible && (
+                    <div className="profile">
+                        <Profile
+                            picture_url={this.state.picture_url}
+                            first={this.state.first}
+                            last={this.state.last}
+                            bio={this.state.bio}
+                            addBio={() =>
+                                this.setState({ profileInvisible: true })
+                            }
+                            clickHandler={() =>
+                                this.setState({ uploaderIsVisible: true })
+                            }
+                        />
+                    </div>
+                )}
+                {this.state.profileInvisible && (
+                    <div className="profile">
+                        <BioEditor
+                            picture_url={this.state.picture_url}
+                            first={this.state.first}
+                            last={this.state.last}
+                            bio={this.state.bio}
+                            editBio={bio => this.setState({ bio: bio })}
+                            clickHandler={() =>
+                                this.setState({ uploaderIsVisible: true })
+                            }
+                        />
+                    </div>
                 )}
             </div>
         );

@@ -85,6 +85,21 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
+app.post("/bio", (req, res) => {
+    console.log("***************** POST bio");
+    console.log("req.body: ", req.body);
+    let email = req.session.email;
+    let bio = req.body.bio;
+    db.updateBio(email, bio)
+        .then(results => {
+            console.log("results from POST bio: ", results);
+            res.json({ success: true });
+        })
+        .catch(err => {
+            console.log("error from post bio: ", err);
+        });
+});
+
 app.post("/register", (req, res) => {
     console.log("*****************regsiter POST !");
     let first = req.body.first;

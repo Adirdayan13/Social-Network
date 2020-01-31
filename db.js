@@ -5,11 +5,11 @@ const db = spicedPg(
         "postgres:postgres:postgres@localhost:5432/socialnetwork"
 );
 
-exports.addUser = function(first, last, email, password, picture_url) {
+exports.addUser = function(first, last, email, password, picture_url, bio) {
     return db.query(
-        `INSERT INTO users (first, last, email, password, picture_url)
-        VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-        [first, last, email, password, picture_url || null]
+        `INSERT INTO users (first, last, email, password, picture_url, bio)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+        [first, last, email, password, picture_url || null, bio || null]
     );
 };
 
@@ -47,8 +47,15 @@ exports.getResetCode = function(email) {
 };
 
 exports.updatePassword = function(email, password) {
-    return db.query(
-        `UPDATE users SET email = $1, password = $2 WHERE email = $1`,
-        [email, password]
-    );
+    return db.query(`UPDATE users SET password = $2 WHERE email = $1`, [
+        email,
+        password
+    ]);
+};
+
+exports.updateBio = function(email, bio) {
+    return db.query(`UPDATE users SET bio = $2  WHERE email = $1`, [
+        email,
+        bio
+    ]);
 };

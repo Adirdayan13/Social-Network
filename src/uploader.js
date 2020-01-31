@@ -5,7 +5,6 @@ export default class Uploader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        // const setImageUrl = props.setImageUrl;
         console.log("this.props: ", this.props);
     }
     grabFile(e) {
