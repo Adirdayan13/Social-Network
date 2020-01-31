@@ -1,5 +1,6 @@
 import React from "react";
-// import Bioeditor from "./bioeditor";
+import BioEditor from "./bioeditor";
+
 // import axios from "./axios";
 
 export default class Profile extends React.Component {
@@ -8,13 +9,10 @@ export default class Profile extends React.Component {
         this.state = {};
         console.log("this.props from Profile : ", this.props);
     }
-    addBio(e) {
-        e.preventDefault();
-    }
     render() {
         return (
             <div className="profile">
-                <h1>Profile</h1>
+                <h1>Profile component</h1>
                 <img
                     className="profile-pic-big"
                     src={this.props.picture_url}
@@ -22,16 +20,20 @@ export default class Profile extends React.Component {
                 />
                 <div>
                     <h3>
-                        {!this.props.bio && (
-                            <div onClick={e => this.props.addBio(e)}>
-                                Add bio:
-                            </div>
-                        )}
-                        {this.props.bio && (
-                            <div onClick={e => this.props.addBio(e)}>
-                                Edit bio: {this.props.bio}
-                            </div>
-                        )}
+                        <div className="BioEditor">
+                            <BioEditor
+                                picture_url={this.props.picture_url}
+                                first={this.props.first}
+                                last={this.props.last}
+                                bio={this.props.bio}
+                                editBio={this.props.editBio}
+                                clickHandler={() =>
+                                    this.setState({
+                                        uploaderIsVisible: true
+                                    })
+                                }
+                            />
+                        </div>
                     </h3>
                 </div>
             </div>

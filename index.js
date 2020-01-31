@@ -280,7 +280,8 @@ app.get("/user", function(req, res) {
     let email = req.session.email;
     db.getUser(email)
         .then(results => {
-            results.rows[0].password = "Not today !";
+            console.log("rsults from get user: ", results);
+            results.rows[0].password = "***** hehe";
             res.json(results.rows[0]);
         })
         .catch(err => {

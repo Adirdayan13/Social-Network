@@ -7,5 +7,5 @@ CREATE TABLE users(
     email VARCHAR NOT NULL  UNIQUE CHECK (email != ''),
     password VARCHAR NOT NULL CHECK (password != ''),
     picture_url VARCHAR CHECK (picture_url != ''),
-    bio VARCHAR CHECK (bio != '')
+    bio VARCHAR
 );
