@@ -75,7 +75,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     if (req.file) {
         db.updateImage(email, imageUrl)
             .then(function(results) {
-                console.log("results: ", results);
                 res.json(imageUrl);
             })
             .catch(function(err) {

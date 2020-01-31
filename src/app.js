@@ -68,9 +68,9 @@ export default class App extends React.Component {
                         picture_url={this.state.picture_url}
                         first={this.state.first}
                         last={this.state.last}
+                        bio={this.state.bio}
                         editBio={bio => this.setState({ bio: bio })}
                         addBio={() => this.setState({ profileInvisible: true })}
-                        bio={this.state.bio}
                     />
                 </div>
             </div>
