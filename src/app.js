@@ -7,9 +7,10 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        console.log("props from app: ", props);
     }
     componentDidMount() {
-        // console.log("this.state: ", this.state);
+        console.log("this.state from app: ", this.state);
         axios
             .get("/user")
             .then(({ data }) => {
@@ -27,7 +28,7 @@ export default class App extends React.Component {
             });
     }
     render() {
-        console.log("this.state: ", this.state);
+        console.log("this.state from app, render: ", this.state);
         if (!this.state.id) {
             return "Loading...";
         }

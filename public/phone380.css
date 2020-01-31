@@ -1,9 +1,13 @@
 @media screen and (max-height: 380px) {
     html {
-        background-color: white;
+        background-color: ##03a9f42e;
     }
     .logo-img-register {
         width: 100%;
+        margin-top: 11%;
+    }
+    .logo-img-welcome {
+        width: 350px;
         margin-top: 11%;
     }
     .logo-div {
@@ -28,5 +32,29 @@
     .img-welcome {
         width: 100%;
         margin-top: 20px;
+    }
+    .main-uploader {
+        width: 60%;
+        height: 40%;
+        border: 1px solid black;
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, 10px);
+        text-align: center;
+        border-radius: 20px;
+    }
+    .inputs-login {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        transform: translate(-50%, -95%);
+        left: 50%;
+        top: 95%;
+        width: 40%;
+        text-align: center;
+        color: #30475e;
+        align-items: center;
+        font-family: "Patua One", cursive;
     }
 }

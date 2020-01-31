@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function ProfilePic(props) {
-    console.log("props: ", props);
+    console.log("props from profilePic: ", props);
     const clickHandler = props.clickHandler;
     const first = props.first;
     const last = props.last;
