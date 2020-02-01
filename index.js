@@ -14,9 +14,6 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const { s3Url } = require("./config");
 /// /upload
-const secretCode = cryptoRandomString({
-    length: 6
-});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -68,39 +65,18 @@ const uploader = multer({
 
 ///// ROUTES
 
-app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("*************** POST upload");
-    let email = req.session.email;
-    const imageUrl = s3Url + req.file.filename;
-    if (req.file) {
-        db.updateImage(email, imageUrl)
-            .then(function(results) {
-                res.json(imageUrl);
-            })
-            .catch(function(err) {
-                console.log("error from POST upload :", err);
-                res.sendStatus(500);
-            });
+app.get("/welcome", function(req, res) {
+    console.log("*************************** GET WELCOME");
+    console.log("resq.session.userId: ", req.session.userId);
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
     }
 });
 
-app.post("/bio", (req, res) => {
-    console.log("***************** POST bio");
-    console.log("req.body: ", req.body);
-    let email = req.session.email;
-    let bio = req.body.bio;
-    db.updateBio(email, bio)
-        .then(results => {
-            console.log("results from POST bio: ", results);
-            res.json({ success: true });
-        })
-        .catch(err => {
-            console.log("error from post bio: ", err);
-        });
-});
-
 app.post("/register", (req, res) => {
-    console.log("*****************regsiter POST !");
+    console.log("*************************** regsiter POST !");
     let first = req.body.first;
     let last = req.body.last;
     let email = req.body.email;
@@ -108,7 +84,7 @@ app.post("/register", (req, res) => {
     console.log("req.body: ", req.body);
 
     if (req.body == {}) {
-        console.log("empty fields in registeraion !req.body.length");
+        console.log("empty fields in registeraion req.body == {}");
         res.json({ success: false });
     } else if (
         first == "" ||
@@ -128,7 +104,6 @@ app.post("/register", (req, res) => {
             .then(hashedPass => {
                 db.addUser(first, last, email, hashedPass, null)
                     .then(results => {
-                        console.log("hashedPass: ", hashedPass);
                         req.session.email = email;
                         req.session.userId = results.rows[0].id;
                         res.json({ success: true });
@@ -140,21 +115,43 @@ app.post("/register", (req, res) => {
             })
             .catch(err => {
                 console.log("error from hashedPass: ", err);
+                res.json({ success: false });
             });
     }
 });
 
-app.get("/welcome", function(req, res) {
-    console.log("************* GET WELCOME");
-    if (req.session.userId) {
-        res.redirect("/");
-    } else {
-        res.sendFile(__dirname + "/index.html");
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("*************************** POST upload");
+    let email = req.session.email;
+    const imageUrl = s3Url + req.file.filename;
+    if (req.file) {
+        db.updateImage(email, imageUrl)
+            .then(function(results) {
+                res.json(imageUrl);
+            })
+            .catch(function(err) {
+                console.log("error from POST upload :", err);
+                res.sendStatus(500);
+            });
     }
 });
 
+app.post("/bio", (req, res) => {
+    console.log("*************************** POST bio");
+    console.log("req.body: ", req.body);
+    let email = req.session.email;
+    let bio = req.body.bio;
+    db.updateBio(email, bio)
+        .then(results => {
+            res.json({ success: true });
+        })
+        .catch(err => {
+            console.log("error from post bio: ", err);
+        });
+});
+
 app.post("/login", function(req, res) {
-    console.log("********************POST login");
+    console.log("*************************** POST login");
     const email = req.body.email;
     const password = req.body.password;
     db.getUser(email)
@@ -182,29 +179,34 @@ app.post("/login", function(req, res) {
 });
 
 app.post("/reset/start", (req, res) => {
-    console.log("********************POST reset/start");
+    console.log("*************************** POST reset/start");
+    const secretCode = cryptoRandomString({
+        length: 6
+    });
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
+            console.log("results from getuser: ", results);
+            const first = results.rows[0].first;
             if (results.rows[0] == undefined) {
                 res.json({ success: false });
             } else {
                 db.deleteEmailAndCode(email)
-                    .then(result => {
-                        console.log("result from deleteEmailAndCode: ", result);
+                    .then(() => {
                         db.reset(email, secretCode)
                             .then(resultReset => {
+                                console.log(
+                                    "results from db.reset: ",
+                                    resultReset
+                                );
                                 let emailCode = resultReset.rows[0].emailcode;
                                 ses.sendEmail(
                                     "jade.player+funky@spicedling.email",
                                     emailCode,
-                                    "Here is your code to reset your account"
+
+                                    `Hello ${first}, Here is your code to reset your account`
                                 )
-                                    .then(resultEmailCode => {
-                                        console.log(
-                                            "results from emailCode: ",
-                                            resultEmailCode
-                                        );
+                                    .then(() => {
                                         res.json({ success: true });
                                     })
                                     .catch(err => {
@@ -229,7 +231,7 @@ app.post("/reset/start", (req, res) => {
 });
 
 app.post("/reset/verify", (req, res) => {
-    console.log("********************POST reset/verify");
+    console.log("*************************** POST reset/verify");
     let email = req.body.state.email;
     let code = req.body.state.code;
     let newPassword = req.body.state.newpassword;
@@ -274,12 +276,10 @@ app.post("/reset/verify", (req, res) => {
 });
 //////////
 app.get("/user", function(req, res) {
-    console.log("********************GET user");
-    // console.log("req.session: ", req.session);
+    console.log("*************************** GET user");
     let email = req.session.email;
     db.getUser(email)
         .then(results => {
-            console.log("rsults from get user: ", results);
             results.rows[0].password = "***** hehe";
             res.json(results.rows[0]);
         })
@@ -290,9 +290,9 @@ app.get("/user", function(req, res) {
 //////////
 // LAST rounte in app !
 app.get("*", function(req, res) {
-    console.log("************* GET *");
+    console.log("*************************** GET *");
     if (!req.session.userId) {
-        console.log("******* REDIRECT TO WELCOME");
+        console.log("*************************** REDIRECT TO WELCOME");
         res.redirect("/welcome");
     } else {
         res.sendFile(__dirname + "/index.html");

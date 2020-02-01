@@ -1,8 +1,8 @@
 import React from "react";
 import Registration from "./registration";
-import { HashRouter, Route } from "react-router-dom";
 import Login from "./login";
 import Reset from "./reset";
+import { HashRouter, Route } from "react-router-dom";
 
 export default class Welcome extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <HashRouter>
-                <div className="sub-main">
+                <div className="welcome-main-div">
                     <Route exact path="/" component={Registration} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/reset/start" component={Reset} />

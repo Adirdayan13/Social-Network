@@ -12,7 +12,6 @@ export default class Profile extends React.Component {
     render() {
         return (
             <div className="profile">
-                <h1>Profile component</h1>
                 <img
                     className="profile-pic-big"
                     src={this.props.picture_url}

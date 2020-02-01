@@ -43,7 +43,7 @@ export default class Registration extends React.Component {
     }
     render() {
         return (
-            <div className="registration-wrapper">
+            <div className="registration-main-div">
                 <div className="logo-div">
                     <img
                         className="logo-img-register"

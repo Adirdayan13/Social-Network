@@ -7,7 +7,6 @@ export default class Bioeditor extends React.Component {
         this.state = {
             bio: this.props.bio
         };
-        // console.log("this.props from Bioeditor : ", this.props);
     }
     clickHandler(e) {
         this.setState({

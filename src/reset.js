@@ -116,7 +116,7 @@ export default class Reset extends React.Component {
                         </button>
                     </div>
                 )}
-                {this.state.step == 3 && <p>Step 3 !</p>}
+                {this.state.step == 3 && location.replace("/welcome#/login")}
             </div>
         );
     }

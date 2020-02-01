@@ -8,15 +8,12 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log("props from app: ", props);
     }
     componentDidMount() {
-        console.log("this.state from app: ", this.state);
         axios
             .get("/user")
             .then(({ data }) => {
                 console.log("data from app : ", data);
-
                 if (data.picture_url == null) {
                     data.picture_url = "/pictures/default.png";
                     this.setState(data);
@@ -29,7 +26,7 @@ export default class App extends React.Component {
             });
     }
     render() {
-        console.log("this.state from app, render: ", this.state);
+        console.log("this.state from app render: ", this.state);
         if (!this.state.id) {
             return "Loading...";
         }
@@ -53,6 +50,7 @@ export default class App extends React.Component {
                 {this.state.uploaderIsVisible && (
                     <div className="uploader">
                         <Uploader
+                            picture_url={this.state.picture_url}
                             setImageUrl={picture_url =>
                                 this.setState({ picture_url })
                             }
@@ -71,13 +69,12 @@ export default class App extends React.Component {
                         bio={this.state.bio}
                         editBio={bio => this.setState({ bio: bio })}
                         addBio={() => this.setState({ profileInvisible: true })}
+                        clickHandler={() =>
+                            this.setState({ uploaderIsVisible: true })
+                        }
                     />
                 </div>
             </div>
         );
     }
 }
-
-// clickHandler={() =>
-//     this.setState({ uploaderIsVisible: true })
-// }

@@ -10,10 +10,9 @@ export default function ProfilePic(props) {
     return (
         <div className="profile-pic-div-main">
             <div className="greets">
-                <h1>Welcome</h1>
-                <h2>
-                    {first} {last}
-                </h2>
+                <h1 className="welcome">
+                    Welcome {first} {last}
+                </h1>
             </div>
             <div className="profile-pic-div">
                 <img
