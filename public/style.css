@@ -27,6 +27,7 @@ input {
 
 p {
     font-family: "Patua One", cursive;
+    margin: 0;
 }
 
 h1,
@@ -130,9 +131,9 @@ h2 {
 }
 
 .profile-pic-big {
-    width: 20%;
-    margin-top: 5%;
-    margin-left: 1%;
+    width: 140px;
+    margin-top: 100px;
+    margin-left: 40px;
 }
 
 .greets {
@@ -239,9 +240,42 @@ h2 {
 }
 
 .bio {
-    width: 300px;
-    height: 100px;
+    width: 250px;
+    height: 70px;
+    position: absolute;
+    left: 200px;
+    top: 200px;
     background-color: transparent;
+}
+
+/* .textarea {
+    position: absolute;
+    top: 200px;
+    left: 250px;
+} */
+
+.bio-div,
+.add-bio-name {
+    width: 100%;
+    align-items: center;
+    position: absolute;
+    left: 200px;
+    top: 200px;
+    height: 100px;
+}
+
+.save {
+    margin-left: 270px;
+    border-radius: 10px;
+    width: 80px;
+    height: 25px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.save:hover {
+    background-color: #30475e;
+    color: white;
 }
 
 @keyframes angry-animation {

@@ -15,6 +15,7 @@ export default class Uploader extends React.Component {
     closeModal() {
         console.log("close modal");
         this.props.uploaderInvisible();
+        this.props.noError();
     }
     clickHandler(e) {
         e.preventDefault();
@@ -27,9 +28,9 @@ export default class Uploader extends React.Component {
             .post("/upload", formData)
             .then(results => {
                 this.props.setImageUrl(results.data);
+                this.closeModal();
                 this.props.waitHide();
                 this.props.noError();
-                this.closeModal();
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);

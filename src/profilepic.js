@@ -8,7 +8,7 @@ export default function ProfilePic(props) {
     const picture_url = props.picture_url;
 
     return (
-        <div className="profile-pic-div-main">
+        <div className="profile-pic-main">
             <div className="greets">
                 <h1 className="welcome">
                     Welcome {first} {last}

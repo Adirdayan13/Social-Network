@@ -17,23 +17,20 @@ export default class Profile extends React.Component {
                     src={this.props.picture_url}
                     onClick={this.props.clickHandler}
                 />
-                <div>
-                    <h3>
-                        <div className="BioEditor">
-                            <BioEditor
-                                picture_url={this.props.picture_url}
-                                first={this.props.first}
-                                last={this.props.last}
-                                bio={this.props.bio}
-                                editBio={this.props.editBio}
-                                clickHandler={() =>
-                                    this.setState({
-                                        uploaderIsVisible: true
-                                    })
-                                }
-                            />
-                        </div>
-                    </h3>
+
+                <div className="BioEditor-from-profile">
+                    <BioEditor
+                        picture_url={this.props.picture_url}
+                        first={this.props.first}
+                        last={this.props.last}
+                        bio={this.props.bio}
+                        editBio={this.props.editBio}
+                        clickHandler={() =>
+                            this.setState({
+                                uploaderIsVisible: true
+                            })
+                        }
+                    />
                 </div>
             </div>
         );

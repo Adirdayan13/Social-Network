@@ -17,7 +17,7 @@ export default class Bioeditor extends React.Component {
         // console.log("************ths.state: ", this.state);
     }
     submitBio(e) {
-        this.editFalse(e);
+        this.editFalse();
 
         e.preventDefault();
         // console.log("this.state from submitBio: ", this.state);
@@ -34,12 +34,12 @@ export default class Bioeditor extends React.Component {
                 console.log("error in POST bio: ", err);
             });
     }
-    editTrue(e) {
+    editTrue() {
         this.setState({
             edit: true
         });
     }
-    editFalse(e) {
+    editFalse() {
         this.setState({
             edit: false
         });
@@ -49,29 +49,48 @@ export default class Bioeditor extends React.Component {
         // console.log("this.props.bio from render: ", this.props.bio);
 
         return (
-            <div className="profile">
+            <div className="bio-editor">
                 {!this.state.edit && (
-                    <div>
+                    <div className="edit-bio">
                         {this.props.bio && (
-                            <div className="bio">
-                                <br></br>
-                                <div onClick={e => this.editTrue(e)}>
-                                    <div>My bio: {this.props.bio}</div>
-                                    Click me to change bio
-                                </div>
+                            <div
+                                className="bio-div"
+                                onClick={() => this.editTrue()}
+                            >
+                                <p>
+                                    {this.props.first}&nbsp;
+                                    {this.props.last}
+                                    <br /> <br />
+                                    {this.props.bio}&nbsp;&nbsp;
+                                    <span
+                                        style={{ textDecoration: "underline" }}
+                                    >
+                                        Edit
+                                    </span>
+                                </p>
                             </div>
                         )}
                         {!this.props.bio && (
-                            <div className="bio">
-                                <div onClick={e => this.editTrue(e)}>
-                                    Add bio:
+                            <div className="add-bio">
+                                <div
+                                    className="add-bio-name"
+                                    onClick={() => this.editTrue()}
+                                >
+                                    <p>
+                                        {this.props.first}&nbsp;
+                                        {this.props.last}
+                                    </p>
+                                    <br />
+                                    <p style={{ textDecoration: "underline" }}>
+                                        Add your bio now
+                                    </p>
                                 </div>
                             </div>
                         )}
                     </div>
                 )}
                 {this.state.edit && (
-                    <div>
+                    <div className="textarea">
                         <textarea
                             onChange={e => this.clickHandler(e)}
                             className="bio"
@@ -80,7 +99,12 @@ export default class Bioeditor extends React.Component {
                             defaultValue={this.state.bio}
                         />
                         <br></br>
-                        <button onClick={e => this.submitBio(e)}>Submit</button>
+                        <button
+                            className="save"
+                            onClick={e => this.submitBio(e)}
+                        >
+                            Submit
+                        </button>
                     </div>
                 )}
             </div>
