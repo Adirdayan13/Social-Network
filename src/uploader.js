@@ -18,17 +18,23 @@ export default class Uploader extends React.Component {
     }
     clickHandler(e) {
         e.preventDefault();
-
         var formData = new FormData();
+        this.props.waitShow();
+        this.props.noError();
         formData.append("file", this.state.file);
 
         axios
             .post("/upload", formData)
             .then(results => {
                 this.props.setImageUrl(results.data);
+                this.props.waitHide();
+                this.props.noError();
+                this.closeModal();
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);
+                this.props.waitHide();
+                this.props.error();
             });
     }
 

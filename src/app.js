@@ -47,19 +47,6 @@ export default class App extends React.Component {
                         last={this.state.last}
                     />
                 </div>
-                {this.state.uploaderIsVisible && (
-                    <div className="uploader">
-                        <Uploader
-                            picture_url={this.state.picture_url}
-                            setImageUrl={picture_url =>
-                                this.setState({ picture_url })
-                            }
-                            uploaderInvisible={() =>
-                                this.setState({ uploaderIsVisible: false })
-                            }
-                        />
-                    </div>
-                )}
 
                 <div className="profile">
                     <Profile
@@ -74,6 +61,30 @@ export default class App extends React.Component {
                         }
                     />
                 </div>
+
+                {this.state.uploaderIsVisible && (
+                    <div className="uploader">
+                        <Uploader
+                            picture_url={this.state.picture_url}
+                            setImageUrl={picture_url =>
+                                this.setState({ picture_url })
+                            }
+                            uploaderInvisible={() =>
+                                this.setState({ uploaderIsVisible: false })
+                            }
+                            waitShow={() => this.setState({ wait: true })}
+                            waitHide={() => this.setState({ wait: false })}
+                            error={() => this.setState({ error: true })}
+                            noError={() => this.setState({ error: false })}
+                        />
+                    </div>
+                )}
+                {this.state.error && (
+                    <p className="error-upload">somehing went wrong</p>
+                )}
+                {this.state.wait && (
+                    <img className="loading-gif" src="/pictures/loading.gif" />
+                )}
             </div>
         );
     }

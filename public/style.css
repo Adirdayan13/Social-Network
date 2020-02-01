@@ -44,7 +44,7 @@ h2 {
 
 .main-uploader {
     width: 400px;
-    height: 20%;
+    height: 32%;
     border: 1px solid black;
     position: absolute;
     left: 50%;
@@ -52,6 +52,7 @@ h2 {
     margin-top: 2%;
     text-align: center;
     border-radius: 20px;
+    top: 20%;
 }
 
 #file {
@@ -201,6 +202,14 @@ h2 {
     color: white;
 }
 
+.loading-gif {
+    width: 140px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .error {
     color: red;
     animation-name: angry-animation;
@@ -211,6 +220,20 @@ h2 {
     animation-direction: normal;
     position: absolute;
     top: 65%;
+    width: 100%;
+    text-align: center;
+}
+
+.error-upload {
+    color: red;
+    animation-name: angry-animation;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    position: absolute;
+    top: 45%;
     width: 100%;
     text-align: center;
 }
