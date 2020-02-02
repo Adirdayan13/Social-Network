@@ -41,37 +41,39 @@ export default class Uploader extends React.Component {
 
     render() {
         return (
-            <div className="main-uploader">
-                <img
-                    className="x"
-                    onClick={() => this.closeModal()}
-                    src="/pictures/x.gif"
-                />
-                <br></br>
-                <br></br>
-                <p className="change-profile-text">
-                    Want to change your profile picture ?
-                </p>
-                <form>
-                    <input
-                        type="file"
-                        name="file"
-                        id="file"
-                        accept="image/*"
-                        data-multiple-caption="{count} files selected"
-                        multiple
-                        onChange={e => this.grabFile(e)}
+            <div className="main-up">
+                <div className="main-uploader">
+                    <img
+                        className="x"
+                        onClick={() => this.closeModal()}
+                        src="/pictures/x.gif"
                     />
-                    <label htmlFor="file">Choose a file</label>
                     <br></br>
                     <br></br>
-                    <button
-                        className="upload-btn"
-                        onClick={e => this.clickHandler(e)}
-                    >
-                        Submit
-                    </button>
-                </form>
+                    <p className="change-profile-text">
+                        Want to change your profile picture ?
+                    </p>
+                    <form>
+                        <input
+                            type="file"
+                            name="file"
+                            id="file"
+                            accept="image/*"
+                            data-multiple-caption="{count} files selected"
+                            multiple
+                            onChange={e => this.grabFile(e)}
+                        />
+                        <label htmlFor="file">Choose a file</label>
+                        <br></br>
+                        <br></br>
+                        <button
+                            className="upload-btn"
+                            onClick={e => this.clickHandler(e)}
+                        >
+                            Submit
+                        </button>
+                    </form>
+                </div>
             </div>
         );
     }

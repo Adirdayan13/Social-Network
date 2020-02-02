@@ -136,6 +136,32 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
+app.post("/edit", (req, res) => {
+    let email = req.body.email;
+    let first = req.body.first;
+    let last = req.body.last;
+    let id = req.body.id;
+
+    console.log("req.body from POST /edit: ", req.body);
+    db.updateProfile(id, email, first, last)
+        .then(results => {
+            req.session.email = email;
+            res.json({ success: true, email: email, first: first, last: last });
+        })
+        .catch(err => {
+            console.log("error from updateProfile: ", err);
+            res.json({ success: false });
+        });
+});
+
+app.post("/logout", (req, res) => {
+    console.log("*************************** POST logout");
+    req.session = undefined;
+    console.log("req.session from logout:", req.session);
+    // res.redirect("/");
+    res.json({ logout: true });
+});
+
 app.post("/bio", (req, res) => {
     console.log("*************************** POST bio");
     console.log("req.body: ", req.body);
@@ -154,6 +180,7 @@ app.post("/login", function(req, res) {
     console.log("*************************** POST login");
     const email = req.body.email;
     const password = req.body.password;
+    console.log("email: ", email);
     db.getUser(email)
         .then(results => {
             bcrypt
@@ -278,8 +305,10 @@ app.post("/reset/verify", (req, res) => {
 app.get("/user", function(req, res) {
     console.log("*************************** GET user");
     let email = req.session.email;
+    console.log("req.session from get user: ", req.session);
     db.getUser(email)
         .then(results => {
+            console.log("results from get user: ", results.rows[0]);
             results.rows[0].password = "***** hehe";
             res.json(results.rows[0]);
         })

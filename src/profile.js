@@ -17,7 +17,6 @@ export default class Profile extends React.Component {
                     src={this.props.picture_url}
                     onClick={this.props.clickHandler}
                 />
-
                 <div className="BioEditor-from-profile">
                     <BioEditor
                         picture_url={this.props.picture_url}

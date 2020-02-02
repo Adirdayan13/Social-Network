@@ -35,6 +35,20 @@ h2 {
     text-align: center;
 }
 
+button {
+    background: transparent;
+    border-radius: 20px;
+    border: 1px solid black;
+    box-shadow: 0 8px 6px -6px black;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #30475e;
+    color: white;
+}
+
 .main,
 .welcome-main-div,
 .all-login,
@@ -132,8 +146,9 @@ h2 {
 
 .profile-pic-big {
     width: 140px;
-    margin-top: 100px;
-    margin-left: 40px;
+    position: absolute;
+    left: 30px;
+    top: 120px;
 }
 
 .greets {
@@ -225,6 +240,20 @@ h2 {
     text-align: center;
 }
 
+.error-register {
+    color: red;
+    animation-name: angry-animation;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    position: absolute;
+    top: -40px;
+    width: 100%;
+    text-align: center;
+}
+
 .error-upload {
     color: red;
     animation-name: angry-animation;
@@ -242,30 +271,42 @@ h2 {
 .bio {
     width: 250px;
     height: 70px;
-    position: absolute;
-    left: 200px;
-    top: 200px;
     background-color: transparent;
 }
 
-/* .textarea {
+.textarea {
+    width: 250px;
+    height: 70px;
     position: absolute;
-    top: 200px;
-    left: 250px;
-} */
+    left: 30px;
+    top: 280px;
+}
 
 .bio-div,
 .add-bio-name {
-    width: 100%;
+    width: 20%;
     align-items: center;
     position: absolute;
-    left: 200px;
-    top: 200px;
+    left: 30px;
+    top: 280px;
     height: 100px;
 }
 
+.edit-inputs {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 10px);
+    text-align: center;
+}
+
+.edit-profile {
+    margin-top: 10px;
+    margin-left: 93%;
+    cursor: pointer;
+}
+
 .save {
-    margin-left: 270px;
+    margin-left: 80px;
     border-radius: 10px;
     width: 80px;
     height: 25px;

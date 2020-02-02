@@ -59,3 +59,10 @@ exports.updateBio = function(email, bio) {
         bio
     ]);
 };
+
+exports.updateProfile = function(id, email, first, last) {
+    return db.query(
+        `UPDATE users SET email = $2, first = $3, last = $4 WHERE id = $1`,
+        [id, email, first, last]
+    );
+};

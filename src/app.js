@@ -3,13 +3,17 @@ import axios from "./axios";
 import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
 import Profile from "./profile";
+import EditProfile from "./editprofile";
+// import Logout from "./logout";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        console.log("this.state from app: ", this.state);
     }
     componentDidMount() {
+        console.log("this.state from app did mount: ", this.state);
         axios
             .get("/user")
             .then(({ data }) => {
@@ -25,6 +29,17 @@ export default class App extends React.Component {
                 console.log("error from GET user: ", err);
             });
     }
+    logout(e) {
+        e.preventDefault();
+        axios
+            .post("/logout")
+            .then(() => {
+                location.replace("/");
+            })
+            .catch(err => {
+                console.log("Error from post logout: ", err);
+            });
+    }
     render() {
         console.log("this.state from app render: ", this.state);
         if (!this.state.id) {
@@ -38,9 +53,43 @@ export default class App extends React.Component {
                     alt="Logo"
                 />
 
+                <div className="edit-profile">
+                    <p
+                        onClick={() =>
+                            this.setState({
+                                editProfile: true,
+                                done: false,
+                                uploaderIsVisible: false
+                            })
+                        }
+                    >
+                        Edit Profile
+                    </p>
+                    <p onClick={e => this.logout(e)}>Logout</p>
+                </div>
+                <div className="logout"></div>
+                {this.state.editProfile && (
+                    <EditProfile
+                        setUpdate={(email, first, last) =>
+                            this.setState({ email, first, last })
+                        }
+                        error={() => this.setState({ error: true })}
+                        noError={() => this.setState({ error: false })}
+                        editHandler={() => this.setState({ editProfile: true })}
+                        closeEdit={() => this.setState({ editProfile: false })}
+                        first={this.state.first}
+                        last={this.state.last}
+                        email={this.state.email}
+                        id={this.state.id}
+                    />
+                )}
+
                 <ProfilePic
                     clickHandler={() =>
-                        this.setState({ uploaderIsVisible: true })
+                        this.setState({
+                            uploaderIsVisible: true,
+                            editProfile: false
+                        })
                     }
                     picture_url={this.state.picture_url}
                     first={this.state.first}
@@ -74,6 +123,7 @@ export default class App extends React.Component {
                         noError={() => this.setState({ error: false })}
                     />
                 )}
+
                 {this.state.error && (
                     <p className="error-upload">somehing went wrong</p>
                 )}

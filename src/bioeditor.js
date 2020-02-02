@@ -53,10 +53,7 @@ export default class Bioeditor extends React.Component {
                 {!this.state.edit && (
                     <div className="edit-bio">
                         {this.props.bio && (
-                            <div
-                                className="bio-div"
-                                onClick={() => this.editTrue()}
-                            >
+                            <div className="bio-div">
                                 <p>
                                     {this.props.first}&nbsp;
                                     {this.props.last}
@@ -64,6 +61,7 @@ export default class Bioeditor extends React.Component {
                                     {this.props.bio}&nbsp;&nbsp;
                                     <span
                                         style={{ textDecoration: "underline" }}
+                                        onClick={() => this.editTrue()}
                                     >
                                         Edit
                                     </span>

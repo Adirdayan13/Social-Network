@@ -13,6 +13,7 @@ export default class Registration extends React.Component {
         });
     }
     submit() {
+        this.setState({ error: false });
         axios
             .post("/register", {
                 first: this.state.first,
@@ -57,7 +58,7 @@ export default class Registration extends React.Component {
                         It’s quick and easy.
                     </p>
                     {this.state.error && (
-                        <p className="error">
+                        <p className="error-register">
                             Something went wrong, please try again.
                         </p>
                     )}
