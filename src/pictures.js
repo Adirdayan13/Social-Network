@@ -36,8 +36,10 @@ export default class Pictures extends React.Component {
         axios
             .post("/upload-album", formData)
             .then(results => {
-                console.log("results from upload album: ", results);
-                this.componentDidMount();
+                console.log("results from upload album: ", results.data);
+                this.setState({
+                    pictures: [...this.state.pictures, results.data]
+                });
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);
