@@ -61,21 +61,18 @@ export default class EditProfile extends React.Component {
                             className="email"
                             name="email"
                             placeholder="Email"
-                            defaultValue={this.props.email}
                             onChange={e => this.handleChange(e)}
                         />
                         <input
                             className="first"
                             name="first"
                             placeholder="First"
-                            defaultValue={this.props.first}
                             onChange={e => this.handleChange(e)}
                         />
                         <input
                             className="last"
                             name="last"
                             placeholder="Last"
-                            defaultValue={this.props.last}
                             onChange={e => this.handleChange(e)}
                         />
                         <br />

@@ -25,6 +25,10 @@ exports.getUser = function(email) {
     return db.query(`SELECT * FROM users WHERE email = $1`, [email]);
 };
 
+exports.getUserById = function(id) {
+    return db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+};
+
 exports.reset = function(email, emailcode) {
     return db.query(
         `INSERT INTO reset (email, emailcode)
@@ -65,4 +69,17 @@ exports.updateProfile = function(id, email, first, last) {
         `UPDATE users SET email = $2, first = $3, last = $4 WHERE id = $1`,
         [id, email, first, last]
     );
+};
+
+exports.addPictureToAlbums = function(user_id, picture) {
+    return db.query(`INSERT INTO pictures (user_id, picture) VALUES ($1, $2)`, [
+        user_id,
+        picture
+    ]);
+};
+
+exports.getPicture = function(user_id) {
+    return db.query(`SELECT picture FROM pictures WHERE user_id = $1`, [
+        user_id
+    ]);
 };

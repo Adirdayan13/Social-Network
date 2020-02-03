@@ -49,9 +49,9 @@ export default class Bioeditor extends React.Component {
         // console.log("this.props.bio from render: ", this.props.bio);
 
         return (
-            <div className="bio-editor">
+            <>
                 {!this.state.edit && (
-                    <div className="edit-bio">
+                    <>
                         {this.props.bio && (
                             <div className="bio-div">
                                 <p>
@@ -85,7 +85,7 @@ export default class Bioeditor extends React.Component {
                                 </div>
                             </div>
                         )}
-                    </div>
+                    </>
                 )}
                 {this.state.edit && (
                     <div className="textarea">
@@ -101,11 +101,11 @@ export default class Bioeditor extends React.Component {
                             className="save"
                             onClick={e => this.submitBio(e)}
                         >
-                            Submit
+                            Save
                         </button>
                     </div>
                 )}
-            </div>
+            </>
         );
     }
 }

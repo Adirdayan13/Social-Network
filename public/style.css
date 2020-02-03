@@ -121,6 +121,7 @@ button:hover {
 }
 
 .upload-btn {
+    margin-bottom: 10px;
     background-color: transparent;
     border: 1px solid black;
     font-family: "Patua One", cursive;
@@ -279,7 +280,7 @@ button:hover {
     height: 70px;
     position: absolute;
     left: 30px;
-    top: 280px;
+    top: 340px;
 }
 
 .bio-div,
@@ -288,8 +289,21 @@ button:hover {
     align-items: center;
     position: absolute;
     left: 30px;
-    top: 280px;
+    top: 340px;
     height: 100px;
+}
+
+.pictures {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    border: 5px solid white;
+    text-align: center;
+}
+
+.pictures-album {
+    width: 300px;
 }
 
 .edit-inputs {
@@ -303,6 +317,11 @@ button:hover {
     margin-top: 10px;
     margin-left: 93%;
     cursor: pointer;
+    text-align: center;
+}
+
+.edit-profile > p {
+    text-decoration: underline;
 }
 
 .save {
@@ -317,6 +336,14 @@ button:hover {
 .save:hover {
     background-color: #30475e;
     color: white;
+}
+
+.other-user-profile-pic {
+    width: 100px;
+}
+
+.other-user-info {
+    font-size: 20px;
 }
 
 @keyframes angry-animation {

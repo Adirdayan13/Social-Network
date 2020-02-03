@@ -74,4 +74,10 @@
         text-align: center;
         border-radius: 20px;
     }
+    .edit-profile {
+        margin-top: 35px;
+        margin-left: 83%;
+        cursor: pointer;
+        text-align: center;
+    }
 }

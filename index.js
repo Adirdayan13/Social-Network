@@ -136,6 +136,35 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     }
 });
 
+app.post("/upload-album", uploader.single("file"), s3.upload, (req, res) => {
+    const user_id = req.session.userId;
+    const imageUrl = s3Url + req.file.filename;
+    console.log("req.session from upload/album: ", req.session);
+    if (req.file) {
+        db.addPictureToAlbums(user_id, imageUrl)
+            .then(() => {
+                res.json(imageUrl);
+            })
+            .catch(err => {
+                console.log("error from upload-album: ", err);
+            });
+    }
+});
+
+app.get("/pictures", (req, res) => {
+    console.log("******************** GET pictures");
+    const user_id = req.session.userId;
+    console.log(user_id);
+    db.getPicture(user_id)
+        .then(results => {
+            console.log("results from get pictures: ", results);
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("Error from get pictures: ", err);
+        });
+});
+
 app.post("/edit", (req, res) => {
     let email = req.body.email;
     let first = req.body.first;
@@ -316,6 +345,23 @@ app.get("/user", function(req, res) {
             console.log("error from GET user: ", err);
         });
 });
+
+app.get("/user/:id.json", (req, res) => {
+    console.log("********************* GET user/:id.json");
+    console.log("id: ", req.session.userId);
+    console.log("req.params.id: ", req.params.id);
+    db.getUserById(req.params.id)
+        .then(results => {
+            const userInfo = results.rows[0];
+            console.log("results from getUserById: ", results.rows[0]);
+            results.rows[0].password = "******";
+            res.json({ userInfo: userInfo, currentId: req.session.userId });
+        })
+        .catch(err => {
+            console.log("error in getUserById: ", err);
+        });
+});
+
 //////////
 // LAST rounte in app !
 app.get("*", function(req, res) {
