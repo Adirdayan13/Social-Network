@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function ProfilePic(props) {
     console.log("props from profilePic: ", props);
@@ -15,11 +16,9 @@ export default function ProfilePic(props) {
                 </h1>
             </>
             <div className="profile-pic-div">
-                <img
-                    className="profile-pic"
-                    onClick={clickHandler}
-                    src={picture_url}
-                />
+                <Link to="/upload">
+                    <img className="profile-pic" src={picture_url} />
+                </Link>
             </div>
         </>
     );

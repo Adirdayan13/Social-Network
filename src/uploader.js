@@ -1,22 +1,18 @@
 import React from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class Uploader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log("this.props: ", this.props);
     }
     grabFile(e) {
         this.setState({
             [e.target.name]: e.target.files[0]
         });
     }
-    closeModal() {
-        console.log("close modal");
-        this.props.uploaderInvisible();
-        this.props.noError();
-    }
+
     clickHandler(e) {
         e.preventDefault();
         var formData = new FormData();
@@ -29,9 +25,9 @@ export default class Uploader extends React.Component {
             .post("/upload", formData)
             .then(results => {
                 this.props.setImageUrl(results.data);
-                this.closeModal();
                 this.props.waitHide();
                 this.props.noError();
+                this.redirect();
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);
@@ -44,11 +40,9 @@ export default class Uploader extends React.Component {
         return (
             <div className="main-up">
                 <div className="main-uploader">
-                    <img
-                        className="x"
-                        onClick={() => this.closeModal()}
-                        src="/pictures/x.gif"
-                    />
+                    <Link to="/">
+                        <img className="x" src="/pictures/x.gif" />
+                    </Link>
                     <br></br>
                     <br></br>
                     <p className="change-profile-text">

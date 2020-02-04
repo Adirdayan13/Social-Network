@@ -1,6 +1,7 @@
 import React from "react";
 import BioEditor from "./bioeditor";
-
+import { BrowserRouter, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import axios from "./axios";
 
 export default class Profile extends React.Component {
@@ -12,11 +13,13 @@ export default class Profile extends React.Component {
     render() {
         return (
             <div className="profile">
-                <img
-                    className="profile-pic-big"
-                    src={this.props.picture_url}
-                    onClick={this.props.clickHandler}
-                />
+                <Link to="/upload">
+                    <img
+                        className="profile-pic-big"
+                        src={this.props.picture_url}
+                    />
+                </Link>
+
                 <div className="BioEditor-from-profile">
                     <BioEditor
                         picture_url={this.props.picture_url}

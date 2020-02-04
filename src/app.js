@@ -59,53 +59,23 @@ export default class App extends React.Component {
             <div className="app">
                 <BrowserRouter>
                     <div className="header">
-                        <img
-                            className="logo-img-after-login"
-                            src="/pictures/logo.png"
-                            alt="Logo"
-                        />
+                        <Link to="/">
+                            <img
+                                className="logo-img-after-login"
+                                src="/pictures/logo.png"
+                                alt="Logo"
+                            />
+                        </Link>
 
                         <div className="text-header">
                             <ul>
                                 <li>
-                                    <a
-                                        className="menu"
-                                        onClick={() =>
-                                            this.setState(
-                                                {
-                                                    done: false,
-                                                    uploaderIsVisible: false,
-                                                    profileAndBio: false,
-                                                    otherProfileHide: true
-                                                },
-                                                this.redirect()
-                                            )
-                                        }
-                                    >
-                                        Menu
-                                    </a>
+                                    <Link to="/">Menu</Link>
                                     <ul>
-                                        <li
-                                            onClick={() =>
-                                                this.setState({
-                                                    done: false,
-                                                    uploaderIsVisible: false,
-                                                    otherProfileHide: true
-                                                })
-                                            }
-                                        >
+                                        <li>
                                             <Link to="/edit">Edit profile</Link>
                                         </li>{" "}
-                                        <li
-                                            onClick={() =>
-                                                this.setState({
-                                                    uploaderIsVisible: false,
-                                                    done: false,
-                                                    profileAndBio: true,
-                                                    otherProfileHide: true
-                                                })
-                                            }
-                                        >
+                                        <li>
                                             <Link to="/mypictures">Album</Link>
                                         </li>{" "}
                                         <li onClick={e => this.logout(e)}>
@@ -117,33 +87,11 @@ export default class App extends React.Component {
                         </div>
 
                         <ProfilePic
-                            clickHandler={() =>
-                                this.setState({
-                                    uploaderIsVisible: true,
-                                    editProfile: false,
-                                    otherProfileHide: true
-                                })
-                            }
                             picture_url={this.state.picture_url}
                             first={this.state.first}
                             last={this.state.last}
                         />
                     </div>
-                    {this.state.uploaderIsVisible && (
-                        <Uploader
-                            picture_url={this.state.picture_url}
-                            setImageUrl={picture_url =>
-                                this.setState({ picture_url })
-                            }
-                            uploaderInvisible={() =>
-                                this.setState({ uploaderIsVisible: false })
-                            }
-                            waitShow={() => this.setState({ wait: true })}
-                            waitHide={() => this.setState({ wait: false })}
-                            error={() => this.setState({ error: true })}
-                            noError={() => this.setState({ error: false })}
-                        />
-                    )}
 
                     {this.state.error && (
                         <p className="error-upload">somehing went wrong</p>
@@ -154,9 +102,23 @@ export default class App extends React.Component {
                             src="/pictures/loading.gif"
                         />
                     )}
-                    {!this.state.otherProfileHide && (
-                        <Route path="/user/:id" component={OtherProfile} />
-                    )}
+
+                    <Route path="/user/:id" component={OtherProfile} />
+                    <Route
+                        path="/upload"
+                        component={() => (
+                            <Uploader
+                                picture_url={this.state.picture_url}
+                                setImageUrl={picture_url =>
+                                    this.setState({ picture_url })
+                                }
+                                waitShow={() => this.setState({ wait: true })}
+                                waitHide={() => this.setState({ wait: false })}
+                                error={() => this.setState({ error: true })}
+                                noError={() => this.setState({ error: false })}
+                            />
+                        )}
+                    />
                     <Route path="/edit" component={EditProfile} />
                     <Route path="/mypictures" component={Pictures} />
                     <Route exact path="/users/" component={FindPeople} />
@@ -176,12 +138,9 @@ export default class App extends React.Component {
                                             profileInvisible: true
                                         })
                                     }
-                                    clickHandler={() =>
-                                        this.setState({
-                                            uploaderIsVisible: true,
-                                            editProfile: false
-                                        })
-                                    }
+                                    clickHandler={() => (
+                                        <Link to="/upload"></Link>
+                                    )}
                                 />
                             )}
                         />
