@@ -6,6 +6,8 @@ import Profile from "./profile";
 import EditProfile from "./editprofile";
 import Pictures from "./pictures";
 import OtherProfile from "./otherprofile";
+import FindPeople from "./FindPeople";
+import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -42,6 +44,12 @@ export default class App extends React.Component {
                 console.log("Error from post logout: ", err);
             });
     }
+    changeText(e) {
+        console.log("e:", e);
+    }
+    redirect() {
+        location.replace("/");
+    }
     render() {
         console.log("this.state from app render: ", this.state);
         if (!this.state.id) {
@@ -50,73 +58,100 @@ export default class App extends React.Component {
         return (
             <div className="app">
                 <BrowserRouter>
-                    <img
-                        className="logo-img-after-login"
-                        src="/pictures/logo.png"
-                        alt="Logo"
-                    />
+                    <div className="header">
+                        <img
+                            className="logo-img-after-login"
+                            src="/pictures/logo.png"
+                            alt="Logo"
+                        />
 
-                    <div className="edit-profile">
-                        <p
-                            onClick={() =>
+                        <div className="text-header">
+                            <ul>
+                                <li>
+                                    <a
+                                        className="menu"
+                                        onClick={() =>
+                                            this.setState(
+                                                {
+                                                    editProfile: false,
+                                                    done: false,
+                                                    uploaderIsVisible: false,
+                                                    profileAndBio: false,
+                                                    otherProfileHide: true
+                                                },
+                                                this.redirect()
+                                            )
+                                        }
+                                    >
+                                        Menu
+                                    </a>
+                                    <ul>
+                                        <li
+                                            onClick={() =>
+                                                this.setState({
+                                                    editProfile: true,
+                                                    done: false,
+                                                    uploaderIsVisible: false,
+                                                    otherProfileHide: true
+                                                })
+                                            }
+                                        >
+                                            <a>Edit Profile</a>
+                                        </li>{" "}
+                                        <li
+                                            onClick={() =>
+                                                this.setState({
+                                                    uploaderIsVisible: false,
+                                                    done: false,
+                                                    editProfile: false,
+                                                    profileAndBio: true,
+                                                    otherProfileHide: true
+                                                })
+                                            }
+                                        >
+                                            <Link to="/mypictures">Album</Link>
+                                        </li>{" "}
+                                        <li onClick={e => this.logout(e)}>
+                                            <a>Log out</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {this.state.editProfile && (
+                            <EditProfile
+                                setUpdate={(email, first, last) =>
+                                    this.setState({ email, first, last })
+                                }
+                                error={() => this.setState({ error: true })}
+                                noError={() => this.setState({ error: false })}
+                                editHandler={() =>
+                                    this.setState({ editProfile: true })
+                                }
+                                closeEdit={() =>
+                                    this.setState({ editProfile: false })
+                                }
+                                first={this.state.first}
+                                last={this.state.last}
+                                email={this.state.email}
+                                id={this.state.id}
+                            />
+                        )}
+
+                        <ProfilePic
+                            clickHandler={() =>
                                 this.setState({
-                                    editProfile: true,
-                                    done: false,
-                                    uploaderIsVisible: false,
-                                    picturesVisible: false
+                                    uploaderIsVisible: true,
+                                    editProfile: false,
+                                    otherProfileHide: true
                                 })
                             }
-                        >
-                            Edit Profile
-                        </p>
-                        <p
-                            onClick={() =>
-                                this.setState({
-                                    picturesVisible: true,
-                                    uploaderIsVisible: false,
-                                    done: false,
-                                    editProfile: false
-                                })
-                            }
-                        >
-                            Albums
-                        </p>
-                        <p onClick={e => this.logout(e)}>Log out</p>
-                    </div>
-                    <div className="logout"></div>
-                    {this.state.editProfile && (
-                        <EditProfile
-                            setUpdate={(email, first, last) =>
-                                this.setState({ email, first, last })
-                            }
-                            error={() => this.setState({ error: true })}
-                            noError={() => this.setState({ error: false })}
-                            editHandler={() =>
-                                this.setState({ editProfile: true })
-                            }
-                            closeEdit={() =>
-                                this.setState({ editProfile: false })
-                            }
+                            picture_url={this.state.picture_url}
                             first={this.state.first}
                             last={this.state.last}
-                            email={this.state.email}
-                            id={this.state.id}
                         />
-                    )}
-
-                    <ProfilePic
-                        clickHandler={() =>
-                            this.setState({
-                                uploaderIsVisible: true,
-                                editProfile: false,
-                                picturesVisible: false
-                            })
-                        }
-                        picture_url={this.state.picture_url}
-                        first={this.state.first}
-                        last={this.state.last}
-                    />
-
+                    </div>
                     {this.state.uploaderIsVisible && (
                         <Uploader
                             picture_url={this.state.picture_url}
@@ -133,14 +168,6 @@ export default class App extends React.Component {
                         />
                     )}
 
-                    {this.state.picturesVisible && (
-                        <Pictures
-                            visible={() =>
-                                this.setState({ picturesVisible: true })
-                            }
-                        />
-                    )}
-
                     {this.state.error && (
                         <p className="error-upload">somehing went wrong</p>
                     )}
@@ -150,31 +177,37 @@ export default class App extends React.Component {
                             src="/pictures/loading.gif"
                         />
                     )}
-
-                    <Route path="/user/:id" component={OtherProfile} />
-                    <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <Profile
-                                picture_url={this.state.picture_url}
-                                first={this.state.first}
-                                last={this.state.last}
-                                bio={this.state.bio}
-                                editBio={bio => this.setState({ bio: bio })}
-                                addBio={() =>
-                                    this.setState({
-                                        profileInvisible: true
-                                    })
-                                }
-                                clickHandler={() =>
-                                    this.setState({
-                                        uploaderIsVisible: true
-                                    })
-                                }
-                            />
-                        )}
-                    />
+                    {!this.state.otherProfileHide && (
+                        <Route path="/user/:id" component={OtherProfile} />
+                    )}
+                    <Route path="/mypictures" component={Pictures} />
+                    <Route exact path="/users/" component={FindPeople} />
+                    {!this.state.profileAndBio && (
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Profile
+                                    picture_url={this.state.picture_url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                    editBio={bio => this.setState({ bio: bio })}
+                                    addBio={() =>
+                                        this.setState({
+                                            profileInvisible: true
+                                        })
+                                    }
+                                    clickHandler={() =>
+                                        this.setState({
+                                            uploaderIsVisible: true,
+                                            editProfile: false
+                                        })
+                                    }
+                                />
+                            )}
+                        />
+                    )}
                 </BrowserRouter>
             </div>
         );

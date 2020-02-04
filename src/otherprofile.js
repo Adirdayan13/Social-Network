@@ -36,10 +36,6 @@ export default class OtherProfile extends React.Component {
             .catch(err => {
                 console.log("error from getUserById: ", err);
             });
-
-        // this is HARD CODE demo
-
-        //we also want to redirect if user is not exist
     }
 
     render() {

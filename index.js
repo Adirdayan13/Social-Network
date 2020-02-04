@@ -362,6 +362,31 @@ app.get("/user/:id.json", (req, res) => {
         });
 });
 
+app.get("/users/:first.json", (req, res) => {
+    console.log("**************** GET users/:first");
+    console.log("req.params.first: ", req.params.first);
+    db.getUserByName(req.params.first)
+        .then(results => {
+            console.log("results from GET users/:first.json: ", results.rows);
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("error from GET users/:first.json: ", err);
+        });
+});
+
+app.get("/users/newestUsers", (req, res) => {
+    console.log("***************** GET users/newestUsers");
+    db.newestUsers()
+        .then(results => {
+            console.log("results from newestUsers: ", results.rows);
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("error from GET newestUsers: ", err);
+        });
+});
+
 //////////
 // LAST rounte in app !
 app.get("*", function(req, res) {

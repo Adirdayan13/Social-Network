@@ -8,12 +8,12 @@ export default function ProfilePic(props) {
     const picture_url = props.picture_url;
 
     return (
-        <div className="profile-pic-main">
-            <div className="greets">
+        <>
+            <>
                 <h1 className="welcome">
                     Welcome {first} {last}
                 </h1>
-            </div>
+            </>
             <div className="profile-pic-div">
                 <img
                     className="profile-pic"
@@ -21,6 +21,6 @@ export default function ProfilePic(props) {
                     src={picture_url}
                 />
             </div>
-        </div>
+        </>
     );
 }

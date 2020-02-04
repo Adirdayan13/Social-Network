@@ -1,0 +1,96 @@
+import React, { useState, useEffect } from "react";
+import axios from "./axios";
+
+export default function FindPeople() {
+    const [greetee, setGreetee] = useState("World");
+    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState("");
+    const [joined, setJoined] = useState("");
+
+    useEffect(() => {
+        let ignore = false;
+        (async () => {
+            try {
+                console.log("try !");
+                if (user != "") {
+                    const { data } = await axios.get(
+                        "/users/" + user + ".json"
+                    );
+                    if (!ignore) {
+                        setUsers(data);
+                        setJoined(false);
+                    }
+                } else {
+                    setUsers([]);
+                    const { data } = await axios.get("/users/newestUsers");
+
+                    setUsers(data);
+                    setJoined(true);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        })();
+        return () => {
+            ignore = true;
+        };
+    }, [user]);
+
+    // useEffect(() => {
+    //     axios
+    //         .get("users/" + country + ".json")
+    //         .then(({ data }) => {
+    //             setCountries(data);
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }, [country]);
+
+    // const onChange = ({ target }) => {
+    //     // console.log('target: ', target);
+    //     setGreetee(target.value);
+    // };
+
+    const onCountryChange = ({ target }) => {
+        setUser(target.value);
+    };
+
+    console.log("users: ", users);
+    console.log("joined: ", joined);
+
+    return (
+        <>
+            <h1>Hello, {greetee}</h1>
+            <input
+                onChange={onCountryChange}
+                type="text"
+                placeholder="Search for friends"
+            />
+            {joined && <p>Checkout who just joined</p>}
+            <div className="all-pictures-div">
+                {users.map((user, index) => {
+                    return (
+                        <div className="picture-search-div" key={index}>
+                            <p>
+                                {user.first} {user.last}
+                            </p>
+                            {user.picture_url && (
+                                <img
+                                    className="picture-search"
+                                    src={user.picture_url}
+                                />
+                            )}
+                            {!user.picture_url && (
+                                <img
+                                    className="picture-search"
+                                    src="/pictures/default.png"
+                                />
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </>
+    );
+}

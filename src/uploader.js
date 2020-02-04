@@ -16,12 +16,14 @@ export default class Uploader extends React.Component {
         console.log("close modal");
         this.props.uploaderInvisible();
         this.props.noError();
+        this.props.picturesInvisible();
     }
     clickHandler(e) {
         e.preventDefault();
         var formData = new FormData();
         this.props.waitShow();
         this.props.noError();
+        this.props.picturesInvisible();
         formData.append("file", this.state.file);
 
         axios
@@ -78,5 +80,3 @@ export default class Uploader extends React.Component {
         );
     }
 }
-// <button onClick={() => this.clickHandler()}></button>
-// <button onClick={() => this.closeModal()}>X</button>
