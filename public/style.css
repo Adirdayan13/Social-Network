@@ -36,12 +36,20 @@ h2 {
 }
 
 button {
+    text-align: center;
+    font-family: "Patua One", cursive;
     background: transparent;
     border-radius: 20px;
     border: 1px solid black;
     box-shadow: 0 8px 6px -6px black;
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    text-decoration: none;
+    color: black;
 }
 
 .text-header {

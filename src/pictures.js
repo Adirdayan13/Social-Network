@@ -38,7 +38,7 @@ export default class Pictures extends React.Component {
             .then(results => {
                 console.log("results from upload album: ", results.data);
                 this.setState({
-                    pictures: [...this.state.pictures, results.data]
+                    pictures: [results.data, ...this.state.pictures]
                 });
             })
             .catch(err => {

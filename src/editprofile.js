@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class EditProfile extends React.Component {
     constructor(props) {
@@ -77,7 +78,11 @@ export default class EditProfile extends React.Component {
                         />
                         <br />
                         <button onClick={e => this.edit(e)}>Submit</button>
-                        <button onClick={e => this.close(e)}>Cancel</button>
+                        <button>
+                            <Link className="cancelBtn" to="/">
+                                Cancel
+                            </Link>
+                        </button>
                     </div>
                 )}
             </div>

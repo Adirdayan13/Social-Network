@@ -73,7 +73,6 @@ export default class App extends React.Component {
                                         onClick={() =>
                                             this.setState(
                                                 {
-                                                    editProfile: false,
                                                     done: false,
                                                     uploaderIsVisible: false,
                                                     profileAndBio: false,
@@ -89,21 +88,19 @@ export default class App extends React.Component {
                                         <li
                                             onClick={() =>
                                                 this.setState({
-                                                    editProfile: true,
                                                     done: false,
                                                     uploaderIsVisible: false,
                                                     otherProfileHide: true
                                                 })
                                             }
                                         >
-                                            <a>Edit Profile</a>
+                                            <Link to="/edit">Edit profile</Link>
                                         </li>{" "}
                                         <li
                                             onClick={() =>
                                                 this.setState({
                                                     uploaderIsVisible: false,
                                                     done: false,
-                                                    editProfile: false,
                                                     profileAndBio: true,
                                                     otherProfileHide: true
                                                 })
@@ -118,26 +115,6 @@ export default class App extends React.Component {
                                 </li>
                             </ul>
                         </div>
-
-                        {this.state.editProfile && (
-                            <EditProfile
-                                setUpdate={(email, first, last) =>
-                                    this.setState({ email, first, last })
-                                }
-                                error={() => this.setState({ error: true })}
-                                noError={() => this.setState({ error: false })}
-                                editHandler={() =>
-                                    this.setState({ editProfile: true })
-                                }
-                                closeEdit={() =>
-                                    this.setState({ editProfile: false })
-                                }
-                                first={this.state.first}
-                                last={this.state.last}
-                                email={this.state.email}
-                                id={this.state.id}
-                            />
-                        )}
 
                         <ProfilePic
                             clickHandler={() =>
@@ -180,6 +157,7 @@ export default class App extends React.Component {
                     {!this.state.otherProfileHide && (
                         <Route path="/user/:id" component={OtherProfile} />
                     )}
+                    <Route path="/edit" component={EditProfile} />
                     <Route path="/mypictures" component={Pictures} />
                     <Route exact path="/users/" component={FindPeople} />
                     {!this.state.profileAndBio && (
