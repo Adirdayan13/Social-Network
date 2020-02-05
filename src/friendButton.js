@@ -48,6 +48,21 @@ export default function FriendButton(props) {
                 });
             console.log("data from POST friendButton: ", data);
         }
+
+        if (friendOrNot.btnText == "Accept friend request") {
+            const { data } = axios
+                .post("/friends-status/accept/" + props.recipient_id + ".json")
+                .then(results => {
+                    console.log(
+                        "results from POST friends-status/accept: ",
+                        results
+                    );
+                    setFriendOrNot(results.data);
+                })
+                .catch(err => {
+                    console.log("error from POST friends-status/accept: ", err);
+                });
+        }
     };
 
     return (

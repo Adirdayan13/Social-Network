@@ -118,8 +118,10 @@ exports.addFriends = function(recipient_id, sender_id) {
 
 exports.updateFriends = function(recipient_id, sender_id) {
     return db.query(
-        `UPDATE friendship SET accepted = true WHERE
-        recipient_id = $1 AND sender_id = $2
+        `UPDATE friendship
+        SET accepted = true
+        WHERE
+         recipient_id = $1 AND sender_id = $2
         `,
         [recipient_id, sender_id]
     );
