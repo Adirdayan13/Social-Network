@@ -63,6 +63,17 @@ export default function FriendButton(props) {
                     console.log("error from POST friends-status/accept: ", err);
                 });
         }
+        if (friendOrNot.btnText == "Unfriend") {
+            axios
+                .post("/friends-status/cancel/" + props.recipient_id + ".json")
+                .then(results => {
+                    console.log("results from cancel: ", results);
+                    setFriendOrNot(results.data);
+                })
+                .catch(err => {
+                    console.log("error from cancel: ", err);
+                });
+        }
     };
 
     return (
