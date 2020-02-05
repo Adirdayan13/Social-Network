@@ -20,22 +20,39 @@ export default function FriendButton(props) {
         })();
     }, []);
 
-    const sendRequest = function() {
-        const { data } = axios
-            .post("/friends-status/" + props.recipient_id + ".json")
-            .then(results => {
-                console.log("results from POST /friends-status: ", results);
-                setFriendOrNot(results.data);
-            })
-            .catch(err => {
-                console.log("error from POST /friends-status");
-            });
-        console.log("data from POST friendButton: ", data);
+    const handleClick = function() {
+        console.log("data from const sendRequest: ", friendOrNot);
+        if (friendOrNot.btnText == "Cancel friend request") {
+            console.log("I am in cancel friend request");
+            axios
+                .post("/friends-status/cancel/" + props.recipient_id + ".json")
+                .then(results => {
+                    console.log("results from cancel: ", results);
+                    setFriendOrNot(results.data);
+                })
+                .catch(err => {
+                    console.log("error from cancel: ", err);
+                });
+        }
+
+        if (friendOrNot.btnText == "Send friend request") {
+            console.log("I am in Send friend request");
+            const { data } = axios
+                .post("/friends-status/" + props.recipient_id + ".json")
+                .then(results => {
+                    console.log("results from POST /friends-status: ", results);
+                    setFriendOrNot(results.data);
+                })
+                .catch(err => {
+                    console.log("error from POST /friends-status");
+                });
+            console.log("data from POST friendButton: ", data);
+        }
     };
 
     return (
         <>
-            <button onClick={sendRequest}>{friendOrNot.btnText}</button>
+            <button onClick={handleClick}>{friendOrNot.btnText}</button>
         </>
     );
 }

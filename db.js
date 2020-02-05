@@ -100,20 +100,37 @@ exports.newestUsers = function() {
 };
 
 exports.getFriends = function(recipient_id, sender_id) {
-    return db
-        .query(
-            `SELECT * FROM friendship
-        WHERE (recipient_id = $1 AND sender_id = $2)
-        OR (recipient_id = $2 AND sender_id = $1);`,
-            [recipient_id, sender_id]
-        )
-        .then(({ rows }) => rows);
+    return db.query(
+        `SELECT * FROM friendship
+            WHERE (recipient_id = $1 AND sender_id = $2)
+            OR (recipient_id = $2 AND sender_id = $1);`,
+        [recipient_id, sender_id]
+    );
 };
 
 exports.addFriends = function(recipient_id, sender_id) {
     return db.query(
         `INSERT INTO friendship (recipient_id, sender_id)
         VALUES ($1, $2)`,
+        [recipient_id, sender_id]
+    );
+};
+
+exports.updateFriends = function(recipient_id, sender_id) {
+    return db.query(
+        `UPDATE friendship SET accepted = true WHERE
+        recipient_id = $1 AND sender_id = $2
+        `,
+        [recipient_id, sender_id]
+    );
+};
+
+exports.deleteRequest = function(recipient_id, sender_id) {
+    return db.query(
+        `DELETE FROM friendship WHERE
+        recipient_id = $1 AND sender_id = $2
+        OR
+        recipient_id = $2 AND sender_id = $1`,
         [recipient_id, sender_id]
     );
 };

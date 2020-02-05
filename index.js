@@ -389,23 +389,38 @@ app.get("/users/newestUsers", (req, res) => {
 
 app.get("/friends-status/:recipient_id.json", (req, res) => {
     console.log("***************** GET friends-status/:id");
-    console.log("recipient_id: ", req.params.recipient_id);
-    console.log("sender_Id: ", req.session.userId);
-    let recipient_id = req.params.recipient_id;
-    let sender_id = req.session.userId;
-    db.getFriends(recipient_id, sender_id)
+    console.log("viewedUser: ", req.params.recipient_id);
+    console.log("logedInUser: ", req.session.userId);
+    let viewedUser = req.params.recipient_id;
+    let logedInUser = req.session.userId;
+    db.getFriends(viewedUser, logedInUser)
         .then(results => {
-            console.log("results from GET friends-status: ", results);
-            if (results == 0) {
+            console.log("results from GET friends-status: ", results.rows);
+            // console.log("sender: ", results.rows[0].sender_id);
+            // console.log("recipient: ", results.rows[0].recipient_id);
+            if (results.rows == 0) {
                 console.log("no friends");
                 res.json({ success: true, btnText: "Send friend request" });
-            } else if (results[0].accepted == false) {
-                console.log("friend request sent");
-                res.json({
-                    success: true,
-                    btnText: "Friend request sent"
-                });
-            } else if (results[0].accepted) {
+            } else if (results.rows[0].accepted == false) {
+                console.log("Cancel friend request");
+                console.log("logedInUser: ", logedInUser);
+                console.log("viewedUser: ", viewedUser);
+                console.log("results.rows[0]: ", results.rows[0]);
+
+                if (logedInUser == results.rows[0].sender_id) {
+                    console.log("we are in if");
+                    res.json({
+                        success: true,
+                        btnText: "Cancel friend request"
+                    });
+                } else if (logedInUser == results.rows[0].recipient_id) {
+                    console.log("we are in else if");
+                    res.json({
+                        success: true,
+                        btnText: "Accept friend request"
+                    });
+                }
+            } else if (results.rows[0].accepted) {
                 console.log("friends !");
                 res.json({ success: true, btnText: "Unfriend" });
             }
@@ -426,10 +441,24 @@ app.post("/friends-status/:recipient_id.json", (req, res) => {
                 "results from POST friends-status/:recipient_id: ",
                 results
             );
-            res.json({ success: true, btnText: "Friend request sent" });
+            res.json({ success: true, btnText: "Cancel friend request" });
         })
         .catch(err => {
             console.log("error from POST friends-status/:recipient_id: ", err);
+        });
+});
+
+app.post("/friends-status/cancel/:recipient_id.json", (req, res) => {
+    console.log("******************** POST friends-status-cancel");
+    let recipient_id = req.params.recipient_id;
+    let sender_id = req.session.userId;
+    db.deleteRequest(recipient_id, sender_id)
+        .then(results => {
+            console.log("results from cancel request: ", results);
+            res.json({ success: true, btnText: "Send friend request" });
+        })
+        .catch(err => {
+            console.log("error in cancel: ", err);
         });
 });
 

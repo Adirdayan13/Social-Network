@@ -41,7 +41,11 @@ export default class OtherProfile extends React.Component {
         return (
             <div className="otherprofile">
                 <h1>
-                    {this.state.myId} {this.props.match.params.id}
+                    sender id:
+                    {this.state.myId}
+                    <br />
+                    recipient_id:
+                    {this.props.match.params.id}
                 </h1>
                 {this.state.userInfo && (
                     <>
