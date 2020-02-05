@@ -400,11 +400,11 @@ app.get("/friends-status/:recipient_id.json", (req, res) => {
                 console.log("no friends");
                 res.json({ success: true, btnText: "Send friend request" });
             } else if (results[0].accepted == false) {
-                console.log({
+                console.log("friend request sent");
+                res.json({
                     success: true,
-                    btnText: "friends request send and wait for response"
+                    btnText: "Friend request sent"
                 });
-                res.json("Friend Request send");
             } else if (results[0].accepted) {
                 console.log("friends !");
                 res.json({ success: true, btnText: "Unfriend" });
