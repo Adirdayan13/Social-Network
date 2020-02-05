@@ -242,7 +242,7 @@ app.post("/reset/start", (req, res) => {
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
-            console.log("results from getuser: ", results);
+            // console.log("results from getuser: ", results);
             const first = results.rows[0].first;
             if (results.rows[0] == undefined) {
                 res.json({ success: false });
@@ -334,10 +334,10 @@ app.post("/reset/verify", (req, res) => {
 app.get("/user", function(req, res) {
     console.log("*************************** GET user");
     let email = req.session.email;
-    console.log("req.session from get user: ", req.session);
+    // console.log("req.session from get user: ", req.session);
     db.getUser(email)
         .then(results => {
-            console.log("results from get user: ", results.rows[0]);
+            // console.log("results from get user: ", results.rows[0]);
             results.rows[0].password = "***** hehe";
             res.json(results.rows[0]);
         })
@@ -353,7 +353,7 @@ app.get("/user/:id.json", (req, res) => {
     db.getUserById(req.params.id)
         .then(results => {
             const userInfo = results.rows[0];
-            console.log("results from getUserById: ", results.rows[0]);
+            // console.log("results from getUserById: ", results.rows[0]);
             results.rows[0].password = "******";
             res.json({ userInfo: userInfo, currentId: req.session.userId });
         })
@@ -387,8 +387,50 @@ app.get("/users/newestUsers", (req, res) => {
         });
 });
 
-app.get("/friends-status/:id", (req, res) => {
+app.get("/friends-status/:recipient_id.json", (req, res) => {
     console.log("***************** GET friends-status/:id");
+    console.log("recipient_id: ", req.params.recipient_id);
+    console.log("sender_Id: ", req.session.userId);
+    let recipient_id = req.params.recipient_id;
+    let sender_id = req.session.userId;
+    db.getFriends(recipient_id, sender_id)
+        .then(results => {
+            console.log("results from GET friends-status: ", results);
+            if (results == 0) {
+                console.log("no friends");
+                res.json({ success: true, btnText: "Send friend request" });
+            } else if (results[0].accepted == false) {
+                console.log({
+                    success: true,
+                    btnText: "friends request send and wait for response"
+                });
+                res.json("Friend Request send");
+            } else if (results[0].accepted) {
+                console.log("friends !");
+                res.json({ success: true, btnText: "Unfriend" });
+            }
+        })
+        .catch(err => {
+            console.log("error from GET friends-status: ", err);
+            res.json({ success: false, btnText: "Send friend request" });
+        });
+});
+
+app.post("/friends-status/:recipient_id.json", (req, res) => {
+    console.log("****************** POST friends-status/:id");
+    let recipient_id = req.params.recipient_id;
+    let sender_id = req.session.userId;
+    db.addFriends(recipient_id, sender_id)
+        .then(results => {
+            console.log(
+                "results from POST friends-status/:recipient_id: ",
+                results
+            );
+            res.json({ success: true, btnText: "Friend request sent" });
+        })
+        .catch(err => {
+            console.log("error from POST friends-status/:recipient_id: ", err);
+        });
 });
 
 //////////

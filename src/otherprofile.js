@@ -61,8 +61,8 @@ export default class OtherProfile extends React.Component {
 
                 <div className="friend-button">
                     <FriendButton
-                        myId={this.state.myId}
-                        friendId={this.props.match.params.id}
+                        sender_Id={this.state.myId}
+                        recipient_id={this.props.match.params.id}
                     />
                 </div>
             </div>
