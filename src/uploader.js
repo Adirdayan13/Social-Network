@@ -27,7 +27,7 @@ export default class Uploader extends React.Component {
                 this.props.setImageUrl(results.data);
                 this.props.waitHide();
                 this.props.noError();
-                this.redirect();
+                location.replace("/");
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);

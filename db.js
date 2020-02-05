@@ -98,3 +98,12 @@ exports.newestUsers = function() {
         LIMIT 3`
     );
 };
+
+exports.friends = function(recipient_id, sender_id) {
+    return db.query(
+        `SELECT * FROM friendship
+        WHERE (recipient_id = $1 AND sender_id = $2)
+        OR (recipient_id = $2 AND sender_id = $1);`,
+        [recipient_id, sender_id]
+    );
+};

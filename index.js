@@ -387,6 +387,10 @@ app.get("/users/newestUsers", (req, res) => {
         });
 });
 
+app.get("/friends-status/:id", (req, res) => {
+    console.log("***************** GET friends-status/:id");
+});
+
 //////////
 // LAST rounte in app !
 app.get("*", function(req, res) {

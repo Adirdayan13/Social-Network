@@ -54,36 +54,31 @@ export default class Bioeditor extends React.Component {
                     <>
                         {this.props.bio && (
                             <div className="bio-div">
-                                <p>
-                                    {this.props.first}&nbsp;
-                                    {this.props.last}
-                                    <br /> <br />
+                                <p className="bio-text">
                                     {this.props.bio}&nbsp;&nbsp;
-                                    <span
-                                        style={{ textDecoration: "underline" }}
-                                        onClick={() => this.editTrue()}
-                                    >
-                                        Edit
-                                    </span>
+                                </p>
+                                <br />
+                                <br />
+                                <p
+                                    className="edit-in-bio"
+                                    onClick={() => this.editTrue()}
+                                >
+                                    Edit
                                 </p>
                             </div>
                         )}
                         {!this.props.bio && (
-                            <div className="add-bio">
+                            <>
                                 <div
-                                    className="add-bio-name"
+                                    className="add-in-bio"
                                     onClick={() => this.editTrue()}
                                 >
-                                    <p>
-                                        {this.props.first}&nbsp;
-                                        {this.props.last}
-                                    </p>
                                     <br />
                                     <p style={{ textDecoration: "underline" }}>
                                         Add your bio now
                                     </p>
                                 </div>
-                            </div>
+                            </>
                         )}
                     </>
                 )}

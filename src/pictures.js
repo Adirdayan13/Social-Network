@@ -32,17 +32,23 @@ export default class Pictures extends React.Component {
         e.preventDefault();
         var formData = new FormData();
         formData.append("file", this.state.file);
+        // this.props.waitShow();
+        // this.props.noError();
 
         axios
             .post("/upload-album", formData)
             .then(results => {
                 console.log("results from upload album: ", results.data);
+                // this.props.waitHide();
+                // this.props.noError();
                 this.setState({
                     pictures: [results.data, ...this.state.pictures]
                 });
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);
+                // this.props.waitHide();
+                // this.props.error();
             });
     }
 

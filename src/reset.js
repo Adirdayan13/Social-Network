@@ -72,13 +72,14 @@ export default class Reset extends React.Component {
                 {this.state.step == undefined && (
                     <div className="no-step">
                         <p>Reset your password</p>
+                        <br />
                         <input
                             className="email"
                             name="email"
                             placeholder="Email"
                             onChange={e => this.handleChange(e)}
                         />
-                        <br></br>
+                        <br />
                         <button
                             className="submit-btn-reset"
                             onClick={() => this.submit()}
@@ -86,6 +87,8 @@ export default class Reset extends React.Component {
                             Reset password &nbsp;&nbsp;
                             <i className="fas fa-users"></i>
                         </button>
+                        <br /> <br />
+                        <Link to="/login">Click here to Log in!</Link>
                     </div>
                 )}
                 {this.state.step == 2 && (
@@ -114,6 +117,7 @@ export default class Reset extends React.Component {
                             Reset password &nbsp;&nbsp;
                             <i className="fas fa-users"></i>
                         </button>
+                        <br />
                     </div>
                 )}
                 {this.state.step == 3 && location.replace("/welcome#/login")}

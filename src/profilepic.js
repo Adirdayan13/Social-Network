@@ -10,16 +10,15 @@ export default function ProfilePic(props) {
 
     return (
         <>
-            <>
-                <h1 className="welcome">
-                    Welcome {first} {last}
-                </h1>
-            </>
             <div className="profile-pic-div">
                 <Link to="/upload">
                     <img className="profile-pic" src={picture_url} />
                 </Link>
             </div>
+
+            <p>
+                {first} {last}
+            </p>
         </>
     );
 }

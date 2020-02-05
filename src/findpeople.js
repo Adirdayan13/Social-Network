@@ -60,8 +60,8 @@ export default function FindPeople() {
     console.log("joined: ", joined);
 
     return (
-        <>
-            <h1>Hello, {greetee}</h1>
+        <div className="find-people">
+            <h2>Search for friends</h2>
             <input
                 onChange={onCountryChange}
                 type="text"
@@ -71,8 +71,8 @@ export default function FindPeople() {
             <div className="all-pictures-div">
                 {users.map((user, index) => {
                     return (
-                        <div className="picture-search-div" key={index}>
-                            <p>
+                        <div className="picture-div" key={index}>
+                            <p className="full-name-picture">
                                 {user.first} {user.last}
                             </p>
                             {user.picture_url && (
@@ -91,6 +91,6 @@ export default function FindPeople() {
                     );
                 })}
             </div>
-        </>
+        </div>
     );
 }

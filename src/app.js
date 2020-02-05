@@ -66,12 +66,14 @@ export default class App extends React.Component {
                                 alt="Logo"
                             />
                         </Link>
-
                         <div className="text-header">
                             <ul>
                                 <li>
                                     <Link to="/">Menu</Link>
                                     <ul>
+                                        <li>
+                                            <Link to="/users">Search</Link>
+                                        </li>{" "}
                                         <li>
                                             <Link to="/edit">Edit profile</Link>
                                         </li>{" "}
@@ -85,66 +87,75 @@ export default class App extends React.Component {
                                 </li>
                             </ul>
                         </div>
-
                         <ProfilePic
                             picture_url={this.state.picture_url}
                             first={this.state.first}
                             last={this.state.last}
                         />
-                    </div>
 
-                    {this.state.error && (
-                        <p className="error-upload">somehing went wrong</p>
-                    )}
-                    {this.state.wait && (
-                        <img
-                            className="loading-gif"
-                            src="/pictures/loading.gif"
-                        />
-                    )}
-
-                    <Route path="/user/:id" component={OtherProfile} />
-                    <Route
-                        path="/upload"
-                        component={() => (
-                            <Uploader
-                                picture_url={this.state.picture_url}
-                                setImageUrl={picture_url =>
-                                    this.setState({ picture_url })
-                                }
-                                waitShow={() => this.setState({ wait: true })}
-                                waitHide={() => this.setState({ wait: false })}
-                                error={() => this.setState({ error: true })}
-                                noError={() => this.setState({ error: false })}
+                        {this.state.error && (
+                            <p className="error-upload">somehing went wrong</p>
+                        )}
+                        {this.state.wait && (
+                            <img
+                                className="loading-gif"
+                                src="/pictures/loading.gif"
                             />
                         )}
-                    />
-                    <Route path="/edit" component={EditProfile} />
-                    <Route path="/mypictures" component={Pictures} />
-                    <Route exact path="/users/" component={FindPeople} />
-                    {!this.state.profileAndBio && (
                         <Route
-                            exact
-                            path="/"
-                            render={() => (
-                                <Profile
+                            path="/upload"
+                            component={() => (
+                                <Uploader
                                     picture_url={this.state.picture_url}
-                                    first={this.state.first}
-                                    last={this.state.last}
-                                    bio={this.state.bio}
-                                    editBio={bio => this.setState({ bio: bio })}
-                                    addBio={() =>
-                                        this.setState({
-                                            profileInvisible: true
-                                        })
+                                    setImageUrl={picture_url =>
+                                        this.setState({ picture_url })
                                     }
-                                    clickHandler={() => (
-                                        <Link to="/upload"></Link>
-                                    )}
+                                    waitShow={() =>
+                                        this.setState({ wait: true })
+                                    }
+                                    waitHide={() =>
+                                        this.setState({ wait: false })
+                                    }
+                                    error={() => this.setState({ error: true })}
+                                    noError={() =>
+                                        this.setState({ error: false })
+                                    }
                                 />
                             )}
                         />
-                    )}
+                    </div>
+
+                    <div className="profile-main">
+                        <Route path="/user/:id" component={OtherProfile} />
+                        <Route path="/edit" component={EditProfile} />
+                        <Route path="/mypictures" component={Pictures} />
+                        <Route exact path="/users/" component={FindPeople} />
+                        {!this.state.profileAndBio && (
+                            <Route
+                                exact
+                                path="/"
+                                render={() => (
+                                    <Profile
+                                        picture_url={this.state.picture_url}
+                                        first={this.state.first}
+                                        last={this.state.last}
+                                        bio={this.state.bio}
+                                        editBio={bio =>
+                                            this.setState({ bio: bio })
+                                        }
+                                        addBio={() =>
+                                            this.setState({
+                                                profileInvisible: true
+                                            })
+                                        }
+                                        clickHandler={() => (
+                                            <Link to="/upload"></Link>
+                                        )}
+                                    />
+                                )}
+                            />
+                        )}
+                    </div>
                 </BrowserRouter>
             </div>
         );

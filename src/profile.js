@@ -13,6 +13,9 @@ export default class Profile extends React.Component {
     render() {
         return (
             <div className="profile">
+                <p className="fullname-profile">
+                    {this.props.first} {this.props.last}
+                </p>
                 <Link to="/upload">
                     <img
                         className="profile-pic-big"

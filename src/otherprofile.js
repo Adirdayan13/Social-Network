@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import FriendButton from "./friendButton";
 
 export default class OtherProfile extends React.Component {
     constructor() {
@@ -25,12 +26,10 @@ export default class OtherProfile extends React.Component {
                 if (this.props.match.params.id == results.data.currentId) {
                     this.props.history.push("/");
                 } else {
-                    console.log("userInfo: ", results.data.userInfo);
-                    this.setState({ userInfo: results.data.userInfo });
-                    console.log(
-                        "this.state from otherprofile mount: ",
-                        this.state
-                    );
+                    this.setState({
+                        userInfo: results.data.userInfo,
+                        myId: results.data.currentId
+                    });
                 }
             })
             .catch(err => {
@@ -42,22 +41,30 @@ export default class OtherProfile extends React.Component {
         return (
             <div className="otherprofile">
                 <h1>
-                    {this.state.userInfo && (
-                        <>
-                            <img
-                                className="other-user-profile-pic"
-                                src={this.state.userInfo.picture_url}
-                            />
-                            <p className="other-user-info">
-                                {this.state.userInfo.first}{" "}
-                                {this.state.userInfo.last}
-                                <br />
-                                {this.state.userInfo.bio}
-                            </p>
-                        </>
-                    )}
-                    {!this.state.userInfo && <p>User does not exist</p>}
+                    {this.state.myId} {this.props.match.params.id}
                 </h1>
+                {this.state.userInfo && (
+                    <>
+                        <img
+                            className="other-user-profile-pic"
+                            src={this.state.userInfo.picture_url}
+                        />
+                        <p className="other-user-info">
+                            {this.state.userInfo.first}{" "}
+                            {this.state.userInfo.last}
+                            <br />
+                            {this.state.userInfo.bio}
+                        </p>
+                    </>
+                )}
+                {!this.state.userInfo && <p>User does not exist</p>}
+
+                <div className="friend-button">
+                    <FriendButton
+                        myId={this.state.myId}
+                        friendId={this.props.match.params.id}
+                    />
+                </div>
             </div>
         );
     }
