@@ -121,7 +121,7 @@ exports.updateFriends = function(recipient_id, sender_id) {
         `UPDATE friendship
         SET accepted = true
         WHERE
-         recipient_id = $1 AND sender_id = $2
+         recipient_id = $2 AND sender_id = $1
         `,
         [recipient_id, sender_id]
     );

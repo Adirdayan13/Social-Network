@@ -464,8 +464,8 @@ app.post("/friends-status/cancel/:recipient_id.json", (req, res) => {
 
 app.post("/friends-status/accept/:recipient_id.json", (req, res) => {
     console.log("********************* POST friends-status/accept");
-    const sender_id = req.params.recipient_id;
-    const recipient_id = req.session.userId;
+    const recipient_id = req.params.recipient_id;
+    const sender_id = req.session.userId;
     console.log("recipient_id: ", recipient_id);
     console.log("sender_id: ", sender_id);
     db.updateFriends(recipient_id, sender_id)
