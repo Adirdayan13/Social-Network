@@ -150,6 +150,20 @@ app.post("/upload-album", uploader.single("file"), s3.upload, (req, res) => {
             });
     }
 });
+//
+app.get("/pictures/:id.json", (req, res) => {
+    console.log("******************** GET pictures");
+    const user_id = req.params.id;
+    console.log(user_id);
+    db.getPicture(user_id)
+        .then(results => {
+            console.log("results from get pictures: ", results);
+            res.json(results.rows);
+        })
+        .catch(err => {
+            console.log("Error from get pictures: ", err);
+        });
+});
 
 app.get("/pictures", (req, res) => {
     console.log("******************** GET pictures");
@@ -475,6 +489,19 @@ app.post("/friends-status/accept/:recipient_id.json", (req, res) => {
         })
         .catch(err => {
             console.log("error from accept: ", err);
+        });
+});
+
+app.get("/friend-album/:friend_id.json", (req, res) => {
+    console.log("friend-album");
+    const friendId = req.params.friend_id;
+    db.getPicture(friendId)
+        .then(results => {
+            console.log("results from friend-album: ", results.rows);
+            res.json({ success: true, pictures: results.rows });
+        })
+        .catch(err => {
+            console.log("error from friend-album: ", err);
         });
 });
 

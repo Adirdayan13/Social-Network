@@ -6,14 +6,14 @@ export default class OtherProfile extends React.Component {
     constructor() {
         super();
         this.state = {};
-        console.log("this.state from otherprofile: ", this.state);
+        // console.log("this.state from otherprofile: ", this.state);
     }
 
     componentDidMount() {
         //here we want to make a request to the server to get
         // all the info about the requested user (dynamic route)
 
-        console.log("this.props.match.params.id: ", this.props.match.params.id);
+        // console.log("this.props.match.params.id: ", this.props.match.params.id);
 
         // we want the server to send back all info about requested user
         // and the id of the currently logged in user
@@ -40,15 +40,8 @@ export default class OtherProfile extends React.Component {
     render() {
         return (
             <div className="otherprofile">
-                <h1>
-                    my id:
-                    {this.state.myId}
-                    <br />
-                    other:
-                    {this.props.match.params.id}
-                </h1>
                 {this.state.userInfo && (
-                    <>
+                    <div className="all-other-profile">
                         <img
                             className="other-user-profile-pic"
                             src={this.state.userInfo.picture_url}
@@ -59,16 +52,16 @@ export default class OtherProfile extends React.Component {
                             <br />
                             {this.state.userInfo.bio}
                         </p>
-                    </>
+                        <br />
+                        <FriendButton
+                            sender_Id={this.state.myId}
+                            recipient_id={this.props.match.params.id}
+                            first={this.state.userInfo.first}
+                        />
+                        <br />
+                    </div>
                 )}
                 {!this.state.userInfo && <p>User does not exist</p>}
-
-                <div className="friend-button">
-                    <FriendButton
-                        sender_Id={this.state.myId}
-                        recipient_id={this.props.match.params.id}
-                    />
-                </div>
             </div>
         );
     }

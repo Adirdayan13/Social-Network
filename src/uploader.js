@@ -25,13 +25,12 @@ export default class Uploader extends React.Component {
             .post("/upload", formData)
             .then(results => {
                 this.props.setImageUrl(results.data);
-                this.props.waitHide();
-                this.props.noError();
+                this.props.animataionFalse();
                 location.replace("/");
             })
             .catch(err => {
                 console.log("error from POST upload: ", err);
-                this.props.waitHide();
+                this.props.animataionFalse();
                 this.props.error();
             });
     }

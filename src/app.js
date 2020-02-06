@@ -7,6 +7,7 @@ import EditProfile from "./editprofile";
 import Pictures from "./pictures";
 import OtherProfile from "./otherprofile";
 import FindPeople from "./FindPeople";
+
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 
@@ -50,6 +51,15 @@ export default class App extends React.Component {
     redirect() {
         location.replace("/");
     }
+    animataionFalse() {
+        this.setState({
+            waitPictures: false,
+            errorPictures: false,
+            wait: false,
+            error: false
+        });
+    }
+
     render() {
         console.log("this.state from app render: ", this.state);
         if (!this.state.id) {
@@ -59,49 +69,64 @@ export default class App extends React.Component {
             <div className="app">
                 <BrowserRouter>
                     <div className="header">
-                        <Link to="/">
-                            <img
-                                className="logo-img-after-login"
-                                src="/pictures/logo.png"
-                                alt="Logo"
-                            />
-                        </Link>
-                        <div className="text-header">
-                            <ul>
-                                <li>
-                                    <Link to="/">Menu</Link>
-                                    <ul>
-                                        <li>
-                                            <Link to="/users">Search</Link>
-                                        </li>{" "}
-                                        <li>
-                                            <Link to="/edit">Edit profile</Link>
-                                        </li>{" "}
-                                        <li>
-                                            <Link to="/mypictures">Album</Link>
-                                        </li>{" "}
-                                        <li onClick={e => this.logout(e)}>
-                                            <a>Log out</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <div className="l-header">
+                            <Link to="/">
+                                <img
+                                    className="logo-img-after-login"
+                                    src="/pictures/logo.png"
+                                    alt="Logo"
+                                    onClick={() => this.animataionFalse()}
+                                />
+                            </Link>
                         </div>
-                        <ProfilePic
-                            picture_url={this.state.picture_url}
-                            first={this.state.first}
-                            last={this.state.last}
-                        />
+                        <div className="r-header">
+                            <div className="text-header">
+                                <ProfilePic
+                                    picture_url={this.state.picture_url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    animataionFalse={() =>
+                                        this.animataionFalse()
+                                    }
+                                />
+                                <ul>
+                                    <li>
+                                        <Link className="dropdown" to="/">
+                                            <i className="fas fa-arrow-down"></i>
+                                        </Link>
+                                        <ul>
+                                            <li>
+                                                <Link to="/users">Search</Link>
+                                            </li>{" "}
+                                            <li>
+                                                <Link to="/edit">
+                                                    Edit profile
+                                                </Link>
+                                            </li>{" "}
+                                            <li>
+                                                <Link to="/mypictures">
+                                                    Album
+                                                </Link>
+                                            </li>{" "}
+                                            <li onClick={e => this.logout(e)}>
+                                                <a>Log out</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
                         {this.state.error && (
                             <p className="error-upload">somehing went wrong</p>
                         )}
                         {this.state.wait && (
                             <img
-                                className="loading-gif"
+                                className="loading-gif-uploader"
                                 src="/pictures/loading.gif"
                             />
                         )}
+
                         <Route
                             path="/upload"
                             component={() => (
@@ -113,12 +138,12 @@ export default class App extends React.Component {
                                     waitShow={() =>
                                         this.setState({ wait: true })
                                     }
-                                    waitHide={() =>
-                                        this.setState({ wait: false })
-                                    }
-                                    error={() => this.setState({ error: true })}
                                     noError={() =>
                                         this.setState({ error: false })
+                                    }
+                                    error={() => this.setState({ error: true })}
+                                    animataionFalse={() =>
+                                        this.animataionFalse()
                                     }
                                 />
                             )}
@@ -128,7 +153,36 @@ export default class App extends React.Component {
                     <div className="profile-main">
                         <Route path="/user/:id" component={OtherProfile} />
                         <Route path="/edit" component={EditProfile} />
-                        <Route path="/mypictures" component={Pictures} />
+                        <Route
+                            path="/mypictures"
+                            render={() => (
+                                <Pictures
+                                    waitShow={() =>
+                                        this.setState({ waitPictures: true })
+                                    }
+                                    error={() =>
+                                        this.setState({ errorPictures: true })
+                                    }
+                                    waitHide={() =>
+                                        this.setState({ waitPictures: false })
+                                    }
+                                    noError={() =>
+                                        this.setState({ errorPictures: false })
+                                    }
+                                />
+                            )}
+                        />
+                        {this.state.errorPictures && (
+                            <p className="error-upload-pictures">
+                                somehing went wrong
+                            </p>
+                        )}
+                        {this.state.waitPictures && (
+                            <img
+                                className="loading-gif-pictures"
+                                src="/pictures/loading.gif"
+                            />
+                        )}
                         <Route exact path="/users/" component={FindPeople} />
                         {!this.state.profileAndBio && (
                             <Route

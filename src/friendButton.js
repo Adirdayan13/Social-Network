@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default function FriendButton(props) {
     const [friendOrNot, setFriendOrNot] = useState([]);
+    const [picture, setPicture] = useState([]);
+    const [albumExist, setAlbumExist] = useState([]);
     console.log("props: ", props);
 
     useEffect(() => {
@@ -17,8 +20,25 @@ export default function FriendButton(props) {
             } catch (e) {
                 console.log(e);
             }
+            try {
+                axios
+                    .get("/pictures/" + props.recipient_id + ".json")
+                    .then(results => {
+                        console.log(
+                            "results from pictures/recipient_id: ",
+                            results.data
+                        );
+                        setAlbumExist(results.data);
+                        console.log("albumExist: ", albumExist);
+                    })
+                    .catch(err => {
+                        console.log("Error from pictures/recipient_id: ", err);
+                    });
+            } catch (e) {
+                console.log("e: ", e);
+            }
         })();
-    }, []);
+    }, [picture]);
 
     const handleClick = function() {
         console.log("data from const sendRequest: ", friendOrNot);
@@ -69,6 +89,7 @@ export default function FriendButton(props) {
                 .then(results => {
                     console.log("results from cancel: ", results);
                     setFriendOrNot(results.data);
+                    setPicture([]);
                 })
                 .catch(err => {
                     console.log("error from cancel: ", err);
@@ -76,9 +97,48 @@ export default function FriendButton(props) {
         }
     };
 
+    const showAlbum = function() {
+        console.log("friends or not: ", friendOrNot);
+        console.log("albumExist: ", albumExist);
+        console.log("picture: ", picture);
+        /// make axios to get pictures before !!
+
+        axios
+            .get("/friend-album/" + props.recipient_id + ".json")
+            .then(results => {
+                setPicture(results.data.pictures);
+                console.log("results from get friend pictures: ", results);
+            })
+            .catch(err => {
+                console.log("error from get friend pictures: ", err);
+            });
+    };
+
     return (
-        <>
-            <button onClick={handleClick}>{friendOrNot.btnText}</button>
-        </>
+        <div className="album">
+            {friendOrNot.btnText == "Unfriend" && !!albumExist.length && (
+                <button onClick={showAlbum}>Show {props.first} album</button>
+            )}
+            <br />
+            {friendOrNot.btnText != "Unfriend" && (
+                <button onClick={handleClick}>{friendOrNot.btnText}</button>
+            )}
+
+            {friendOrNot.btnText == "Unfriend" && (
+                <button className="unfriend-btn" onClick={handleClick}>
+                    {friendOrNot.btnText}
+                </button>
+            )}
+
+            <div className="album-sub-main-div">
+                {picture.map((pic, index) => (
+                    <img
+                        key={index}
+                        src={pic.picture}
+                        className="pictures-album"
+                    />
+                ))}
+            </div>
+        </div>
     );
 }

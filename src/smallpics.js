@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
-export default class Pictures extends React.Component {
+export default class SmallPictures extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,11 +13,19 @@ export default class Pictures extends React.Component {
         axios
             .get("/pictures")
             .then(results => {
-                for (var i = 0; i < results.data.length; i++) {
-                    let newState = { ...this.state };
-                    newState.pictures.push(results.data[i].picture);
-                    this.setState(newState);
-                    // console.log("results.data[i]", results.data[i].picture);
+                if (results.data.length >= 4) {
+                    for (var i = 0; i < 4; i++) {
+                        let newState = { ...this.state };
+                        newState.pictures.push(results.data[i].picture);
+                        this.setState(newState);
+                    }
+                } else {
+                    for (var j = 0; j < results.data.length; j++) {
+                        let newState = { ...this.state };
+
+                        newState.pictures.push(results.data[j].picture);
+                        this.setState(newState);
+                    }
                 }
             })
             .catch(err => {
@@ -55,40 +64,23 @@ export default class Pictures extends React.Component {
         // console.log("this.state from pictures: ", this.state);
 
         return (
-            <div className="pictures">
-                <form>
-                    <input
-                        type="file"
-                        name="file"
-                        id="file"
-                        accept="image/*"
-                        data-multiple-caption="{count} files selected"
-                        multiple
-                        onChange={e => this.grabFile(e)}
-                    />
-                    <label htmlFor="file">Choose a file</label>
-                    <br></br>
-                    <br></br>
-                    <button
-                        className="upload-btn"
-                        onClick={e => this.clickHandler(e)}
-                    >
-                        Submit
-                    </button>
-                </form>
-                <div className="album">
+            <div className="smallpictures">
+                <>
+                    <Link to="/mypictures">
+                        <p>My album</p>
+                    </Link>
                     {this.state.pictures && (
-                        <div className="album-sub-main-div">
+                        <>
                             {this.state.pictures.map((picture, index) => (
                                 <img
                                     key={index}
-                                    className="pictures-album"
+                                    className="small-pictures-album"
                                     src={picture}
                                 />
                             ))}
-                        </div>
+                        </>
                     )}
-                </div>
+                </>
             </div>
         );
     }

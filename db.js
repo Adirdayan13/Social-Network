@@ -87,14 +87,14 @@ exports.getPicture = function(user_id) {
 
 exports.getUserByName = function(first) {
     return db.query(
-        `SELECT first, last, picture_url FROM users WHERE first ILIKE $1;`,
+        `SELECT id, first, last, picture_url FROM users WHERE first ILIKE $1;`,
         [first + "%"]
     );
 };
 
 exports.newestUsers = function() {
     return db.query(
-        `SELECT first, last, picture_url FROM users ORDER BY id DESC
+        `SELECT id, first, last, picture_url FROM users ORDER BY id DESC
         LIMIT 3`
     );
 };

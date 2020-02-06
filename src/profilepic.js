@@ -7,16 +7,21 @@ export default function ProfilePic(props) {
     const first = props.first;
     const last = props.last;
     const picture_url = props.picture_url;
+    const animataionFalse = props.animataionFalse;
 
     return (
         <>
             <div className="profile-pic-div">
                 <Link to="/upload">
-                    <img className="profile-pic" src={picture_url} />
+                    <img
+                        className="profile-pic"
+                        src={picture_url}
+                        onClick={animataionFalse}
+                    />
                 </Link>
             </div>
 
-            <p>
+            <p style={{ marginRight: "10px" }}>
                 {first} {last}
             </p>
         </>

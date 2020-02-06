@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [greetee, setGreetee] = useState("World");
@@ -52,13 +53,16 @@ export default function FindPeople() {
     //     setGreetee(target.value);
     // };
 
+    const showProfile = a => {
+        location.replace("/user/" + a);
+    };
+
     const onCountryChange = ({ target }) => {
         setUser(target.value);
     };
 
     console.log("users: ", users);
     console.log("joined: ", joined);
-
     return (
         <div className="find-people">
             <h2>Search for friends</h2>
@@ -77,12 +81,14 @@ export default function FindPeople() {
                             </p>
                             {user.picture_url && (
                                 <img
+                                    onClick={() => showProfile(user.id)}
                                     className="picture-search"
                                     src={user.picture_url}
                                 />
                             )}
                             {!user.picture_url && (
                                 <img
+                                    onClick={() => showProfile(user.id)}
                                     className="picture-search"
                                     src="/pictures/default.png"
                                 />
