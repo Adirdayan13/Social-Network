@@ -1,16 +1,41 @@
 import React from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
+import Recaptcha from "react-recaptcha";
 
 export default class Reset extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.recaptcha = this.recaptcha.bind(this);
+        this.recaptchaLoaded = this.recaptchaLoaded.bind(this);
+        this.verifyCallback = this.verifyCallback.bind(this);
+        this.state = {
+            isVerified: false
+        };
     }
     handleChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         });
+    }
+
+    recaptcha() {
+        if (this.state.isVerified) {
+            this.submit();
+        } else {
+            alert("Please verify");
+        }
+    }
+    recaptchaLoaded() {
+        console.log("Recaptcha loaded");
+    }
+    verifyCallback(response) {
+        console.log("checked");
+        if (response) {
+            this.setState({
+                isVerified: true
+            });
+        }
     }
     submit() {
         this.setState({ error: false });
@@ -66,8 +91,15 @@ export default class Reset extends React.Component {
             });
     }
     render() {
+        console.log("this.state: ", this.state);
         return (
             <div className="reset">
+                <Recaptcha
+                    sitekey="6LfkedYUAAAAABgGDiNN5_wq7VmyR2azMdEr8Xnf"
+                    render="explicit"
+                    onloadCallback={this.recaptchaLoaded}
+                    verifyCallback={this.verifyCallback}
+                />
                 {this.state.error && <p>something went wrong</p>}
                 {this.state.step == undefined && (
                     <div className="no-step">
@@ -82,7 +114,7 @@ export default class Reset extends React.Component {
                         <br />
                         <button
                             className="submit-btn-reset"
-                            onClick={() => this.submit()}
+                            onClick={() => this.recaptcha()}
                         >
                             Reset password &nbsp;&nbsp;
                             <i className="fas fa-users"></i>

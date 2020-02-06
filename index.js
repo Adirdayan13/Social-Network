@@ -256,7 +256,6 @@ app.post("/reset/start", (req, res) => {
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
-            // console.log("results from getuser: ", results);
             const first = results.rows[0].first;
             if (results.rows[0] == undefined) {
                 res.json({ success: false });
@@ -265,10 +264,6 @@ app.post("/reset/start", (req, res) => {
                     .then(() => {
                         db.reset(email, secretCode)
                             .then(resultReset => {
-                                console.log(
-                                    "results from db.reset: ",
-                                    resultReset
-                                );
                                 let emailCode = resultReset.rows[0].emailcode;
                                 ses.sendEmail(
                                     "jade.player+funky@spicedling.email",

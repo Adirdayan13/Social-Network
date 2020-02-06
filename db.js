@@ -33,8 +33,7 @@ exports.reset = function(email, emailcode) {
     return db.query(
         `INSERT INTO reset (email, emailcode)
         VALUES ($1, $2)
-        ON CONFLICT (email)
-        DO UPDATE SET emailcode = $2 RETURNING emailcode`,
+        RETURNING emailcode`,
         [email, emailcode]
     );
 };
