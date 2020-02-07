@@ -17,12 +17,13 @@ export default function Friends() {
             state.friendsWannabes &&
             state.friendsWannabes.filter(friend => !friend.accepted)
     );
+
     console.log("acceptedFriends: ", acceptedFriends);
     console.log("friendsWannabes: ", friendsWannabes);
 
     useEffect(() => {
         dispatch(getStatus());
-    }, []);
+    }, [acceptFriend, friendsWannabes]);
 
     return (
         <div className="friends-main">
@@ -30,30 +31,42 @@ export default function Friends() {
             {acceptedFriends &&
                 acceptedFriends.map(friend => (
                     <div className="friends-approved" key={friend.id}>
-                        <img className="friends-pic" src={friend.picture_url} />
-                        <br />
                         <p>
                             {friend.first} {friend.last}
                         </p>
+                        <img className="friends-pic" src={friend.picture_url} />
+                        <br />
+                        <button
+                            onClick={e => dispatch(declineFriend(friend.id))}
+                        >
+                            Unfriend
+                        </button>
+                        <br />
                     </div>
                 ))}
             <br />
-            <h1>Want to be your friends:</h1>
-            <>
+            <div className="friendsWannabes">
+                <h1>Want to be your friends:</h1>
                 {friendsWannabes &&
                     friendsWannabes.map(friend => (
-                        <div key={friend.id}>
+                        <div className="wannabe-friend" key={friend.id}>
+                            <p>
+                                {friend.first} {friend.last}
+                            </p>
                             <img
                                 className="friends-pic"
                                 src={friend.picture_url}
                             />
                             <br />
-                            <p>
-                                {friend.first} {friend.last}
-                            </p>
+                            <button
+                                onClick={e => dispatch(acceptFriend(friend.id))}
+                            >
+                                Accept
+                            </button>
+                            <br />
                         </div>
                     ))}
-            </>
+            </div>
         </div>
     );
 }

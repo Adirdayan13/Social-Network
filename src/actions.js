@@ -4,7 +4,7 @@ import axios from "./axios";
 export async function getStatus() {
     //axios request to server
     //all action creaters will return object that have a type property
-    //
+
     const { data } = await axios.get("/friends-requests");
     console.log("data from friends-request: ", data.rows);
 
@@ -14,24 +14,24 @@ export async function getStatus() {
     };
 }
 
-// export function acceptFriend() {
-//     //axios request to server
-//     //all action creaters will return object that have a type property
-//     const acceptFriend = () => {};
-// }
+export async function acceptFriend(recipient_id) {
+    const { data } = await axios.post(
+        "/friends-status/accept/" + recipient_id + ".json"
+    );
+    console.log("data from acceptFriend: ", data);
+    return {
+        type: "ACCEPT_FRIEND",
+        acceptFriend: data.rows
+    };
+}
 
-// export function declineFriend() {
-//     //axios request to server
-//     //all action creaters will return object that have a type property
-//     // const declineFriend = () => {
-//     //     axios
-//     //         .post("/friends-status/cancel/" + props.recipient_id + ".json")
-//     //         .then(results => {
-//     //             console.log("results from cancel: ", results);
-//     //             setFriendOrNot(results.data);
-//     //         })
-//     //         .catch(err => {
-//     //             console.log("error from cancel: ", err);
-//     //         });
-// }
-// }
+export async function declineFriend(recipient_id) {
+    const { data } = await axios.post(
+        "/friends-status/cancel/" + recipient_id + ".json"
+    );
+    console.log("data from declineFriend: ", data);
+    return {
+        type: "UNFRIEND",
+        declineFriend: data.rows
+    };
+}

@@ -13,12 +13,19 @@ export default function reducer(state = {}, action) {
         // Object.assign - make copy of objects
     }
 
-    if (action.type === "ALL_CAPS_WITH_UNDERSCORE") {
-        //do something
+    if (action.type === "ACCEPT_FRIEND") {
+        state = {
+            ...state,
+            acceptFriend: action.acceptFriend
+        };
+        console.log("state from accept friend reducer: ", state);
     }
 
-    if (action.type === "ALL_CAPS_WITH_UNDERSCORE") {
-        //do something
+    if (action.type === "UNFRIEND") {
+        state = {
+            ...state,
+            declineFriend: action.declineFriend
+        };
     }
 
     return state;

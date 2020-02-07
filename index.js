@@ -505,7 +505,7 @@ app.get("/friends-requests", (req, res) => {
     console.log("req.session: ", req.session);
     db.friendsStatus(req.session.userId)
         .then(results => {
-            console.log("results from friendStatus: ", results);
+            console.log("results from friendStatus: ", results.rows);
             res.json(results);
         })
         .catch(err => {
