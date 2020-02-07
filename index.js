@@ -157,7 +157,7 @@ app.get("/pictures/:id.json", (req, res) => {
     console.log(user_id);
     db.getPicture(user_id)
         .then(results => {
-            console.log("results from get pictures: ", results);
+            // console.log("results from get pictures: ", results);
             res.json(results.rows);
         })
         .catch(err => {
@@ -171,7 +171,7 @@ app.get("/pictures", (req, res) => {
     console.log(user_id);
     db.getPicture(user_id)
         .then(results => {
-            console.log("results from get pictures: ", results);
+            // console.log("results from get pictures: ", results);
             res.json(results.rows);
         })
         .catch(err => {
@@ -388,7 +388,7 @@ app.get("/users/newestUsers", (req, res) => {
     console.log("***************** GET users/newestUsers");
     db.newestUsers()
         .then(results => {
-            console.log("results from newestUsers: ", results.rows);
+            // console.log("results from newestUsers: ", results.rows);
             res.json(results.rows);
         })
         .catch(err => {
@@ -497,6 +497,19 @@ app.get("/friend-album/:friend_id.json", (req, res) => {
         })
         .catch(err => {
             console.log("error from friend-album: ", err);
+        });
+});
+
+app.get("/friends-requests", (req, res) => {
+    console.log("********************** GET friends-requests");
+    console.log("req.session: ", req.session);
+    db.friendsStatus(req.session.userId)
+        .then(results => {
+            console.log("results from friendStatus: ", results);
+            res.json(results);
+        })
+        .catch(err => {
+            console.log("error from friendsStatus: ", err);
         });
 });
 

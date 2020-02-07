@@ -7,6 +7,7 @@ import EditProfile from "./editprofile";
 import Pictures from "./pictures";
 import OtherProfile from "./otherprofile";
 import FindPeople from "./FindPeople";
+import Friends from "./friends";
 
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -92,24 +93,35 @@ export default class App extends React.Component {
                                 <ul>
                                     <li>
                                         <Link className="dropdown" to="/">
-                                            <i className="fas fa-arrow-down"></i>
+                                            <i
+                                                style={{ color: "black " }}
+                                                className="fas fa-arrow-down"
+                                            ></i>
                                         </Link>
                                         <ul>
                                             <li>
-                                                <Link to="/users">Search</Link>
+                                                <Link to="/users">
+                                                    <i className="fas fa-search"></i>{" "}
+                                                    Search
+                                                </Link>
                                             </li>{" "}
                                             <li>
                                                 <Link to="/edit">
-                                                    Edit profile
+                                                    <i className="fas fa-user-edit"></i>{" "}
+                                                    Edit
                                                 </Link>
                                             </li>{" "}
                                             <li>
                                                 <Link to="/mypictures">
+                                                    <i className="far fa-images"></i>{" "}
                                                     Album
                                                 </Link>
                                             </li>{" "}
                                             <li onClick={e => this.logout(e)}>
-                                                <a>Log out</a>
+                                                <a>
+                                                    <i className="fas fa-sign-out-alt"></i>{" "}
+                                                    Log out
+                                                </a>
                                             </li>
                                         </ul>
                                     </li>
@@ -153,6 +165,7 @@ export default class App extends React.Component {
                     <div className="profile-main">
                         <Route path="/user/:id" component={OtherProfile} />
                         <Route path="/edit" component={EditProfile} />
+                        <Route exact path="/friends/" component={Friends} />
                         <Route
                             path="/mypictures"
                             render={() => (

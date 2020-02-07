@@ -77,7 +77,6 @@ ul li {
     float: left;
     width: 73px;
     height: 40px;
-    /* background-color: orange; */
     opacity: 0.8;
     line-height: 40px;
     text-align: center;
@@ -85,6 +84,7 @@ ul li {
 }
 
 ul li a {
+    border-bottom: 1px solid black;
     text-decoration: none;
     color: white;
     display: block;
@@ -101,7 +101,7 @@ ul li ul li {
 
 ul li:hover ul li {
     display: block;
-    background-color: #30475e;
+    background-color: #706c61;
     /* opacity: 70%; */
 }
 
@@ -142,13 +142,14 @@ button:hover {
 
 .smallpics {
     display: flex;
-    border: 2px solid brown;
+    border: 2px solid #0000008c;
     flex-direction: column;
     text-align: center;
     align-items: center;
-    margin-left: 10px;
+    margin-left: 20px;
     border-radius: 20px;
     width: 180px;
+    margin-top: 20px;
 }
 
 .small-pictures-album {
@@ -163,6 +164,27 @@ button:hover {
     /* min-height: 100vh; */
     flex-wrap: wrap;
     flex-direction: row;
+}
+
+.friends-main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.friends-pic {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    padding-bottom: 60px;
+    background-color: #2196f336;
 }
 
 .main-profile {
@@ -279,12 +301,13 @@ button:hover {
 .profile {
     width: 300px;
     display: flex;
-    border: 2px solid brown;
+    border: 2px solid #0000008c;
     flex-direction: column;
     text-align: center;
     align-items: center;
     border-radius: 20px;
-    margin-left: 5px;
+    margin-left: 55px;
+    margin-top: 20px;
 }
 
 .all-pictures-div {

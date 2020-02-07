@@ -23,7 +23,7 @@ export default class Reset extends React.Component {
         if (this.state.isVerified) {
             this.submit();
         } else {
-            alert("Please verify");
+            alert("You are a robot ?");
         }
     }
     recaptchaLoaded() {
