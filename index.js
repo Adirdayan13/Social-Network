@@ -492,7 +492,6 @@ app.get("/friend-album/:friend_id.json", (req, res) => {
     const friendId = req.params.friend_id;
     db.getPicture(friendId)
         .then(results => {
-            console.log("results from friend-album: ", results.rows);
             res.json({ success: true, pictures: results.rows });
         })
         .catch(err => {
@@ -502,7 +501,6 @@ app.get("/friend-album/:friend_id.json", (req, res) => {
 
 app.get("/friends-requests", (req, res) => {
     console.log("********************** GET friends-requests");
-    console.log("req.session: ", req.session);
     db.friendsStatus(req.session.userId)
         .then(results => {
             console.log("results from friendStatus: ", results.rows);

@@ -11,7 +11,6 @@ export default function FriendButton(props) {
     useEffect(() => {
         (async () => {
             try {
-                console.log("try !");
                 const { data } = await axios.get(
                     "/friends-status/" + props.recipient_id + ".json"
                 );
@@ -43,7 +42,6 @@ export default function FriendButton(props) {
     const handleClick = function() {
         console.log("data from const sendRequest: ", friendOrNot);
         if (friendOrNot.btnText == "Cancel friend request") {
-            console.log("I am in cancel friend request");
             axios
                 .post("/friends-status/cancel/" + props.recipient_id + ".json")
                 .then(results => {
@@ -56,7 +54,6 @@ export default function FriendButton(props) {
         }
 
         if (friendOrNot.btnText == "Send friend request") {
-            console.log("I am in Send friend request");
             const { data } = axios
                 .post("/friends-status/" + props.recipient_id + ".json")
                 .then(results => {
@@ -64,7 +61,7 @@ export default function FriendButton(props) {
                     setFriendOrNot(results.data);
                 })
                 .catch(err => {
-                    console.log("error from POST /friends-status");
+                    console.log("error from POST /friends-status: ", err);
                 });
             console.log("data from POST friendButton: ", data);
         }
@@ -82,6 +79,7 @@ export default function FriendButton(props) {
                 .catch(err => {
                     console.log("error from POST friends-status/accept: ", err);
                 });
+            console.log("data from accept friend request: ", data);
         }
         if (friendOrNot.btnText == "Unfriend") {
             axios

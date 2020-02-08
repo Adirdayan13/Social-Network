@@ -1,7 +1,7 @@
+// import axios from "./axios";
 import React, { useEffect } from "react";
-import axios from "./axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getStatus, acceptFriend, declineFriend } from "./actions";
+import { getStatus, acceptFriend, unfriend } from "./actions";
 
 export default function Friends() {
     const dispatch = useDispatch();
@@ -18,38 +18,20 @@ export default function Friends() {
             state.friendsWannabes.filter(friend => !friend.accepted)
     );
 
+    useEffect(() => {
+        dispatch(getStatus());
+    }, []);
+
     console.log("acceptedFriends: ", acceptedFriends);
     console.log("friendsWannabes: ", friendsWannabes);
 
-    useEffect(() => {
-        dispatch(getStatus());
-    }, [acceptFriend, friendsWannabes]);
-
     return (
         <div className="friends-main">
-            <h1>Your friends</h1>
-            {acceptedFriends &&
-                acceptedFriends.map(friend => (
-                    <div className="friends-approved" key={friend.id}>
-                        <p>
-                            {friend.first} {friend.last}
-                        </p>
-                        <img className="friends-pic" src={friend.picture_url} />
-                        <br />
-                        <button
-                            onClick={e => dispatch(declineFriend(friend.id))}
-                        >
-                            Unfriend
-                        </button>
-                        <br />
-                    </div>
-                ))}
-            <br />
-            <div className="friendsWannabes">
-                <h1>Want to be your friends:</h1>
-                {friendsWannabes &&
-                    friendsWannabes.map(friend => (
-                        <div className="wannabe-friend" key={friend.id}>
+            <div className="myfriends">
+                <h1>Your friends</h1>
+                {acceptedFriends &&
+                    acceptedFriends.map(friend => (
+                        <div className="friends-approved" key={friend.id}>
                             <p>
                                 {friend.first} {friend.last}
                             </p>
@@ -59,13 +41,37 @@ export default function Friends() {
                             />
                             <br />
                             <button
-                                onClick={e => dispatch(acceptFriend(friend.id))}
+                                onClick={() => dispatch(unfriend(friend.id))}
                             >
-                                Accept
+                                Unfriend
                             </button>
                             <br />
                         </div>
                     ))}
+                <br />
+                <div className="friendsWannabes">
+                    <h1>Want to be your friends:</h1>
+                    {friendsWannabes &&
+                        friendsWannabes.map(friend => (
+                            <div className="wannabe-friend" key={friend.id}>
+                                <p>
+                                    {friend.first} {friend.last}
+                                </p>
+                                <img
+                                    className="friends-pic"
+                                    src={friend.picture_url}
+                                />
+                                <br />
+                                <button
+                                    onClick={() =>
+                                        dispatch(acceptFriend(friend.id))
+                                    }
+                                >
+                                    Accept
+                                </button>
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     );

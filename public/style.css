@@ -166,7 +166,7 @@ button:hover {
     flex-direction: row;
 }
 
-.friends-pic {
+/* .friends-pic {
     width: 150px;
     height: 150px;
     margin: 10px;
@@ -175,7 +175,7 @@ button:hover {
     padding: 20px;
     padding-top: 60px;
     background-color: #2196f336;
-}
+} */
 
 /* .friends-main {
     display: flex;
@@ -187,7 +187,7 @@ button:hover {
     margin-top: 40px;
 } */
 
-/* .friends-approved {
+.friends-approved {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -195,7 +195,7 @@ button:hover {
     align-items: center;
 }
 
-.wannabe-friend {
+/* .wannabe-friend {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -435,9 +435,13 @@ button:hover {
     transform: translate(-50%, 10px);
 }
 
-.logo-img-register,
 .logo-img-welcome {
     width: 350px;
+    margin-top: 50px;
+}
+
+.logo-img-register {
+    width: 190px;
     margin-top: 50px;
 }
 
@@ -654,6 +658,17 @@ button:hover {
     transform: translate(-50%, -90%);
     text-align: center;
     font-family: "Patua One", cursive;
+}
+
+.robotmain {
+    position: relative;
+    top: -56px;
+}
+
+.robot {
+    position: absolute;
+    top: 23px;
+    left: 49px;
 }
 
 @keyframes angry-animation {

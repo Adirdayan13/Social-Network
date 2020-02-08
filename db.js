@@ -120,8 +120,7 @@ exports.updateFriends = function(recipient_id, sender_id) {
         `UPDATE friendship
         SET accepted = true
         WHERE
-         recipient_id = $2 AND sender_id = $1
-        `,
+        recipient_id = $2 AND sender_id = $1`,
         [recipient_id, sender_id]
     );
 };
@@ -139,12 +138,11 @@ exports.deleteRequest = function(recipient_id, sender_id) {
 exports.friendsStatus = function(recipient_id) {
     return db.query(
         `SELECT users.id, first, last, picture_url, accepted
-     FROM friendship
-     JOIN users
-     ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
-     OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
-     OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
- `,
+         FROM friendship
+         JOIN users
+         ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+         OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+         OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`,
         [recipient_id]
     );
 };

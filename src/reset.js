@@ -94,12 +94,21 @@ export default class Reset extends React.Component {
         console.log("this.state: ", this.state);
         return (
             <div className="reset">
-                <Recaptcha
-                    sitekey="6LfkedYUAAAAABgGDiNN5_wq7VmyR2azMdEr8Xnf"
-                    render="explicit"
-                    onloadCallback={this.recaptchaLoaded}
-                    verifyCallback={this.verifyCallback}
-                />
+                <div className="robotmain">
+                    <img
+                        style={{ width: "396px" }}
+                        src="/pictures/adir5euros.svg"
+                    />
+                </div>
+                <div className="robot">
+                    <Recaptcha
+                        className="recaptcha"
+                        sitekey="6LfkedYUAAAAABgGDiNN5_wq7VmyR2azMdEr8Xnf"
+                        render="explicit"
+                        onloadCallback={this.recaptchaLoaded}
+                        verifyCallback={this.verifyCallback}
+                    />
+                </div>
                 {this.state.error && <p>something went wrong</p>}
                 {this.state.step == undefined && (
                     <div className="no-step">
