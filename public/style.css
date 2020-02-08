@@ -75,7 +75,7 @@ ul {
 
 ul li {
     float: left;
-    width: 73px;
+    width: 90px;
     height: 40px;
     opacity: 0.8;
     line-height: 40px;
@@ -187,12 +187,43 @@ button:hover {
     margin-top: 40px;
 } */
 
-.friends-approved {
+.friends-main {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.friends-approved,
+.wannabe-friend {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    margin-left: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: #2196f336;
+}
+
+.accepted-friends {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.friendsWannabes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.friends-pic {
+    width: 100px;
+    height: 150px;
+    margin-top: 5px;
 }
 
 /* .wannabe-friend {
@@ -442,7 +473,7 @@ button:hover {
 
 .logo-img-register {
     width: 190px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .logo-img-after-login {
@@ -662,13 +693,13 @@ button:hover {
 
 .robotmain {
     position: relative;
-    top: -56px;
+    top: 55px;
 }
 
 .robot {
     position: absolute;
-    top: 23px;
-    left: 49px;
+    top: 199px;
+    left: 72px;
 }
 
 @keyframes angry-animation {

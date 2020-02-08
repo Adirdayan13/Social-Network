@@ -27,8 +27,10 @@ export default function Friends() {
 
     return (
         <div className="friends-main">
-            <div className="myfriends">
-                <h1>Your friends</h1>
+            <h1 style={{ margin: "10px", textDecoration: "underline" }}>
+                Your friends
+            </h1>
+            <div className="accepted-friends">
                 {acceptedFriends &&
                     acceptedFriends.map(friend => (
                         <div className="friends-approved" key={friend.id}>
@@ -41,6 +43,7 @@ export default function Friends() {
                             />
                             <br />
                             <button
+                                className="unfriend-btn"
                                 onClick={() => dispatch(unfriend(friend.id))}
                             >
                                 Unfriend
@@ -48,30 +51,33 @@ export default function Friends() {
                             <br />
                         </div>
                     ))}
-                <br />
-                <div className="friendsWannabes">
-                    <h1>Want to be your friends:</h1>
-                    {friendsWannabes &&
-                        friendsWannabes.map(friend => (
-                            <div className="wannabe-friend" key={friend.id}>
-                                <p>
-                                    {friend.first} {friend.last}
-                                </p>
-                                <img
-                                    className="friends-pic"
-                                    src={friend.picture_url}
-                                />
-                                <br />
-                                <button
-                                    onClick={() =>
-                                        dispatch(acceptFriend(friend.id))
-                                    }
-                                >
-                                    Accept
-                                </button>
-                            </div>
-                        ))}
-                </div>
+            </div>
+            <br />
+            <h1 style={{ margin: "10px", textDecoration: "underline" }}>
+                Want to be your friends:
+            </h1>
+            <div className="friendsWannabes">
+                {friendsWannabes &&
+                    friendsWannabes.map(friend => (
+                        <div className="wannabe-friend" key={friend.id}>
+                            <p>
+                                {friend.first} {friend.last}
+                            </p>
+                            <img
+                                className="friends-pic"
+                                src={friend.picture_url}
+                            />
+                            <br />
+                            <button
+                                onClick={() =>
+                                    dispatch(acceptFriend(friend.id))
+                                }
+                            >
+                                Accept
+                            </button>
+                            <br />
+                        </div>
+                    ))}
             </div>
         </div>
     );

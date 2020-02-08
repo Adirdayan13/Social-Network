@@ -96,8 +96,8 @@ export default class Reset extends React.Component {
             <div className="reset">
                 <div className="robotmain">
                     <img
-                        style={{ width: "396px" }}
-                        src="/pictures/adir5euros.svg"
+                        style={{ width: "447px", height: "458px" }}
+                        src="/pictures/robotV3.png"
                     />
                 </div>
                 <div className="robot">

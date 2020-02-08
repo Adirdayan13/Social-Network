@@ -100,6 +100,12 @@ export default class App extends React.Component {
                                         </Link>
                                         <ul>
                                             <li>
+                                                <Link to="/friends">
+                                                    <i className="fas fa-users"></i>{" "}
+                                                    Friends
+                                                </Link>
+                                            </li>{" "}
+                                            <li>
                                                 <Link to="/users">
                                                     <i className="fas fa-search"></i>{" "}
                                                     Search

@@ -13,6 +13,7 @@ export default class SmallPictures extends React.Component {
         axios
             .get("/pictures")
             .then(results => {
+                // console.log("results from get pictures: ", results);
                 if (results.data.length >= 4) {
                     for (var i = 0; i < 4; i++) {
                         let newState = { ...this.state };
@@ -22,7 +23,6 @@ export default class SmallPictures extends React.Component {
                 } else {
                     for (var j = 0; j < results.data.length; j++) {
                         let newState = { ...this.state };
-
                         newState.pictures.push(results.data[j].picture);
                         this.setState(newState);
                     }
@@ -61,7 +61,7 @@ export default class SmallPictures extends React.Component {
     }
 
     render() {
-        // console.log("this.state from pictures: ", this.state);
+        console.log("this.state from pictures: ", this.state);
 
         return (
             <div className="smallpictures">
@@ -79,6 +79,9 @@ export default class SmallPictures extends React.Component {
                                 />
                             ))}
                         </>
+                    )}
+                    {this.state.pictures.length == 0 && (
+                        <p>Upload your first picture</p>
                     )}
                 </>
             </div>
