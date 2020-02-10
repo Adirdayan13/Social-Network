@@ -47,7 +47,7 @@ export default class Registration extends React.Component {
             <div className="registration-main-div">
                 <div className="logo-div">
                     <img
-                        className="logo-img-register"
+                        className="logo-img-welcome"
                         src="/pictures/logo.png"
                     ></img>
                 </div>

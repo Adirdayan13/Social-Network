@@ -11,6 +11,12 @@ export default function Login() {
 
     return (
         <form>
+            <div className="logo-div">
+                <img
+                    className="logo-img-welcome"
+                    src="/pictures/logo.png"
+                ></img>
+            </div>
             <div className="inputs-login">
                 {error && <p>Something went wrong</p>}
                 <input

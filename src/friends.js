@@ -48,7 +48,6 @@ export default function Friends() {
                             >
                                 Unfriend
                             </button>
-                            <br />
                         </div>
                     ))}
             </div>
@@ -75,7 +74,6 @@ export default function Friends() {
                             >
                                 Accept
                             </button>
-                            <br />
                         </div>
                     ))}
             </div>

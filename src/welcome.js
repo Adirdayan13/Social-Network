@@ -13,14 +13,7 @@ export default class Welcome extends React.Component {
         return (
             <HashRouter>
                 <div className="welcome-main-div">
-                    <div className="registration-main-div">
-                        <div className="logo-div">
-                            <img
-                                className="logo-img-register"
-                                src="/pictures/logo.png"
-                            ></img>
-                        </div>
-                    </div>
+                    <div className="registration-main-div"></div>
                     <Route exact path="/" component={Registration} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/reset/start" component={Reset} />

@@ -12,6 +12,7 @@ export default class Pictures extends React.Component {
         axios
             .get("/pictures")
             .then(results => {
+                console.log("Results from get pictures: ", results.data);
                 for (var i = 0; i < results.data.length; i++) {
                     let newState = { ...this.state };
                     newState.pictures.push(results.data[i].picture);

@@ -16,10 +16,10 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log("this.state from app: ", this.state);
+        // console.log("this.state from app: ", this.state);
     }
     componentDidMount() {
-        console.log("this.state from app did mount: ", this.state);
+        // console.log("this.state from app did mount: ", this.state);
         axios
             .get("/user")
             .then(({ data }) => {
@@ -33,6 +33,16 @@ export default class App extends React.Component {
             })
             .catch(err => {
                 console.log("error from GET user: ", err);
+            });
+
+        axios
+            .get("/news")
+            .then(results => {
+                console.log("results from news: ", results.data.articles);
+                this.setState({ news: results.data.articles });
+            })
+            .catch(err => {
+                console.log("error from news: ", err);
             });
     }
     logout(e) {
@@ -59,6 +69,26 @@ export default class App extends React.Component {
             wait: false,
             error: false
         });
+    }
+    handleChange(e) {
+        let value = e.target.value;
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+        // console.log("name, value: ", name, value);
+        console.log("this.state from handle change: ", this.state);
+        axios
+            .post("/news/" + value, {
+                country: value
+            })
+            .then(results => {
+                // console.log("results from news: ", results.data.articles);
+                // console.log("this.state from results news: ", this.state);
+                this.setState({ news: results.data.articles });
+            })
+            .catch(err => {
+                console.log("error from news: ", err);
+            });
     }
 
     render() {
@@ -170,7 +200,30 @@ export default class App extends React.Component {
 
                     <div className="profile-main">
                         <Route path="/user/:id" component={OtherProfile} />
-                        <Route path="/edit" component={EditProfile} />
+                        <Route
+                            path="/edit"
+                            component={() => (
+                                <EditProfile
+                                    setUpdate={(email, first, last) =>
+                                        this.setState({ email, first, last })
+                                    }
+                                    error={() => this.setState({ error: true })}
+                                    noError={() =>
+                                        this.setState({ error: false })
+                                    }
+                                    editHandler={() =>
+                                        this.setState({ editProfile: true })
+                                    }
+                                    closeEdit={() =>
+                                        this.setState({ editProfile: false })
+                                    }
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    email={this.state.email}
+                                    id={this.state.id}
+                                />
+                            )}
+                        />
                         <Route exact path="/friends/" component={Friends} />
                         <Route
                             path="/mypictures"
@@ -227,6 +280,95 @@ export default class App extends React.Component {
                                     />
                                 )}
                             />
+                        )}
+                        {this.state.news && (
+                            <div className="allnewsmain">
+                                <p
+                                    className="news-title"
+                                    style={{
+                                        textAlign: "center",
+                                        color: "red",
+                                        textDecoration: "underline"
+                                    }}
+                                >
+                                    News Feed
+                                </p>
+                                <br />
+                                <label htmlFor="language">
+                                    Choose a language:
+                                </label>
+                                <select
+                                    name="language"
+                                    id="language"
+                                    onChange={e => this.handleChange(e)}
+                                >
+                                    <option name="us" value="us">
+                                        English
+                                    </option>
+                                    <option name="il" value="il">
+                                        Hebrew
+                                    </option>
+                                    <option name="fr" value="fr">
+                                        French
+                                    </option>
+                                    <option name="in" value="in">
+                                        Hindi
+                                    </option>
+                                    <option name="pt" value="pt">
+                                        Portuguese
+                                    </option>
+                                    <option name="cn" value="cn">
+                                        Mandarin
+                                    </option>
+                                    <option name="ru" value="ru">
+                                        Russia
+                                    </option>
+                                </select>
+                                <br />
+                                <label htmlFor="category">
+                                    Choose a category:
+                                </label>
+                                <select
+                                    name="category"
+                                    id="category"
+                                    onChange={e => this.handleChange(e)}
+                                >
+                                    <option>General</option>
+                                    <option>Business</option>
+                                    <option>Entertainment</option>
+                                    <option>Science</option>
+                                    <option>Health</option>
+                                    <option>Sports</option>
+                                    <option>Technology</option>
+                                </select>
+                                <div className="allnews">
+                                    {this.state.news.map((singleNews, key) => (
+                                        <div className="news" key={key}>
+                                            <p
+                                                style={{
+                                                    textDecoration: "underline",
+                                                    color: "crimson",
+                                                    textAlign: "center"
+                                                }}
+                                            >
+                                                <br />
+                                                {singleNews.title}
+                                            </p>
+                                            <p>
+                                                {singleNews.description}
+                                                <br />
+                                            </p>
+                                            <a
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                href={singleNews.url}
+                                            >
+                                                Read full article
+                                            </a>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         )}
                     </div>
                 </BrowserRouter>

@@ -79,7 +79,7 @@ exports.addPictureToAlbums = function(user_id, picture) {
 
 exports.getPicture = function(user_id) {
     return db.query(
-        `SELECT picture FROM pictures WHERE user_id = $1 ORDER BY id DESC`,
+        `SELECT id, picture FROM pictures WHERE user_id = $1 ORDER BY id DESC`,
         [user_id]
     );
 };

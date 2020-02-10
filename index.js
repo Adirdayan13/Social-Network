@@ -8,6 +8,8 @@ const cookieSession = require("cookie-session");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
 const path = require("path");
+const NewsAPI = require("newsapi");
+const newsapi = new NewsAPI("1c8473f38ea34be9818e190955cd57ff");
 ///upload
 const s3 = require("./s3");
 const multer = require("multer");
@@ -256,6 +258,7 @@ app.post("/reset/start", (req, res) => {
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
+            console.log("getuser");
             const first = results.rows[0].first;
             if (results.rows[0] == undefined) {
                 res.json({ success: false });
@@ -508,6 +511,35 @@ app.get("/friends-requests", (req, res) => {
         })
         .catch(err => {
             console.log("error from friendsStatus: ", err);
+        });
+});
+
+app.get("/news/", (req, res) => {
+    newsapi.v2
+        .topHeadlines({
+            category: "technology",
+            language: "en",
+            country: "us"
+        })
+        .then(response => {
+            console.log(response);
+            res.json(response);
+        });
+});
+
+app.post("/news/:country", (req, res) => {
+    // const language = req.params.language;
+    const country = req.body.country;
+    console.log("req.body: ", req.body);
+    console.log("req.body.country: ", country);
+    newsapi.v2
+        .topHeadlines({
+            // category: category || "technology",
+            country: country
+        })
+        .then(response => {
+            console.log(response);
+            res.json(response);
         });
 });
 

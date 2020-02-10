@@ -65,6 +65,31 @@ button {
     justify-content: flex-end;
 }
 
+.allnewsmain {
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.allnews {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    height: 500px;
+    overflow: scroll;
+    margin-top: 20px;
+    border-radius: 20px;
+    width: 300px;
+    padding: 10px;
+}
+
+.news {
+    width: 300px;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
 ul {
     margin: 0px;
     padding: 0px;
@@ -125,13 +150,6 @@ button:hover {
     width: 50%;
 }
 
-/* .main,
-.welcome-main-div,
-.all-login {
-    width: 100%;
-    height: 100%;
-} */
-
 .app {
     display: flex;
     flex-direction: column;
@@ -147,9 +165,10 @@ button:hover {
     text-align: center;
     align-items: center;
     margin-left: 20px;
-    border-radius: 20px;
+    border-radius: 10px;
     width: 180px;
     margin-top: 20px;
+    height: fit-content;
 }
 
 .small-pictures-album {
@@ -165,27 +184,6 @@ button:hover {
     flex-wrap: wrap;
     flex-direction: row;
 }
-
-/* .friends-pic {
-    width: 150px;
-    height: 150px;
-    margin: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    padding-top: 60px;
-    background-color: #2196f336;
-} */
-
-/* .friends-main {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-    margin-top: 40px;
-} */
 
 .friends-main {
     flex-direction: column;
@@ -226,23 +224,9 @@ button:hover {
     margin-top: 5px;
 }
 
-/* .wannabe-friend {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.friendsWannabes {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
-
 .main-profile {
     display: flex;
-    align-items: flex-start;
+    /* flex-direction: column; */
 }
 
 .loading-gif-uploader {
@@ -361,6 +345,7 @@ button:hover {
     border-radius: 20px;
     margin-left: 55px;
     margin-top: 20px;
+    height: fit-content;
 }
 
 .all-pictures-div {
@@ -464,6 +449,14 @@ button:hover {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 10px);
+}
+
+.logo-div-reset {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    top: -19%;
+    transform: translate(-50%, -19%);
 }
 
 .logo-img-welcome {
@@ -693,13 +686,13 @@ button:hover {
 
 .robotmain {
     position: relative;
-    top: 55px;
+    top: -25px;
 }
 
 .robot {
     position: absolute;
-    top: 199px;
-    left: 72px;
+    top: 121px;
+    left: 37px;
 }
 
 @keyframes angry-animation {
