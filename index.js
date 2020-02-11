@@ -579,22 +579,25 @@ io.on("connection", async function(socket) {
     const userId = socket.request.session.userId;
 
     const getMessages = await db.getMessage();
-    console.log("getMessage: ", getMessages);
+    // console.log("getMessage: ", getMessages);
     io.sockets.emit("getMessages", getMessages);
 
-    socket.on("Chat message", async msg => {
+    socket.on("Add message", async msg => {
         console.log("on the server....", msg);
         try {
             const data = await db.getUserById(userId);
-            // const addMessage = await db.addMessage(
-            //     data.rows[0].id,
-            //     data.rows[0].first,
-            //     data.rows[0].last,
-            //     msg
-            // );
-            // addMessage[0].picture_url = data.rows[0].picture_url;
-            io.sockets.emit("muffin", msg);
-            console.log("data: ", data.rows);
+            const addMessage = await db.addMessage(
+                data.rows[0].id,
+                data.rows[0].first,
+                data.rows[0].last,
+                msg
+            );
+            // console.log("addMessage: ", addMessage);
+            // console.log("addMessage[0].id: ", addMessage[0].id);
+            // console.log("data.rows[0]: ", data.rows[0]);
+            data.rows[0].message = msg;
+            data.rows[0].user_id = addMessage[0].id;
+            io.sockets.emit("addMessage", data.rows[0]);
             // console.log("addMessage: ", addMessage);
         } catch (e) {
             console.log("error from chat message: ", e);

@@ -42,6 +42,14 @@ export default function reducer(state = {}, action) {
             chatMessages: action.msg
         };
     }
+    if (action.type == "ADD_MESSAGE") {
+        console.log("action.message from reducerssss: ", action.msg);
+        console.log("state from reducers: ", state);
+        state = {
+            ...state,
+            chatMessages: [action.msg].concat(state.chatMessages)
+        };
+    }
 
     return state;
 }

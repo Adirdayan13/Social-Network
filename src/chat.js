@@ -12,18 +12,16 @@ export function Chat() {
 
     useEffect(() => {
         let { clientHeight, scrollTop, scrollHeight } = elemRef.current;
-        console.log("scroll top", scrollTop);
-        console.log("clien height", clientHeight);
-        console.log("scroll height", scrollHeight);
+        // console.log("scroll top", scrollTop);
+        // console.log("clien height", clientHeight);
+        // console.log("scroll height", scrollHeight);
         elemRef.current.scrollTop = scrollHeight - clientHeight;
-    }, []);
+    }, [chatMessages]);
 
     const keyCheck = e => {
-        console.log("which key is preseed", e.key);
         if (e.key == "Enter") {
             e.preventDefault();
-            console.log("what the user is typing", e.target.value);
-            socket.emit("Chat message", e.target.value);
+            socket.emit("Add message", e.target.value);
             e.target.value = "";
         }
     };
@@ -33,13 +31,21 @@ export function Chat() {
             <h1>Chat Room! </h1>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
-                    chatMessages.map((msg, index) => {
-                        console.log("msg from loop: ", msg);
+                    chatMessages.reverse().map((msg, index) => {
+                        // console.log("msg from loop: ", msg);
                         return (
                             <>
-                                <p key={index}>
-                                    {msg.first}: {msg.message}
-                                </p>
+                                <div className="picture-inchat">
+                                    <img
+                                        className="profile-pic"
+                                        src={msg.picture_url}
+                                    />
+                                </div>
+                                <div className="chat-msgs">
+                                    <p>
+                                        {msg.first}: {msg.message}
+                                    </p>
+                                </div>
                             </>
                         );
                     })}

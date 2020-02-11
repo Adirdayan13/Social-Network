@@ -34,3 +34,11 @@ export async function getMessages(msg) {
         msg
     };
 }
+
+export async function addMessage(msg) {
+    console.log("msg from action: ", msg);
+    return {
+        type: "ADD_MESSAGE",
+        msg
+    };
+}
