@@ -50,6 +50,11 @@ button {
     cursor: pointer;
 }
 
+.chat-container {
+    height: 300px;
+    overflow-y: scroll;
+}
+
 .cancelBtn {
     text-decoration: none;
     color: black;
@@ -78,7 +83,7 @@ button {
     border: 1px solid black;
     height: 500px;
     overflow: scroll;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 20px;
     width: 300px;
     padding: 10px;
@@ -88,6 +93,7 @@ button {
     width: 300px;
     border-bottom: 1px solid black;
     padding-bottom: 5px;
+    text-align: center;
 }
 
 ul {

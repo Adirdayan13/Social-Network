@@ -15,6 +15,8 @@ const s3 = require("./s3");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const { s3Url } = require("./config");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 /// /upload
 
 if (process.env.NODE_ENV != "production") {
@@ -32,12 +34,21 @@ app.use(compression());
 app.use(express.json());
 app.use(express.static("./public"));
 
-app.use(
-    cookieSession({
-        secret: "secrets",
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
+app.use(cookieSessionMiddleware);
+
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+// app.use(
+//     cookieSession({
+//         secret: "secrets",
+//         maxAge: 1000 * 60 * 60 * 24 * 14
+//     })
+// );
 
 app.use(csurf());
 
@@ -531,14 +542,14 @@ app.post("/news/:country", (req, res) => {
     // const language = req.params.language;
     const country = req.body.country;
     console.log("req.body: ", req.body);
-    console.log("req.body.country: ", country);
+    // console.log("req.body.country: ", country);
     newsapi.v2
         .topHeadlines({
             // category: category || "technology",
             country: country
         })
         .then(response => {
-            console.log(response);
+            // console.log(response);
             res.json(response);
         });
 });
@@ -555,6 +566,50 @@ app.get("*", function(req, res) {
     }
 });
 
-app.listen(8080, function() {
+server.listen(8080, function() {
     console.log("I'm listening 808(0).");
+});
+
+// SERVER SIDE SOCKET code
+io.on("connection", async function(socket) {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+
+    const getMessages = await db.getMessage();
+    console.log("getMessage: ", getMessages);
+    io.sockets.emit("getMessages", getMessages);
+
+    socket.on("Chat message", async msg => {
+        console.log("on the server....", msg);
+        try {
+            const data = await db.getUserById(userId);
+            // const addMessage = await db.addMessage(
+            //     data.rows[0].id,
+            //     data.rows[0].first,
+            //     data.rows[0].last,
+            //     msg
+            // );
+            // addMessage[0].picture_url = data.rows[0].picture_url;
+            io.sockets.emit("muffin", msg);
+            console.log("data: ", data.rows);
+            // console.log("addMessage: ", addMessage);
+        } catch (e) {
+            console.log("error from chat message: ", e);
+        }
+    });
+
+    // go and get the last 10 msgs from // DB
+    // we will need a new table and query
+
+    // db.getLastTenChatMessages()
+    //     .then(data => {
+    //         console.log("data from chat messages: ", data);
+    //         io.socket.emit("chatMessages", data.rows);
+    //     })
+    //     .catch(err => {
+    //         console.log("error from messages: ", err);
+    //     });
 });

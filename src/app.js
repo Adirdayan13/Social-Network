@@ -8,6 +8,8 @@ import Pictures from "./pictures";
 import OtherProfile from "./otherprofile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
+import { Chat } from "./chat";
+import News from "./news";
 
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -23,7 +25,7 @@ export default class App extends React.Component {
         axios
             .get("/user")
             .then(({ data }) => {
-                console.log("data from app : ", data);
+                // console.log("data from app : ", data);
                 if (data.picture_url == null) {
                     data.picture_url = "/pictures/default.png";
                     this.setState(data);
@@ -35,15 +37,15 @@ export default class App extends React.Component {
                 console.log("error from GET user: ", err);
             });
 
-        axios
-            .get("/news")
-            .then(results => {
-                console.log("results from news: ", results.data.articles);
-                this.setState({ news: results.data.articles });
-            })
-            .catch(err => {
-                console.log("error from news: ", err);
-            });
+        // axios
+        //     .get("/news")
+        //     .then(results => {
+        //         // console.log("results from news: ", results.data.articles);
+        //         this.setState({ news: results.data.articles });
+        //     })
+        //     .catch(err => {
+        //         console.log("error from news: ", err);
+        //     });
     }
     logout(e) {
         e.preventDefault();
@@ -72,27 +74,33 @@ export default class App extends React.Component {
     }
     handleChange(e) {
         let value = e.target.value;
-        this.setState({
-            [e.target.name]: e.target.value
-        });
+        console.log("value: ", value);
+        this.setState(
+            {
+                [e.target.name]: e.target.value
+            },
+            () => {
+                console.log("this.state from handle change: ", this.state);
+                axios
+                    .post("/news/" + value, {
+                        country: this.state.language,
+                        category: this.state.category
+                    })
+                    .then(results => {
+                        // console.log("results from news: ", results.data.articles);
+                        // console.log("this.state from results news: ", this.state);
+                        this.setState({ news: results.data.articles });
+                    })
+                    .catch(err => {
+                        console.log("error from news: ", err);
+                    });
+            }
+        );
         // console.log("name, value: ", name, value);
-        console.log("this.state from handle change: ", this.state);
-        axios
-            .post("/news/" + value, {
-                country: value
-            })
-            .then(results => {
-                // console.log("results from news: ", results.data.articles);
-                // console.log("this.state from results news: ", this.state);
-                this.setState({ news: results.data.articles });
-            })
-            .catch(err => {
-                console.log("error from news: ", err);
-            });
     }
 
     render() {
-        console.log("this.state from app render: ", this.state);
+        // console.log("this.state from app render: ", this.state);
         if (!this.state.id) {
             return "Loading...";
         }
@@ -224,6 +232,7 @@ export default class App extends React.Component {
                                 />
                             )}
                         />
+                        <Route exact path="/chat/" component={Chat} />
                         <Route exact path="/friends/" component={Friends} />
                         <Route
                             path="/mypictures"
@@ -293,7 +302,6 @@ export default class App extends React.Component {
                                 >
                                     News Feed
                                 </p>
-                                <br />
                                 <label htmlFor="language">
                                     Choose a language:
                                 </label>
@@ -324,7 +332,7 @@ export default class App extends React.Component {
                                         Russia
                                     </option>
                                 </select>
-                                <br />
+
                                 <label htmlFor="category">
                                     Choose a category:
                                 </label>
@@ -376,3 +384,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+// {this.state.news && <News />}

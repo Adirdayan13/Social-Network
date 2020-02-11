@@ -146,3 +146,25 @@ exports.friendsStatus = function(recipient_id) {
         [recipient_id]
     );
 };
+
+exports.addMessage = function(user_id, first, last, message) {
+    return db
+        .query(
+            `INSERT INTO chat
+        (user_id, first, last, message)
+        VALUES
+        ($1, $2, $3, $4) RETURNING *`,
+            [user_id, first, last, message]
+        )
+        .then(({ rows }) => rows);
+};
+
+exports.getMessage = function() {
+    return db
+        .query(
+            `SELECT * FROM chat
+            ORDER BY id DESC
+            LIMIT 10`
+        )
+        .then(({ rows }) => rows);
+};

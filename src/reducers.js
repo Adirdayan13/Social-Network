@@ -36,6 +36,12 @@ export default function reducer(state = {}, action) {
             })
         };
     }
+    if (action.type == "GET_MESSAGES") {
+        state = {
+            ...state,
+            chatMessages: action.msg
+        };
+    }
 
     return state;
 }

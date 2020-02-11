@@ -27,3 +27,10 @@ export async function unfriend(recipient_id) {
         recipient_id
     };
 }
+
+export async function getMessages(msg) {
+    return {
+        type: "GET_MESSAGES",
+        msg
+    };
+}
