@@ -64,8 +64,3 @@ export default function Friends() {
         </div>
     );
 }
-// {
-//     friendsWannabes.map(friend => <div>{friend}</div>);
-// }
-
-// acceptedFriends.map((friend, index) => <div>{friend}</div>);

@@ -10,7 +10,6 @@ export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log("this.props from Profile : ", this.props);
     }
     render() {
         return (

@@ -22,9 +22,6 @@ export default function Friends() {
         dispatch(getStatus());
     }, []);
 
-    console.log("acceptedFriends: ", acceptedFriends);
-    console.log("friendsWannabes: ", friendsWannabes);
-
     return (
         <div className="friends-main">
             <h1 style={{ margin: "10px", textDecoration: "underline" }}>
@@ -80,8 +77,3 @@ export default function Friends() {
         </div>
     );
 }
-// {
-//     friendsWannabes.map(friend => <div>{friend}</div>);
-// }
-
-// acceptedFriends.map((friend, index) => <div>{friend}</div>);

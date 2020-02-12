@@ -20,11 +20,9 @@ export default class App extends React.Component {
         // console.log("this.state from app: ", this.state);
     }
     componentDidMount() {
-        // console.log("this.state from app did mount: ", this.state);
         axios
             .get("/user")
             .then(({ data }) => {
-                // console.log("data from app : ", data);
                 if (data.picture_url == null) {
                     data.picture_url = "/pictures/default.png";
                     this.setState(data);
@@ -35,16 +33,6 @@ export default class App extends React.Component {
             .catch(err => {
                 console.log("error from GET user: ", err);
             });
-
-        // axios
-        //     .get("/news")
-        //     .then(results => {
-        //         // console.log("results from news: ", results.data.articles);
-        //         this.setState({ news: results.data.articles });
-        //     })
-        //     .catch(err => {
-        //         console.log("error from news: ", err);
-        //     });
     }
     logout(e) {
         e.preventDefault();

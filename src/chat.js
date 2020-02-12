@@ -5,9 +5,8 @@ import { useSelector } from "react-redux";
 
 export function Chat() {
     const chatMessages = useSelector(state => state && state.chatMessages);
-    const myId = useSelector(state => state && state.myId);
-    console.log("myId :", myId);
-    console.log("chatMessages: ", chatMessages);
+
+    // const myId = useSelector(state => state && state.myId);
     const elemRef = useRef();
 
     useEffect(() => {
@@ -34,11 +33,15 @@ export function Chat() {
                         .map(msg => {
                             return (
                                 <div className="chat-msgs" key={msg.id}>
-                                    {msg.user_id === { myId } && (
+                                    {msg.user_id === 1 && (
                                         <div className="me-chat">
                                             <img
                                                 className="chat-pic"
-                                                src={msg.picture_url}
+                                                src={
+                                                    msg.picture_url
+                                                        ? msg.picture_url
+                                                        : "/pictures/default.png"
+                                                }
                                             />
                                             <span className="first-last-chat">
                                                 {msg.first} {msg.last}
@@ -55,11 +58,15 @@ export function Chat() {
                                             <p>{msg.message}</p>
                                         </div>
                                     )}
-                                    {msg.user_id != { myId } && (
+                                    {msg.user_id != 1 && (
                                         <div className="otheruser-chat">
                                             <img
                                                 className="chat-pic"
-                                                src={msg.picture_url}
+                                                src={
+                                                    msg.picture_url
+                                                        ? msg.picture_url
+                                                        : "/pictures/default.png"
+                                                }
                                             />
                                             <span className="first-last-chat">
                                                 {msg.first} {msg.last}

@@ -51,12 +51,6 @@ app.use(cookieSessionMiddleware);
 io.use(function(socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
-// app.use(
-//     cookieSession({
-//         secret: "secrets",
-//         maxAge: 1000 * 60 * 60 * 24 * 14
-//     })
-// );
 
 app.use(csurf());
 
@@ -88,7 +82,6 @@ const uploader = multer({
 
 app.get("/welcome", function(req, res) {
     console.log("*************************** GET WELCOME");
-    console.log("req.session.userId: ", req.session.userId);
     if (req.session.userId) {
         res.redirect("/");
     } else {
@@ -102,10 +95,8 @@ app.post("/register", (req, res) => {
     let last = req.body.last;
     let email = req.body.email;
     let password = req.body.password;
-    console.log("req.body: ", req.body);
 
     if (req.body == {}) {
-        console.log("empty fields in registeraion req.body == {}");
         res.json({ success: false });
     } else if (
         first == "" ||
@@ -117,7 +108,6 @@ app.post("/register", (req, res) => {
         email.startsWith(" ") ||
         password.startsWith(" ")
     ) {
-        console.log("empty fields in registeraion");
         res.json({ success: false });
     } else {
         bcrypt
@@ -147,7 +137,7 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     const imageUrl = s3Url + req.file.filename;
     if (req.file) {
         db.updateImage(email, imageUrl)
-            .then(function(results) {
+            .then(function() {
                 res.json(imageUrl);
             })
             .catch(function(err) {
@@ -160,7 +150,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 app.post("/upload-album", uploader.single("file"), s3.upload, (req, res) => {
     const user_id = req.session.userId;
     const imageUrl = s3Url + req.file.filename;
-    console.log("req.session from upload/album: ", req.session);
     if (req.file) {
         db.addPictureToAlbums(user_id, imageUrl)
             .then(() => {
@@ -175,10 +164,8 @@ app.post("/upload-album", uploader.single("file"), s3.upload, (req, res) => {
 app.get("/pictures/:id.json", (req, res) => {
     console.log("******************** GET pictures");
     const user_id = req.params.id;
-    console.log(user_id);
     db.getPicture(user_id)
         .then(results => {
-            // console.log("results from get pictures: ", results);
             res.json(results.rows);
         })
         .catch(err => {
@@ -189,10 +176,8 @@ app.get("/pictures/:id.json", (req, res) => {
 app.get("/pictures", (req, res) => {
     console.log("******************** GET pictures");
     const user_id = req.session.userId;
-    console.log(user_id);
     db.getPicture(user_id)
         .then(results => {
-            // console.log("results from get pictures: ", results);
             res.json(results.rows);
         })
         .catch(err => {
@@ -205,10 +190,8 @@ app.post("/edit", (req, res) => {
     let first = req.body.first;
     let last = req.body.last;
     let id = req.body.id;
-
-    console.log("req.body from POST /edit: ", req.body);
     db.updateProfile(id, email, first, last)
-        .then(results => {
+        .then(() => {
             req.session.email = email;
             res.json({ success: true, email: email, first: first, last: last });
         })
@@ -221,18 +204,15 @@ app.post("/edit", (req, res) => {
 app.post("/logout", (req, res) => {
     console.log("*************************** POST logout");
     req.session = undefined;
-    console.log("req.session from logout:", req.session);
-    // res.redirect("/");
     res.json({ logout: true });
 });
 
 app.post("/bio", (req, res) => {
     console.log("*************************** POST bio");
-    console.log("req.body: ", req.body);
     let email = req.session.email;
     let bio = req.body.bio;
     db.updateBio(email, bio)
-        .then(results => {
+        .then(() => {
             res.json({ success: true });
         })
         .catch(err => {
@@ -244,7 +224,6 @@ app.post("/login", function(req, res) {
     console.log("*************************** POST login");
     const email = req.body.email;
     const password = req.body.password;
-    console.log("email: ", email);
     db.getUser(email)
         .then(results => {
             bcrypt
@@ -277,7 +256,6 @@ app.post("/reset/start", (req, res) => {
     let email = req.body.email;
     db.getUser(email)
         .then(results => {
-            console.log("getuser");
             const first = results.rows[0].first;
             if (results.rows[0] == undefined) {
                 res.json({ success: false });
@@ -322,27 +300,15 @@ app.post("/reset/verify", (req, res) => {
     let email = req.body.state.email;
     let code = req.body.state.code;
     let newPassword = req.body.state.newpassword;
-    console.log("email :", email);
-    console.log("code: ", code);
-    console.log("newPassword :", newPassword);
-    console.log("req.body: ", req.body);
     db.getResetCode(email)
         .then(results => {
-            console.log("results from getResetCode: ", results);
-            console.log("results from getResetCode: ", results.rows[0]);
             if (results.rows[0].emailcode == code) {
                 console.log("there is a match !");
-                ///// HASH THE PASSWORD !!!
                 bcrypt
                     .hash(newPassword)
                     .then(hashedPass => {
-                        console.log("we are in then hahsepass");
                         db.updatePassword(email, hashedPass)
-                            .then(results => {
-                                console.log(
-                                    "results from updatePassword: ",
-                                    results
-                                );
+                            .then(() => {
                                 res.json({ success: true });
                             })
                             .catch(err => {
@@ -361,15 +327,13 @@ app.post("/reset/verify", (req, res) => {
             res.json({ success: false });
         });
 });
-//////////
+
 app.get("/user", function(req, res) {
     console.log("*************************** GET user");
     let email = req.session.email;
-    // console.log("req.session from get user: ", req.session);
     db.getUser(email)
         .then(results => {
-            // console.log("results from get user: ", results.rows[0]);
-            results.rows[0].password = "***** hehe";
+            results.rows[0].password = "sorry";
             res.json(results.rows[0]);
         })
         .catch(err => {
@@ -379,13 +343,9 @@ app.get("/user", function(req, res) {
 
 app.get("/user/:id.json", (req, res) => {
     console.log("********************* GET user/:id.json");
-    console.log("id: ", req.session.userId);
-    console.log("req.params.id: ", req.params.id);
     db.getUserById(req.params.id)
         .then(results => {
             const userInfo = results.rows[0];
-            // console.log("results from getUserById: ", results.rows[0]);
-            results.rows[0].password = "******";
             res.json({ userInfo: userInfo, currentId: req.session.userId });
         })
         .catch(err => {
@@ -395,10 +355,8 @@ app.get("/user/:id.json", (req, res) => {
 
 app.get("/users/:first.json", (req, res) => {
     console.log("**************** GET users/:first");
-    console.log("req.params.first: ", req.params.first);
     db.getUserByName(req.params.first)
         .then(results => {
-            console.log("results from GET users/:first.json: ", results.rows);
             res.json(results.rows);
         })
         .catch(err => {
@@ -419,26 +377,15 @@ app.get("/users/newestUsers", (req, res) => {
 
 app.get("/friends-status/:recipient_id.json", (req, res) => {
     console.log("***************** GET friends-status/:id");
-    console.log("viewedUser: ", req.params.recipient_id);
-    console.log("logedInUser: ", req.session.userId);
     let viewedUser = req.params.recipient_id;
     let logedInUser = req.session.userId;
     db.getFriends(viewedUser, logedInUser)
         .then(results => {
-            console.log("results from GET friends-status: ", results.rows);
-            // console.log("sender: ", results.rows[0].sender_id);
-            // console.log("recipient: ", results.rows[0].recipient_id);
             if (results.rows == 0) {
                 console.log("no friends");
                 res.json({ success: true, btnText: "Send friend request" });
             } else if (results.rows[0].accepted == false) {
-                console.log("Cancel friend request");
-                console.log("logedInUser: ", logedInUser);
-                console.log("viewedUser: ", viewedUser);
-                console.log("results.rows[0]: ", results.rows[0]);
-
                 if (logedInUser == results.rows[0].sender_id) {
-                    console.log("we are in if");
                     res.json({
                         success: true,
                         btnText: "Cancel friend request"
@@ -466,11 +413,7 @@ app.post("/friends-status/:recipient_id.json", (req, res) => {
     let recipient_id = req.params.recipient_id;
     let sender_id = req.session.userId;
     db.addFriends(recipient_id, sender_id)
-        .then(results => {
-            console.log(
-                "results from POST friends-status/:recipient_id: ",
-                results
-            );
+        .then(() => {
             res.json({ success: true, btnText: "Cancel friend request" });
         })
         .catch(err => {
@@ -483,8 +426,7 @@ app.post("/friends-status/cancel/:recipient_id.json", (req, res) => {
     let recipient_id = req.params.recipient_id;
     let sender_id = req.session.userId;
     db.deleteRequest(recipient_id, sender_id)
-        .then(results => {
-            console.log("results from cancel request: ", results);
+        .then(() => {
             res.json({ success: true, btnText: "Send friend request" });
         })
         .catch(err => {
@@ -496,11 +438,8 @@ app.post("/friends-status/accept/:recipient_id.json", (req, res) => {
     console.log("********************* POST friends-status/accept");
     const recipient_id = req.params.recipient_id;
     const sender_id = req.session.userId;
-    console.log("recipient_id: ", recipient_id);
-    console.log("sender_id: ", sender_id);
     db.updateFriends(recipient_id, sender_id)
-        .then(results => {
-            console.log("results from accept: ", results);
+        .then(() => {
             res.json({ success: true, btnText: "Unfriend" });
         })
         .catch(err => {
@@ -509,7 +448,7 @@ app.post("/friends-status/accept/:recipient_id.json", (req, res) => {
 });
 
 app.get("/friend-album/:friend_id.json", (req, res) => {
-    console.log("friend-album");
+    console.log("************************ friend-album/:friend_id.jsn");
     const friendId = req.params.friend_id;
     db.getPicture(friendId)
         .then(results => {
@@ -524,7 +463,6 @@ app.get("/friends-requests", (req, res) => {
     console.log("********************** GET friends-requests");
     db.friendsStatus(req.session.userId)
         .then(results => {
-            console.log("results from friendStatus: ", results.rows);
             res.json(results);
         })
         .catch(err => {
@@ -533,6 +471,7 @@ app.get("/friends-requests", (req, res) => {
 });
 
 app.get("/news/", (req, res) => {
+    console.log("************************ GET news");
     newsapi.v2
         .topHeadlines({
             category: "technology",
@@ -540,24 +479,20 @@ app.get("/news/", (req, res) => {
             country: "us"
         })
         .then(response => {
-            // console.log(response);
             res.json(response);
         });
 });
 
 app.post("/news/:country", (req, res) => {
-    // const language = req.params.language;
+    console.log("***************************** POST news/:country");
     const country = req.body.country;
     const category = req.body.category;
-    console.log("country: ", country);
-    console.log("category: ", category);
     newsapi.v2
         .topHeadlines({
             category: category || "technology",
             country: country || "us"
         })
         .then(response => {
-            console.log(response);
             res.json(response);
         });
 });
@@ -583,14 +518,11 @@ io.on("connection", async function(socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
-
     const userId = socket.request.session.userId;
 
     const getMessages = await db.getMessage();
-    console.log("getMessage: ", getMessages);
     io.sockets.emit("getMessages", getMessages);
     socket.on("Add message", async msg => {
-        console.log("on the server....", msg);
         try {
             const data = await db.getUserById(userId);
             const addMessage = await db.addMessage(
@@ -599,15 +531,11 @@ io.on("connection", async function(socket) {
                 data.rows[0].last,
                 msg
             );
-            io.sockets.emit("myId", data.id);
-            console.log("addMessage: ", addMessage);
-            console.log("data.rows[0]: ", data.rows[0]);
 
             data.rows[0].message = msg;
             data.rows[0].user_id = userId;
             data.rows[0].created_at = addMessage[0].created_at;
             io.sockets.emit("addMessage", data.rows[0]);
-            // console.log("addMessage: ", addMessage);
         } catch (e) {
             console.log("error from chat message: ", e);
         }

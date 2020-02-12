@@ -12,12 +12,10 @@ export default class Pictures extends React.Component {
         axios
             .get("/pictures")
             .then(results => {
-                console.log("Results from get pictures: ", results.data);
                 for (var i = 0; i < results.data.length; i++) {
                     let newState = { ...this.state };
                     newState.pictures.push(results.data[i].picture);
                     this.setState(newState);
-                    // console.log("results.data[i]", results.data[i].picture);
                 }
             })
             .catch(err => {
@@ -38,7 +36,6 @@ export default class Pictures extends React.Component {
         axios
             .post("/upload-album", formData)
             .then(results => {
-                console.log("results from upload album: ", results.data);
                 this.props.waitHide();
                 this.props.noError();
                 this.setState({
@@ -53,8 +50,6 @@ export default class Pictures extends React.Component {
     }
 
     render() {
-        // console.log("this.state from pictures: ", this.state);
-
         return (
             <div className="pictures">
                 <form>

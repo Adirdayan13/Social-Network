@@ -13,7 +13,6 @@ export default class SmallPictures extends React.Component {
         axios
             .get("/pictures")
             .then(results => {
-                // console.log("results from get pictures: ", results);
                 if (results.data.length >= 4) {
                     for (var i = 0; i < 4; i++) {
                         let newState = { ...this.state };
@@ -46,7 +45,6 @@ export default class SmallPictures extends React.Component {
         axios
             .post("/upload-album", formData)
             .then(results => {
-                console.log("results from upload album: ", results.data);
                 this.props.waitHide();
                 this.props.noError();
                 this.setState({
@@ -61,8 +59,6 @@ export default class SmallPictures extends React.Component {
     }
 
     render() {
-        console.log("this.state from pictures: ", this.state);
-
         return (
             <div className="smallpictures">
                 <>
