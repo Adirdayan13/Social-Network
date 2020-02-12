@@ -41,7 +41,7 @@ app.use(express.json());
 app.use(express.static("./public"));
 
 const cookieSessionMiddleware = cookieSession({
-    secret: secrets.SESSION.SECRET,
+    secret: secrets.SESSION_SECRET,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 app.use(cookieSessionMiddleware);
