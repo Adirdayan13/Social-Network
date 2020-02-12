@@ -18,6 +18,7 @@ const { s3Url } = require("./config");
 const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
 /// /upload
+let secrets;
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -30,12 +31,18 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+if (process.env.NODE_ENV === "production") {
+    secrets = process.env;
+} else {
+    secrets = require("./secrets");
+}
+
 app.use(compression());
 app.use(express.json());
 app.use(express.static("./public"));
 
 const cookieSessionMiddleware = cookieSession({
-    secret: `I'm always angry.`,
+    secret: secrets.SESSION.SECRET,
     maxAge: 1000 * 60 * 60 * 24 * 90
 });
 app.use(cookieSessionMiddleware);
