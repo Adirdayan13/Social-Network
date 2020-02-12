@@ -50,8 +50,22 @@ button {
     cursor: pointer;
 }
 
+.chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chat-pic {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    margin-right: 5px;
+}
+
 .chat-container {
     height: 300px;
+    width: 500px;
     overflow-y: scroll;
 }
 
@@ -68,6 +82,12 @@ button {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.newsdiv {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .allnewsmain {
@@ -186,9 +206,22 @@ button:hover {
 .profile-main {
     display: flex;
     width: 100%;
-    /* min-height: 100vh; */
     flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.chat-msgs {
+    display: flex;
     flex-direction: row;
+    /* align-items: center; */
+    margin-bottom: 5px;
+}
+
+.first-last-chat {
+    font-family: "Patua One", cursive;
+    color: red;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
 .friends-main {
@@ -232,7 +265,8 @@ button:hover {
 
 .main-profile {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .loading-gif-uploader {

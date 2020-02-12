@@ -18,6 +18,7 @@ const { s3Url } = require("./config");
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" });
 /// /upload
+let conttectedPeople = {};
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -533,7 +534,7 @@ app.get("/news/", (req, res) => {
             country: "us"
         })
         .then(response => {
-            console.log(response);
+            // console.log(response);
             res.json(response);
         });
 });
@@ -541,15 +542,16 @@ app.get("/news/", (req, res) => {
 app.post("/news/:country", (req, res) => {
     // const language = req.params.language;
     const country = req.body.country;
-    console.log("req.body: ", req.body);
-    // console.log("req.body.country: ", country);
+    const category = req.body.category;
+    console.log("country: ", country);
+    console.log("category: ", category);
     newsapi.v2
         .topHeadlines({
-            // category: category || "technology",
-            country: country
+            category: category || "technology",
+            country: country || "us"
         })
         .then(response => {
-            // console.log(response);
+            console.log(response);
             res.json(response);
         });
 });
@@ -592,9 +594,9 @@ io.on("connection", async function(socket) {
                 data.rows[0].last,
                 msg
             );
-            // console.log("addMessage: ", addMessage);
+            console.log("addMessage: ", addMessage);
             // console.log("addMessage[0].id: ", addMessage[0].id);
-            // console.log("data.rows[0]: ", data.rows[0]);
+            console.log("data.rows[0]: ", data.rows[0]);
             data.rows[0].message = msg;
             data.rows[0].user_id = addMessage[0].id;
             io.sockets.emit("addMessage", data.rows[0]);

@@ -11,7 +11,7 @@ export function Chat() {
     const elemRef = useRef();
 
     useEffect(() => {
-        let { clientHeight, scrollTop, scrollHeight } = elemRef.current;
+        let { clientHeight, scrollHeight } = elemRef.current;
         // console.log("scroll top", scrollTop);
         // console.log("clien height", clientHeight);
         // console.log("scroll height", scrollHeight);
@@ -31,27 +31,61 @@ export function Chat() {
             <h1>Chat Room! </h1>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
-                    chatMessages.reverse().map((msg, index) => {
-                        // console.log("msg from loop: ", msg);
-                        return (
-                            <>
-                                <div className="picture-inchat">
-                                    <img
-                                        className="profile-pic"
-                                        src={msg.picture_url}
-                                    />
+                    chatMessages
+                        .slice(0)
+                        .reverse()
+                        .map(msg => {
+                            // console.log("msg from loop: ", msg);
+                            return (
+                                <div className="chat-msgs" key={msg.id}>
+                                    {msg.user_id === 1 && (
+                                        <div className="me-chat">
+                                            <img
+                                                className="chat-pic"
+                                                src={msg.picture_url}
+                                            />
+                                            <span className="first-last-chat">
+                                                {msg.first} {msg.last}
+                                            </span>{" "}
+                                            <span>
+                                                {new Date(
+                                                    msg.created_at
+                                                ).toLocaleDateString("en-US", {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                })}
+                                                <br />
+                                            </span>
+                                            <p>{msg.message}</p>
+                                        </div>
+                                    )}
+                                    {msg.user_id != 1 && (
+                                        <div className="otheruser-chat">
+                                            <img
+                                                className="chat-pic"
+                                                src={msg.picture_url}
+                                            />
+                                            <span className="first-last-chat">
+                                                {msg.first} {msg.last}
+                                            </span>{" "}
+                                            <span>
+                                                {new Date(
+                                                    msg.created_at
+                                                ).toLocaleDateString("en-US", {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                })}
+                                                <br />
+                                            </span>
+                                            <p>{msg.message}</p>
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="chat-msgs">
-                                    <p>
-                                        {msg.first}: {msg.message}
-                                    </p>
-                                </div>
-                            </>
-                        );
-                    })}
+                            );
+                        })}
             </div>
             <textarea
-                style={{ width: "300px", height: "150px" }}
+                style={{ width: "500px", height: "150px" }}
                 placeholder="Add your message here"
                 onKeyDown={keyCheck}
             ></textarea>

@@ -3,6 +3,7 @@ import BioEditor from "./bioeditor";
 import { BrowserRouter, Route } from "react-router-dom";
 import SmallPictures from "./smallpics";
 import { Link } from "react-router-dom";
+import News from "./news";
 // import axios from "./axios";
 
 export default class Profile extends React.Component {
@@ -42,6 +43,9 @@ export default class Profile extends React.Component {
                 </div>
                 <div className="smallpics">
                     <SmallPictures />
+                </div>
+                <div className="newsdiv">
+                    <News />
                 </div>
             </div>
         );

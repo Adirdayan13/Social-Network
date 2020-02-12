@@ -151,9 +151,9 @@ exports.addMessage = function(user_id, first, last, message) {
     return db
         .query(
             `INSERT INTO chat
-        (user_id, first, last, message)
-        VALUES
-        ($1, $2, $3, $4) RETURNING id`,
+            (user_id, first, last, message)
+            VALUES
+            ($1, $2, $3, $4) RETURNING *`,
             [user_id, first, last, message]
         )
         .then(({ rows }) => rows);
@@ -162,7 +162,7 @@ exports.addMessage = function(user_id, first, last, message) {
 exports.getMessage = function() {
     return db
         .query(
-            `SELECT * FROM chat
+            `SELECT chat.id, chat.user_id, chat.first, chat.last, chat.message, users.picture_url, chat.created_at FROM chat
             JOIN
             users
             ON
