@@ -17,7 +17,6 @@ const uidSafe = require("uid-safe");
 const { s3Url } = require("./config");
 const server = require("http").Server(app);
 const io = require("socket.io").listen(server);
-/// /upload
 let secrets;
 
 if (process.env.NODE_ENV != "production") {
@@ -34,7 +33,7 @@ if (process.env.NODE_ENV != "production") {
 if (process.env.NODE_ENV === "production") {
     secrets = process.env;
 } else {
-    secrets = require("./secrets");
+    secrets = require("./secrets.json");
 }
 
 app.use(compression());
