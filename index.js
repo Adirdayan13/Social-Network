@@ -86,7 +86,7 @@ const uploader = multer({
 
 app.get("/welcome", function(req, res) {
     console.log("*************************** GET WELCOME");
-    console.log("resq.session.userId: ", req.session.userId);
+    console.log("req.session.userId: ", req.session.userId);
     if (req.session.userId) {
         res.redirect("/");
     } else {
