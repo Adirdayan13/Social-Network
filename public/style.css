@@ -65,8 +65,12 @@ button {
 
 .chat-container {
     height: 300px;
-    width: 500px;
+    width: 504px;
     overflow-y: scroll;
+    border: 1px solid black;
+    margin-bottom: 32px;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 .cancelBtn {
@@ -222,6 +226,21 @@ button:hover {
     color: red;
     text-decoration: underline;
     font-weight: bold;
+}
+
+.otheruser-chat {
+    width: 100%;
+    background: #6bd1ffa6;
+    word-break: break-all;
+}
+
+.me-chat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    background: #2196f336;
+    word-break: break-all;
 }
 
 .friends-main {

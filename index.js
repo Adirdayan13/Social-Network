@@ -581,7 +581,7 @@ io.on("connection", async function(socket) {
     const userId = socket.request.session.userId;
 
     const getMessages = await db.getMessage();
-    // console.log("getMessage: ", getMessages);
+    console.log("getMessage: ", getMessages);
     io.sockets.emit("getMessages", getMessages);
 
     socket.on("Add message", async msg => {
@@ -595,26 +595,15 @@ io.on("connection", async function(socket) {
                 msg
             );
             console.log("addMessage: ", addMessage);
-            // console.log("addMessage[0].id: ", addMessage[0].id);
             console.log("data.rows[0]: ", data.rows[0]);
+
             data.rows[0].message = msg;
-            data.rows[0].user_id = addMessage[0].id;
+            data.rows[0].user_id = userId;
+            data.rows[0].created_at = addMessage[0].created_at;
             io.sockets.emit("addMessage", data.rows[0]);
             // console.log("addMessage: ", addMessage);
         } catch (e) {
             console.log("error from chat message: ", e);
         }
     });
-
-    // go and get the last 10 msgs from // DB
-    // we will need a new table and query
-
-    // db.getLastTenChatMessages()
-    //     .then(data => {
-    //         console.log("data from chat messages: ", data);
-    //         io.socket.emit("chatMessages", data.rows);
-    //     })
-    //     .catch(err => {
-    //         console.log("error from messages: ", err);
-    //     });
 });

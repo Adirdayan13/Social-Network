@@ -50,6 +50,7 @@ export default function reducer(state = {}, action) {
             chatMessages: [action.msg].concat(state.chatMessages)
         };
     }
+    console.log("state from reducers end: ", state);
 
     return state;
 }

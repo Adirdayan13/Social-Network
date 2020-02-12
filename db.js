@@ -26,7 +26,10 @@ exports.getUser = function(email) {
 };
 
 exports.getUserById = function(id) {
-    return db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+    return db.query(
+        `SELECT id, first, last, email, picture_url, bio FROM users WHERE id = $1`,
+        [id]
+    );
 };
 
 exports.reset = function(email, emailcode) {
