@@ -16,9 +16,8 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const { s3Url } = require("./config");
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io").listen(server);
 /// /upload
-let conttectedPeople = {};
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -568,7 +567,7 @@ app.get("*", function(req, res) {
     }
 });
 
-server.listen(8080, function() {
+server.listen(process.env.PORT || 8080, function() {
     console.log("I'm listening 808(0).");
 });
 

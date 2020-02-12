@@ -85,7 +85,7 @@ export function Chat() {
                         })}
             </div>
             <textarea
-                style={{ width: "510px", height: "150px" }}
+                className="textarea-chat"
                 placeholder="Add your message here"
                 onKeyDown={keyCheck}
             ></textarea>

@@ -10,6 +10,13 @@
         width: 70%;
         height: 40%;
     }
+    .logo-div-reset {
+        display: flex;
+        position: absolute;
+        left: 50%;
+        top: -16%;
+        transform: translate(-50%, -16%);
+    }
     .logo-img-register {
         width: 100%;
         margin-top: 10%;

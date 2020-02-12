@@ -7,15 +7,14 @@
         margin-top: 11%;
     }
     .logo-img-welcome {
-        width: 350px;
-        margin-top: 11%;
+        width: 150px;
+        margin-top: 20px;
     }
     .logo-div {
         display: flex;
         position: absolute;
-        left: 12%;
+        left: 50%;
         transform: translate(-50%, 0px);
-        width: 17%;
     }
     .registration-inputs {
         position: absolute;
@@ -23,7 +22,8 @@
         flex-direction: column;
         transform: translate(-50%, -95%);
         left: 50%;
-        top: 88%;
+        top: 87%;
+        height: 50%;
         width: 80%;
         text-align: center;
         color: #30475e;

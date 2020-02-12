@@ -9,7 +9,6 @@ import OtherProfile from "./otherprofile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
 import { Chat } from "./chat";
-import News from "./news";
 
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
@@ -124,15 +123,21 @@ export default class App extends React.Component {
                                                 </Link>
                                             </li>{" "}
                                             <li>
-                                                <Link to="/edit">
-                                                    <i className="fas fa-user-edit"></i>{" "}
-                                                    Edit
-                                                </Link>
-                                            </li>{" "}
-                                            <li>
                                                 <Link to="/mypictures">
                                                     <i className="far fa-images"></i>{" "}
                                                     Album
+                                                </Link>
+                                            </li>{" "}
+                                            <li>
+                                                <Link to="/chat">
+                                                    <i className="far fa-comments"></i>{" "}
+                                                    Chat
+                                                </Link>
+                                            </li>{" "}
+                                            <li>
+                                                <Link to="/edit">
+                                                    <i className="fas fa-user-edit"></i>{" "}
+                                                    Edit
                                                 </Link>
                                             </li>{" "}
                                             <li onClick={e => this.logout(e)}>
