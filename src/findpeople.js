@@ -35,22 +35,6 @@ export default function FindPeople() {
         };
     }, [user]);
 
-    // useEffect(() => {
-    //     axios
-    //         .get("users/" + country + ".json")
-    //         .then(({ data }) => {
-    //             setCountries(data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }, [country]);
-
-    // const onChange = ({ target }) => {
-    //     // console.log('target: ', target);
-    //     setGreetee(target.value);
-    // };
-
     const showProfile = a => {
         location.replace("/user/" + a);
     };
