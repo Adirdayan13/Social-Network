@@ -1,5 +1,5 @@
 import * as io from "socket.io-client";
-import { getMessages, addMessage } from "./actions";
+import { myId, getMessages, addMessage } from "./actions";
 
 export let socket;
 
@@ -18,6 +18,10 @@ export const init = store => {
         socket.on("getMessages", msg => {
             console.log("msg from getMessages: ", msg);
             store.dispatch(getMessages(msg));
+        });
+        socket.on("myId", id => {
+            console.log("my id: ", id);
+            store.dispatch(myId(id));
         });
     }
 };

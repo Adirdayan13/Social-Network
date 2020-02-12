@@ -50,14 +50,13 @@ export default function reducer(state = {}, action) {
             chatMessages: [action.msg].concat(state.chatMessages)
         };
     }
+    if (action.type == "MY_ID") {
+        state = {
+            ...state,
+            my_user_id: action.my_user_id
+        };
+    }
     console.log("state from reducers end: ", state);
 
     return state;
 }
-
-// immutably - array
-// map - good for changing item(s) in an array
-// concat - combine two or more arays into one array
-// filter - remove an item(s) from an array
-// ... - clone array or objects
-// Object.assign - make copy of objects

@@ -8,8 +8,10 @@ const cookieSession = require("cookie-session");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
 const path = require("path");
+const newsApiKey = require("./newsapikey.json");
 const NewsAPI = require("newsapi");
-const newsapi = new NewsAPI("1c8473f38ea34be9818e190955cd57ff");
+const newsapi = new NewsAPI(newsApiKey.key);
+
 ///upload
 const s3 = require("./s3");
 const multer = require("multer");
@@ -587,7 +589,6 @@ io.on("connection", async function(socket) {
     const getMessages = await db.getMessage();
     console.log("getMessage: ", getMessages);
     io.sockets.emit("getMessages", getMessages);
-
     socket.on("Add message", async msg => {
         console.log("on the server....", msg);
         try {
@@ -598,6 +599,7 @@ io.on("connection", async function(socket) {
                 data.rows[0].last,
                 msg
             );
+            io.sockets.emit("myId", data.id);
             console.log("addMessage: ", addMessage);
             console.log("data.rows[0]: ", data.rows[0]);
 

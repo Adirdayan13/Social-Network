@@ -5,16 +5,13 @@ import { useSelector } from "react-redux";
 
 export function Chat() {
     const chatMessages = useSelector(state => state && state.chatMessages);
-
+    const myId = useSelector(state => state && state.myId);
+    console.log("myId :", myId);
     console.log("chatMessages: ", chatMessages);
-
     const elemRef = useRef();
 
     useEffect(() => {
         let { clientHeight, scrollHeight } = elemRef.current;
-        // console.log("scroll top", scrollTop);
-        // console.log("clien height", clientHeight);
-        // console.log("scroll height", scrollHeight);
         elemRef.current.scrollTop = scrollHeight - clientHeight;
     }, [chatMessages]);
 
@@ -35,10 +32,9 @@ export function Chat() {
                         .slice(0)
                         .reverse()
                         .map(msg => {
-                            // console.log("msg from loop: ", msg);
                             return (
                                 <div className="chat-msgs" key={msg.id}>
-                                    {msg.user_id === 1 && (
+                                    {msg.user_id === { myId } && (
                                         <div className="me-chat">
                                             <img
                                                 className="chat-pic"
@@ -59,7 +55,7 @@ export function Chat() {
                                             <p>{msg.message}</p>
                                         </div>
                                     )}
-                                    {msg.user_id != 1 && (
+                                    {msg.user_id != { myId } && (
                                         <div className="otheruser-chat">
                                             <img
                                                 className="chat-pic"

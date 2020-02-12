@@ -42,3 +42,11 @@ export async function addMessage(msg) {
         msg
     };
 }
+
+export async function myId(my_user_id) {
+    console.log("my id from actions: ", my_user_id);
+    return {
+        type: "MY_ID",
+        my_user_id
+    };
+}
