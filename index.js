@@ -408,7 +408,6 @@ app.get("/users/newestUsers", (req, res) => {
     console.log("***************** GET users/newestUsers");
     db.newestUsers()
         .then(results => {
-            // console.log("results from newestUsers: ", results.rows);
             res.json(results.rows);
         })
         .catch(err => {
