@@ -1,5 +1,5 @@
 import * as io from "socket.io-client";
-import { getMessages, addMessage } from "./actions";
+import { getMessages, addMessage, onlineUsers } from "./actions";
 
 export let socket;
 
@@ -12,6 +12,10 @@ export const init = store => {
         });
         socket.on("getMessages", msg => {
             store.dispatch(getMessages(msg));
+        });
+        socket.on("onlineUsers", results => {
+            // console.log("online Users are : ", results);
+            store.dispatch(onlineUsers(results));
         });
     }
 };

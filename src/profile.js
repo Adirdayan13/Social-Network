@@ -1,9 +1,9 @@
 import React from "react";
 import BioEditor from "./bioeditor";
-import { BrowserRouter, Route } from "react-router-dom";
 import SmallPictures from "./smallpics";
 import { Link } from "react-router-dom";
 import News from "./news";
+// import { BrowserRouter, Route } from "react-router-dom";
 // import axios from "./axios";
 
 export default class Profile extends React.Component {

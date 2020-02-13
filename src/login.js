@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "./axios";
 import { Link } from "react-router-dom";
 import { useStatefulFields } from "./hooks/useStatefulFields";
 import { useAuthSubmit } from "./hooks/useAuthSubmit";
@@ -18,7 +17,11 @@ export default function Login() {
                 ></img>
             </div>
             <div className="inputs-login">
-                {error && <p>Something went wrong</p>}
+                {error && (
+                    <p className="error">
+                        something went wrong, please try again.
+                    </p>
+                )}
                 <input
                     name="email"
                     className="email"

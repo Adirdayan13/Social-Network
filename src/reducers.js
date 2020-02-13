@@ -47,7 +47,14 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    console.log("state from reducers end: ", state);
+    if (action.type == "SHOW_ONLINE_USERS") {
+        state = {
+            ...state,
+            onlineUsers: action.results
+        };
+    }
+
+    // console.log("state from reducers end: ", state);
 
     return state;
 }

@@ -5,6 +5,7 @@ export function useAuthSubmit(url, values) {
     const [error, setError] = useState();
 
     const handleSubmit = e => {
+        setError(false);
         e.preventDefault();
         axios
             .post(url, values)

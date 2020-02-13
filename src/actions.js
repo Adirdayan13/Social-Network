@@ -37,3 +37,10 @@ export async function addMessage(msg) {
         msg
     };
 }
+
+export function onlineUsers(results) {
+    return {
+        type: "SHOW_ONLINE_USERS",
+        results
+    };
+}

@@ -175,3 +175,14 @@ exports.getMessage = function() {
         )
         .then(({ rows }) => rows);
 };
+
+exports.onlineUsers = onlineUserId => {
+    return db
+        .query(
+            `SELECT id, first, last, picture_url
+            FROM users
+            WHERE id = ANY ($1)`,
+            [onlineUserId]
+        )
+        .then(({ rows }) => rows);
+};

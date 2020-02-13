@@ -73,6 +73,19 @@ button {
     padding: 5px;
 }
 
+.connected-users {
+    width: 140px;
+    transform: translate(-440px, -250px);
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .cancelBtn {
     text-decoration: none;
     color: black;
@@ -594,7 +607,7 @@ button:hover {
     animation-iteration-count: 1;
     animation-direction: normal;
     position: absolute;
-    top: 65%;
+    top: -30%;
     width: 100%;
     text-align: center;
 }
@@ -657,11 +670,13 @@ button:hover {
 .textarea-chat {
     outline: none;
     resize: none;
-    width: 531px;
+    width: 520px;
+    border-radius: 20px;
     height: 149px;
     margin: 0px;
     background: transparent;
     text-align: center;
+    transform: translate(0px, -80px);
 }
 
 .bio-div {
@@ -721,13 +736,19 @@ button:hover {
 .edit-inputs {
     position: absolute;
     left: 50%;
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, -50%);
     text-align: center;
-    top: 30%;
+    top: 50%;
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 40px;
 }
 
 .edit-profile > p {
     text-decoration: underline;
+    text-align: center;
+    font-size: 30px;
+    margin-top: 5%;
 }
 
 .save {

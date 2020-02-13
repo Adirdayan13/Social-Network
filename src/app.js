@@ -79,6 +79,7 @@ export default class App extends React.Component {
                                 />
                             </Link>
                         </div>
+                        <span>Hello world</span>
                         <div className="r-header">
                             <div className="text-header">
                                 <ProfilePic
@@ -199,7 +200,9 @@ export default class App extends React.Component {
                                 />
                             )}
                         />
-                        <Route exact path="/chat/" component={Chat} />
+                        <Route path="/chat">
+                            <Chat myId={this.state.id} />
+                        </Route>
                         <Route exact path="/friends/" component={Friends} />
                         <Route
                             path="/mypictures"

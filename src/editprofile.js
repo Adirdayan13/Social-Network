@@ -56,6 +56,7 @@ export default class EditProfile extends React.Component {
     render() {
         return (
             <div className="edit-profile">
+                <p className="edit-profile-p">Edit your profile</p>
                 {!this.state.done && (
                     <div className="edit-inputs">
                         <input
