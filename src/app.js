@@ -243,5 +243,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-// {this.state.news && <News />}
