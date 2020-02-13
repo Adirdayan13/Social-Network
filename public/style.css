@@ -28,7 +28,8 @@ input {
     margin-bottom: 10px;
 }
 
-p {
+p,
+h3 {
     font-family: "Patua One", cursive;
     margin: 0;
 }
@@ -36,6 +37,12 @@ p {
 h1,
 h2 {
     text-align: center;
+    font-family: "Patua One", cursive;
+}
+
+label {
+    font-family: "Patua One", cursive;
+    font-size: 14px;
 }
 
 button {
@@ -112,6 +119,14 @@ button {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+}
+
+.news-title {
+    text-decoration: underline;
+    text-align: center;
+    background: #b2dffb;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px 1px #0000000d;
 }
 
 .allnewsmain {
@@ -647,7 +662,7 @@ button:hover {
 
 .bio {
     width: 100%;
-    height: 100px;
+    height: 30px;
     background-color: transparent;
     outline: none;
     resize: none;

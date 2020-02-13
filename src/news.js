@@ -51,7 +51,7 @@ export default class News extends React.Component {
                 {this.state.news && (
                     <div className="allnewsmain">
                         <p
-                            className="news-title"
+                            className="news-feed"
                             style={{
                                 textAlign: "center",
                                 color: "red",
@@ -60,7 +60,7 @@ export default class News extends React.Component {
                         >
                             News Feed
                         </p>
-                        <label htmlFor="language">Choose a language:</label>
+                        <label htmlFor="language">Choose language:</label>
                         <select
                             name="language"
                             id="language"
@@ -89,7 +89,7 @@ export default class News extends React.Component {
                             </option>
                         </select>
 
-                        <label htmlFor="category">Choose a category:</label>
+                        <label htmlFor="category">Choose category:</label>
                         <select
                             name="category"
                             id="category"
@@ -105,17 +105,11 @@ export default class News extends React.Component {
                         <div className="allnews">
                             {this.state.news.map((singleNews, key) => (
                                 <div className="news" key={key}>
-                                    <p
-                                        style={{
-                                            textDecoration: "underline",
-                                            color: "crimson",
-                                            textAlign: "center"
-                                        }}
-                                    >
+                                    <p className="news-title">
                                         <br />
                                         {singleNews.title}
                                     </p>
-                                    <p>
+                                    <p style={{ fontFamily: "auto" }}>
                                         {singleNews.description}
                                         <br />
                                     </p>

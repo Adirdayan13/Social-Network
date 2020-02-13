@@ -10,19 +10,10 @@ export default class OtherProfile extends React.Component {
     }
 
     componentDidMount() {
-        //here we want to make a request to the server to get
-        // all the info about the requested user (dynamic route)
-
-        // console.log("this.props.match.params.id: ", this.props.match.params.id);
-
-        // we want the server to send back all info about requested user
-        // and the id of the currently logged in user
-        // if there are the same we need to redirect the, back to the "/"
-
         axios
             .get("/user/" + this.props.match.params.id + ".json")
             .then(results => {
-                console.log("results from getUserById: ", results);
+                // console.log("results from getUserById: ", results);
                 if (this.props.match.params.id == results.data.currentId) {
                     this.props.history.push("/");
                 } else {

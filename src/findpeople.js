@@ -50,7 +50,7 @@ export default function FindPeople() {
                 type="text"
                 placeholder="Search for friends"
             />
-            {joined && <p>Checkout who just joined</p>}
+            {joined && <p>Check out who just joined</p>}
             <div className="all-pictures-div">
                 {users.map((user, index) => {
                     return (

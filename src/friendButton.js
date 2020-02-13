@@ -5,7 +5,6 @@ export default function FriendButton(props) {
     const [friendOrNot, setFriendOrNot] = useState([]);
     const [picture, setPicture] = useState([]);
     const [albumExist, setAlbumExist] = useState([]);
-    console.log("props: ", props);
 
     useEffect(() => {
         (async () => {
@@ -13,7 +12,6 @@ export default function FriendButton(props) {
                 const { data } = await axios.get(
                     "/friends-status/" + props.recipient_id + ".json"
                 );
-                console.log("data from GET friendButton: ", data);
                 setFriendOrNot(data);
             } catch (e) {
                 console.log(e);
@@ -22,10 +20,6 @@ export default function FriendButton(props) {
                 axios
                     .get("/pictures/" + props.recipient_id + ".json")
                     .then(results => {
-                        console.log(
-                            "results from pictures/recipient_id: ",
-                            results.data
-                        );
                         setAlbumExist(results.data);
                         console.log("albumExist: ", albumExist);
                     })
@@ -44,7 +38,6 @@ export default function FriendButton(props) {
             axios
                 .post("/friends-status/cancel/" + props.recipient_id + ".json")
                 .then(results => {
-                    console.log("results from cancel: ", results);
                     setFriendOrNot(results.data);
                 })
                 .catch(err => {
@@ -56,13 +49,11 @@ export default function FriendButton(props) {
             const { data } = axios
                 .post("/friends-status/" + props.recipient_id + ".json")
                 .then(results => {
-                    console.log("results from POST /friends-status: ", results);
                     setFriendOrNot(results.data);
                 })
                 .catch(err => {
                     console.log("error from POST /friends-status: ", err);
                 });
-            console.log("data from POST friendButton: ", data);
         }
 
         if (friendOrNot.btnText == "Accept friend request") {
@@ -79,7 +70,6 @@ export default function FriendButton(props) {
             axios
                 .post("/friends-status/cancel/" + props.recipient_id + ".json")
                 .then(results => {
-                    console.log("results from cancel: ", results);
                     setFriendOrNot(results.data);
                     setPicture([]);
                 })
@@ -90,16 +80,10 @@ export default function FriendButton(props) {
     };
 
     const showAlbum = function() {
-        console.log("friends or not: ", friendOrNot);
-        console.log("albumExist: ", albumExist);
-        console.log("picture: ", picture);
-        /// make axios to get pictures before !!
-
         axios
             .get("/friend-album/" + props.recipient_id + ".json")
             .then(results => {
                 setPicture(results.data.pictures);
-                console.log("results from get friend pictures: ", results);
             })
             .catch(err => {
                 console.log("error from get friend pictures: ", err);

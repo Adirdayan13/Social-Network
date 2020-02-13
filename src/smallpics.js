@@ -63,7 +63,7 @@ export default class SmallPictures extends React.Component {
             <div className="smallpictures">
                 <>
                     <Link to="/mypictures">
-                        <p>My album</p>
+                        <p style={{ color: "black" }}>My album</p>
                     </Link>
                     {this.state.pictures && (
                         <>

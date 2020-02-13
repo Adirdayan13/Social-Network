@@ -63,13 +63,13 @@ export default class EditProfile extends React.Component {
                         <input
                             className="first"
                             name="first"
-                            placeholder="First"
+                            placeholder="First Name"
                             onChange={e => this.handleChange(e)}
                         />
                         <input
                             className="last"
                             name="last"
-                            placeholder="Last"
+                            placeholder="Last Name"
                             onChange={e => this.handleChange(e)}
                         />
                         <br />

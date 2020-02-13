@@ -1,6 +1,5 @@
 // import axios from "./axios";
 import React, { useEffect } from "react";
-import FriendButton from "./friendButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getStatus, acceptFriend, unfriend } from "./actions";
 
@@ -30,7 +29,7 @@ export default function Friends() {
     return (
         <div className="friends-main">
             <h1 style={{ margin: "10px", textDecoration: "underline" }}>
-                Your friends
+                Your {acceptedFriends && acceptedFriends.length} friends
             </h1>
             <div className="accepted-friends">
                 {acceptedFriends &&
@@ -58,7 +57,8 @@ export default function Friends() {
             </div>
             <br />
             <h1 style={{ margin: "10px", textDecoration: "underline" }}>
-                Want to be your friends:
+                {friendsWannabes && friendsWannabes.length} people want to be
+                your friend:
             </h1>
             <div className="friendsWannabes">
                 {friendsWannabes &&
