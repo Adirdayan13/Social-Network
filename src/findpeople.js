@@ -10,7 +10,6 @@ export default function FindPeople() {
         let ignore = false;
         (async () => {
             try {
-                console.log("try !");
                 if (user != "") {
                     const { data } = await axios.get(
                         "/users/" + user + ".json"
@@ -43,8 +42,6 @@ export default function FindPeople() {
         setUser(target.value);
     };
 
-    console.log("users: ", users);
-    console.log("joined: ", joined);
     return (
         <div className="find-people">
             <h2>Search for friends</h2>

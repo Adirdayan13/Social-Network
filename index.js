@@ -523,7 +523,6 @@ io.on("connection", async function(socket) {
     const userId = socket.request.session.userId;
     onlineUsers[socket.id] = userId;
 
-    console.log("onlineusers connected: ", onlineUsers);
     console.log(
         `user id ${onlineUsers[socket.id]} is connected with socket id ${
             socket.id
@@ -556,7 +555,7 @@ io.on("connection", async function(socket) {
     Object.entries(onlineUsers).map(onlineId => {
         onlineUserId.push(onlineId[1]);
     });
-    console.log("onlineusers : ", onlineUsers);
+    // console.log("onlineusers : ", onlineUsers);
 
     db.onlineUsers(onlineUserId)
         .then(results => {

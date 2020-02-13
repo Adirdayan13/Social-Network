@@ -14,7 +14,6 @@ export const init = store => {
             store.dispatch(getMessages(msg));
         });
         socket.on("onlineUsers", results => {
-            console.log("online Users are from socket : ", results);
             store.dispatch(onlineUsers(results));
         });
     }

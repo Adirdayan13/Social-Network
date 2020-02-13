@@ -24,7 +24,7 @@ export const Chat = ({ myId }) => {
 
     return (
         <div className="chat">
-            <h1 style={{ margin: 0 }}>Chat Room! </h1>
+            <h1>Chat Room! </h1>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages
@@ -87,7 +87,14 @@ export const Chat = ({ myId }) => {
                             );
                         })}
             </div>
-            <div className="connected-users">
+
+            <div
+                className={
+                    location.pathname == "/chat"
+                        ? "connected-users"
+                        : "connected-users-main"
+                }
+            >
                 <h3 style={{ margin: 0 }}>Online users:</h3>
                 {onlineUsers &&
                     onlineUsers[0].map(user => (

@@ -6,18 +6,14 @@ export default class EditProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log("props from editprofile: ", props);
     }
     handleChange(e) {
-        console.log("change");
         this.setState({
             [e.target.name]: e.target.value
         });
-        console.log("this.state: ", this.state);
     }
     edit(e) {
         this.props.editHandler();
-        console.log("this.props from edir profile: ", this.props);
         e.preventDefault(e);
         axios
             .post("/edit", {
@@ -27,7 +23,6 @@ export default class EditProfile extends React.Component {
                 id: this.props.id
             })
             .then(results => {
-                console.log("results from post edit: ", results);
                 if (results.data.success) {
                     this.props.setUpdate(
                         results.data.email,

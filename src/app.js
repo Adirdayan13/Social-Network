@@ -79,8 +79,32 @@ export default class App extends React.Component {
                                 />
                             </Link>
                         </div>
-                        <span>Hello world</span>
+
                         <div className="r-header">
+                            <Link to="/friends">
+                                <i className="fas fa-users"></i>
+                                <p> Friends</p>
+                            </Link>
+                            <Link to="/users">
+                                <i className="fas fa-search"></i>
+                                <p>Search</p>
+                            </Link>
+                            <Link to="/mypictures">
+                                <i className="far fa-images"></i>
+                                <p>Album</p>
+                            </Link>
+                            <Link to="/chat">
+                                <i className="far fa-comments"></i>
+                                <p>Chat</p>
+                            </Link>
+                            <Link to="/edit">
+                                <i className="fas fa-user-edit"></i>
+                                <p>Edit</p>
+                            </Link>
+                            <Link to="/">
+                                <i className="fas fa-sign-out-alt"></i>
+                                <p onClick={e => this.logout(e)}>Log out</p>
+                            </Link>
                             <div className="text-header">
                                 <ProfilePic
                                     picture_url={this.state.picture_url}
@@ -90,54 +114,6 @@ export default class App extends React.Component {
                                         this.animataionFalse()
                                     }
                                 />
-                                <ul>
-                                    <li>
-                                        <Link className="dropdown" to="/">
-                                            <i
-                                                style={{ color: "black " }}
-                                                className="fas fa-arrow-down"
-                                            ></i>
-                                        </Link>
-                                        <ul>
-                                            <li>
-                                                <Link to="/friends">
-                                                    <i className="fas fa-users"></i>{" "}
-                                                    Friends
-                                                </Link>
-                                            </li>{" "}
-                                            <li>
-                                                <Link to="/users">
-                                                    <i className="fas fa-search"></i>{" "}
-                                                    Search
-                                                </Link>
-                                            </li>{" "}
-                                            <li>
-                                                <Link to="/mypictures">
-                                                    <i className="far fa-images"></i>{" "}
-                                                    Album
-                                                </Link>
-                                            </li>{" "}
-                                            <li>
-                                                <Link to="/chat">
-                                                    <i className="far fa-comments"></i>{" "}
-                                                    Chat
-                                                </Link>
-                                            </li>{" "}
-                                            <li>
-                                                <Link to="/edit">
-                                                    <i className="fas fa-user-edit"></i>{" "}
-                                                    Edit
-                                                </Link>
-                                            </li>{" "}
-                                            <li onClick={e => this.logout(e)}>
-                                                <a>
-                                                    <i className="fas fa-sign-out-alt"></i>{" "}
-                                                    Log out
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
 
@@ -241,6 +217,7 @@ export default class App extends React.Component {
                                 path="/"
                                 render={() => (
                                     <Profile
+                                        id={this.state.id}
                                         picture_url={this.state.picture_url}
                                         first={this.state.first}
                                         last={this.state.last}
