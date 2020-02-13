@@ -141,46 +141,6 @@ button {
     text-align: center;
 }
 
-ul {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    font-family: arial;
-    /* background-color: none; */
-}
-
-ul li {
-    float: left;
-    width: 90px;
-    height: 40px;
-    opacity: 0.8;
-    line-height: 40px;
-    text-align: center;
-    font-size: 15px;
-}
-
-ul li a {
-    border-bottom: 1px solid black;
-    text-decoration: none;
-    color: white;
-    display: block;
-    cursor: pointer;
-}
-
-/* ul li a:hover {
-    background-color: green;
-} */
-
-ul li ul li {
-    display: none;
-}
-
-ul li:hover ul li {
-    display: block;
-    background-color: #706c61;
-    /* opacity: 70%; */
-}
-
 button:hover {
     background-color: #30475e;
     color: white;
