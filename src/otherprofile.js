@@ -44,7 +44,11 @@ export default class OtherProfile extends React.Component {
                     <div className="all-other-profile">
                         <img
                             className="other-user-profile-pic"
-                            src={this.state.userInfo.picture_url}
+                            src={
+                                this.state.userInfo.picture_url
+                                    ? this.state.userInfo.picture_url
+                                    : "/pictures/default.png"
+                            }
                         />
                         <p className="other-user-info">
                             {this.state.userInfo.first}{" "}

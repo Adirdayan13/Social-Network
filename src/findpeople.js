@@ -34,8 +34,8 @@ export default function FindPeople() {
         };
     }, [user]);
 
-    const showProfile = a => {
-        location.replace("/user/" + a);
+    const showProfile = userId => {
+        location.replace("/user/" + userId);
     };
 
     const onCountryChange = ({ target }) => {
@@ -58,20 +58,15 @@ export default function FindPeople() {
                             <p className="full-name-picture">
                                 {user.first} {user.last}
                             </p>
-                            {user.picture_url && (
-                                <img
-                                    onClick={() => showProfile(user.id)}
-                                    className="picture-search"
-                                    src={user.picture_url}
-                                />
-                            )}
-                            {!user.picture_url && (
-                                <img
-                                    onClick={() => showProfile(user.id)}
-                                    className="picture-search"
-                                    src="/pictures/default.png"
-                                />
-                            )}
+                            <img
+                                onClick={() => showProfile(user.id)}
+                                className="picture-search"
+                                src={
+                                    user.picture_url
+                                        ? user.picture_url
+                                        : "/pictures/default.png"
+                                }
+                            />
                         </div>
                     );
                 })}

@@ -1,5 +1,6 @@
 // import axios from "./axios";
 import React, { useEffect } from "react";
+import FriendButton from "./friendButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getStatus, acceptFriend, unfriend } from "./actions";
 
@@ -45,6 +46,7 @@ export default function Friends() {
                                 src={friend.picture_url}
                             />
                             <br />
+
                             <button
                                 className="unfriend-btn"
                                 onClick={() => dispatch(unfriend(friend.id))}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
-// import { Link } from "react-router-dom";
 
 export default function FriendButton(props) {
     const [friendOrNot, setFriendOrNot] = useState([]);
@@ -70,16 +69,11 @@ export default function FriendButton(props) {
             const { data } = axios
                 .post("/friends-status/accept/" + props.recipient_id + ".json")
                 .then(results => {
-                    console.log(
-                        "results from POST friends-status/accept: ",
-                        results
-                    );
                     setFriendOrNot(results.data);
                 })
                 .catch(err => {
                     console.log("error from POST friends-status/accept: ", err);
                 });
-            console.log("data from accept friend request: ", data);
         }
         if (friendOrNot.btnText == "Unfriend") {
             axios
