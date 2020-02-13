@@ -6,12 +6,10 @@ import { useSelector } from "react-redux";
 export const Chat = ({ myId }) => {
     const chatMessages = useSelector(state => state && state.chatMessages);
     const onlineUsers = useSelector(state => state && state.onlineUsers);
-    console.log("onlineUsers : ", onlineUsers);
 
     const elemRef = useRef();
 
     useEffect(() => {
-        console.log("myId: ", myId);
         let { clientHeight, scrollHeight } = elemRef.current;
         elemRef.current.scrollTop = scrollHeight - clientHeight;
     }, [chatMessages]);
@@ -26,7 +24,7 @@ export const Chat = ({ myId }) => {
 
     return (
         <div className="chat">
-            <h1>Chat Room! </h1>
+            <h1 style={{ margin: 0 }}>Chat Room! </h1>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages
@@ -92,7 +90,7 @@ export const Chat = ({ myId }) => {
             <div className="connected-users">
                 <h3 style={{ margin: 0 }}>Online users:</h3>
                 {onlineUsers &&
-                    onlineUsers.map(user => (
+                    onlineUsers[0].map(user => (
                         <img
                             key={user.id}
                             className="chat-pic"

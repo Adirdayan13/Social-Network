@@ -514,40 +514,56 @@ server.listen(process.env.PORT || 8080, function() {
 });
 
 let onlineUsers = {};
-let onlineUserId = [];
+
 // SERVER SIDE SOCKET code
 io.on("connection", async function(socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
     const userId = socket.request.session.userId;
-    // add user to online users
     onlineUsers[socket.id] = userId;
+
+    console.log("onlineusers connected: ", onlineUsers);
     console.log(
         `user id ${onlineUsers[socket.id]} is connected with socket id ${
             socket.id
         }`
     );
-    console.log("onlineUsers: ", onlineUsers);
 
-    Object.entries(onlineUsers).map(onlineId => {
-        if (onlineId) {
+    socket.on("disconnect", () => {
+        // delete user from online users
+        console.log(
+            `user is disconnect with socket id ${socket.id} and userId ${
+                onlineUsers[socket.id]
+            }`
+        );
+        delete onlineUsers[socket.id];
+        let onlineUserId = [];
+
+        Object.entries(onlineUsers).map(onlineId => {
             onlineUserId.push(onlineId[1]);
-        }
+        });
+
+        db.onlineUsers(onlineUserId)
+            .then(results => {
+                // emit online users to everyone connected
+                io.sockets.emit("onlineUsers", results);
+            })
+            .catch(err => console.log("error in onlineUsers: ", err));
     });
+
+    let onlineUserId = [];
+    Object.entries(onlineUsers).map(onlineId => {
+        onlineUserId.push(onlineId[1]);
+    });
+    console.log("onlineusers : ", onlineUsers);
+
     db.onlineUsers(onlineUserId)
         .then(results => {
-            console.log("results from searchOnlineUsers: ", results);
             // emit online users to everyone connected
             io.sockets.emit("onlineUsers", results);
         })
         .catch(err => console.log("error in onlineUsers: ", err));
-
-    socket.on("disconnect", () => {
-        // delete user from online users
-        delete onlineUsers[socket.id];
-        console.log(`user is disconnect with socket id ${socket.id}`);
-    });
 
     const getMessages = await db.getMessage();
     io.sockets.emit("getMessages", getMessages);

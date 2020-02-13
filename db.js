@@ -186,3 +186,12 @@ exports.onlineUsers = onlineUserId => {
         )
         .then(({ rows }) => rows);
 };
+
+// exports.deleteOnlineUsers = userId => {
+//     return db.quert(
+//         `DELETE id, first, last, picture_url
+//         FROM users
+//         WHERE id = ANY ($1)`,
+//         [userId]
+//     );
+// };

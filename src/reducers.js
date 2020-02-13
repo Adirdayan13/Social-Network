@@ -50,7 +50,7 @@ export default function reducer(state = {}, action) {
     if (action.type == "SHOW_ONLINE_USERS") {
         state = {
             ...state,
-            onlineUsers: action.results
+            onlineUsers: [action.results]
         };
     }
 
