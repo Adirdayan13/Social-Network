@@ -100,7 +100,11 @@ export const Chat = ({ myId }) => {
                         <img
                             key={user.id}
                             className="chat-pic"
-                            src={user.picture_url}
+                            src={
+                                user.picture_url
+                                    ? user.picture_url
+                                    : "/pictures/default.png"
+                            }
                         />
                     ))}
             </div>

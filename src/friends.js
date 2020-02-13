@@ -18,6 +18,10 @@ export default function Friends() {
             state.friendsWannabes.filter(friend => !friend.accepted)
     );
 
+    const showProfile = userId => {
+        location.replace("user/" + userId);
+    };
+
     useEffect(() => {
         dispatch(getStatus());
     }, []);
@@ -35,6 +39,8 @@ export default function Friends() {
                                 {friend.first} {friend.last}
                             </p>
                             <img
+                                style={{ cursor: "pointer" }}
+                                onClick={() => showProfile(friend.id)}
                                 className="friends-pic"
                                 src={friend.picture_url}
                             />
@@ -60,6 +66,8 @@ export default function Friends() {
                                 {friend.first} {friend.last}
                             </p>
                             <img
+                                style={{ cursor: "pointer" }}
+                                onClick={() => showProfile(friend.id)}
                                 className="friends-pic"
                                 src={friend.picture_url}
                             />
