@@ -26,11 +26,8 @@ export default class Reset extends React.Component {
             alert("You are a robot ?");
         }
     }
-    recaptchaLoaded() {
-        console.log("Recaptcha loaded");
-    }
+    recaptchaLoaded() {}
     verifyCallback(response) {
-        console.log("checked");
         if (response) {
             this.setState({
                 isVerified: true
@@ -39,14 +36,11 @@ export default class Reset extends React.Component {
     }
     submit() {
         this.setState({ error: false });
-        console.log("this.state: ", this.state);
-        console.log("this.state.step: ", this.state.step);
         axios
             .post("/reset/start", {
                 email: this.state.email
             })
             .then(({ data }) => {
-                console.log("data.success: ", data.success);
                 if (data.success) {
                     this.setState({ step: 2 });
                 } else if (data.success == false) {
@@ -62,27 +56,16 @@ export default class Reset extends React.Component {
             });
     }
     changePass() {
-        console.log("this.state: ", this.state);
-
         axios
             .post("/reset/verify", {
                 state: this.state
             })
             .then(results => {
-                console.log("results from POST reset/verify: ", results);
-                console.log("data.success: ", results.data.success);
-                console.log(
-                    "results data success == false: ",
-                    results.data.success == false
-                );
                 if (results.data.success) {
-                    console.log("step: 3");
                     this.setState({ step: 3 });
                 } else if (results.data.success == false) {
-                    console.log("error: true");
                     this.setState({ error: true });
                 } else {
-                    console.log("step: 2");
                     this.setState({ step: 2 });
                 }
             })
@@ -91,7 +74,6 @@ export default class Reset extends React.Component {
             });
     }
     render() {
-        console.log("this.state: ", this.state);
         return (
             <div className="reset">
                 <div className="logo-div-reset">
