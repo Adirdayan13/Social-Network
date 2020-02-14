@@ -62,7 +62,9 @@ export default class SmallPictures extends React.Component {
         return (
             <div className="smallpictures">
                 <>
-                    <p style={{ color: "black" }}>My album</p>
+                    <Link to="/mypictures">
+                        <p style={{ color: "black" }}>My album</p>
+                    </Link>
                     {this.state.pictures && (
                         <>
                             {this.state.pictures.map((picture, index) => (

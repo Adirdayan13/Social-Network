@@ -75,6 +75,9 @@ export default class News extends React.Component {
                             <option name="fr" value="fr">
                                 French
                             </option>
+                            <option name="de" value="de">
+                                Deutch
+                            </option>
                             <option name="in" value="in">
                                 Hindi
                             </option>
@@ -85,7 +88,7 @@ export default class News extends React.Component {
                                 Mandarin
                             </option>
                             <option name="ru" value="ru">
-                                Russia
+                                Russian
                             </option>
                         </select>
 
