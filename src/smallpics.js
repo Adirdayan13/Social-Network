@@ -62,9 +62,7 @@ export default class SmallPictures extends React.Component {
         return (
             <div className="smallpictures">
                 <>
-                    <Link to="/mypictures">
-                        <p style={{ color: "black" }}>My album</p>
-                    </Link>
+                    <p style={{ color: "black" }}>My album</p>
                     {this.state.pictures && (
                         <>
                             {this.state.pictures.map((picture, index) => (
@@ -77,7 +75,9 @@ export default class SmallPictures extends React.Component {
                         </>
                     )}
                     {this.state.pictures.length == 0 && (
-                        <p>Upload your first picture</p>
+                        <Link to="/mypictures">
+                            <p>Upload your first picture</p>
+                        </Link>
                     )}
                 </>
             </div>
