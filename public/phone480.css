@@ -1,7 +1,4 @@
 @media screen and (max-width: 480px) {
-    html {
-        background-color: orange;
-    }
     .logo-div {
         display: flex;
         justify-content: center;
