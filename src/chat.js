@@ -23,7 +23,28 @@ export const Chat = ({ myId }) => {
 
     return (
         <div className="chat">
-            <h1>Chat Room! </h1>
+            <h1 style={{ margin: "0px" }}>Chat Room! </h1>
+            <div
+                className={
+                    location.pathname == "/chat"
+                        ? "connected-users"
+                        : "connected-users-main"
+                }
+            >
+                <h3 style={{ margin: 0 }}>Online users:</h3>
+                {onlineUsers &&
+                    onlineUsers[0].map(user => (
+                        <img
+                            key={user.id}
+                            className="chat-pic"
+                            src={
+                                user.picture_url
+                                    ? user.picture_url
+                                    : "/pictures/default.png"
+                            }
+                        />
+                    ))}
+            </div>
             <div className="chat-container" ref={elemRef}>
                 {chatMessages &&
                     chatMessages
@@ -85,28 +106,6 @@ export const Chat = ({ myId }) => {
                                 </div>
                             );
                         })}
-            </div>
-
-            <div
-                className={
-                    location.pathname == "/chat"
-                        ? "connected-users"
-                        : "connected-users-main"
-                }
-            >
-                <h3 style={{ margin: 0 }}>Online users:</h3>
-                {onlineUsers &&
-                    onlineUsers[0].map(user => (
-                        <img
-                            key={user.id}
-                            className="chat-pic"
-                            src={
-                                user.picture_url
-                                    ? user.picture_url
-                                    : "/pictures/default.png"
-                            }
-                        />
-                    ))}
             </div>
             <textarea
                 className="textarea-chat"

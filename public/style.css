@@ -1,8 +1,8 @@
 html {
     box-sizing: border-box;
     background-color: #03a9f42e;
-    /* border: 8px solid #30475e; */
     margin: 0;
+    width: 100%;
 }
 
 body {
@@ -96,8 +96,8 @@ button {
 }
 
 .connected-users-main {
-    transform: translate(-340px, -10px);
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .cancelBtn {
@@ -120,23 +120,60 @@ button {
     flex-direction: column;
     flex-wrap: wrap;
 }
-
+.news-header {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+.news-img {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    align-items: center;
+}
+select {
+    background: transparent;
+}
 .news-title {
     text-decoration: underline;
     text-align: center;
-    background: #b2dffb;
+    background: #79c9fb;
     border-radius: 20px;
     box-shadow: 1px 1px 1px 1px #0000000d;
-}
-
-.allnewsmain {
-    margin-left: 40px;
+    padding-bottom: 5px;
+    height: 120px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
+.allnewsmain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .allnews {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    height: 460px;
+    overflow: scroll;
+    margin-top: 10px;
+    border-radius: 20px;
+    width: 310px;
+    padding: 10px;
+    box-shadow: 5px 5px 10px 1px black;
+    margin-left: 20px;
+}
+
+.allnewsslash {
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -144,16 +181,34 @@ button {
     overflow: scroll;
     margin-top: 10px;
     border-radius: 20px;
-    width: 300px;
+    width: 310px;
     padding: 10px;
     box-shadow: 5px 5px 10px 1px black;
 }
 
 .news {
-    width: 300px;
+    width: 290px;
     border-bottom: 1px solid black;
     padding-bottom: 5px;
+    display: flex;
     text-align: center;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px 1px black;
+}
+
+.newscomp {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: scroll;
+    margin-top: 10px;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
 }
 
 button:hover {
@@ -482,6 +537,12 @@ button:hover {
     left: 30px;
     height: 300px;
 }
+.profile-pic-div {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+}
 
 .BioEditor-from-profile {
     display: flex;
@@ -491,6 +552,7 @@ button:hover {
 .profile-and-bio {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .otherprofile {
@@ -686,7 +748,7 @@ button:hover {
     margin: 0px;
     background: transparent;
     text-align: center;
-    transform: translate(0px, -80px);
+    transform: translate(0px, -10px);
     box-shadow: 5px 5px 10px 1px black;
 }
 

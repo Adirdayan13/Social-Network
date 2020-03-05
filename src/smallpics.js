@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "./axios";
+import Pictures from "./pictures";
 import { Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 export default class SmallPictures extends React.Component {
     constructor(props) {
@@ -61,27 +63,29 @@ export default class SmallPictures extends React.Component {
     render() {
         return (
             <div className="smallpictures">
-                <>
-                    <Link to="/mypictures">
-                        <p style={{ color: "black" }}>My album</p>
-                    </Link>
-                    {this.state.pictures && (
-                        <>
-                            {this.state.pictures.map((picture, index) => (
-                                <img
-                                    key={index}
-                                    className="small-pictures-album"
-                                    src={picture}
-                                />
-                            ))}
-                        </>
-                    )}
-                    {this.state.pictures.length == 0 && (
-                        <Link to="/mypictures">
-                            <p>Upload your first picture</p>
-                        </Link>
-                    )}
-                </>
+                <BrowserRouter>
+                    <>
+                        <a href="/mypictures">
+                            <p style={{ color: "black" }}>My album</p>
+                        </a>
+                        {this.state.pictures && (
+                            <>
+                                {this.state.pictures.map((picture, index) => (
+                                    <img
+                                        key={index}
+                                        className="small-pictures-album"
+                                        src={picture}
+                                    />
+                                ))}
+                            </>
+                        )}
+                        {this.state.pictures.length == 0 && (
+                            <a href="/mypictures">
+                                <p>Upload your first picture</p>
+                            </a>
+                        )}
+                    </>
+                </BrowserRouter>
             </div>
         );
     }

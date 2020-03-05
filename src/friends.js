@@ -28,9 +28,37 @@ export default function Friends() {
 
     return (
         <div className="friends-main">
-            <h1 style={{ margin: "10px", textDecoration: "underline" }}>
-                Your {acceptedFriends && acceptedFriends.length} friends
-            </h1>
+            {acceptedFriends && (
+                <>
+                    {acceptedFriends.length == 0 && (
+                        <h2
+                            style={{
+                                margin: "10px",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            You have no friends yet, go to search and find more
+                            people to connect to.
+                        </h2>
+                    )}
+                </>
+            )}
+            {acceptedFriends && (
+                <>
+                    {acceptedFriends.length > 0 && (
+                        <h2
+                            style={{
+                                margin: "10px",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            Your {acceptedFriends && acceptedFriends.length}{" "}
+                            friends
+                        </h2>
+                    )}
+                </>
+            )}
+
             <div className="accepted-friends">
                 {acceptedFriends &&
                     acceptedFriends.map(friend => (
@@ -56,10 +84,32 @@ export default function Friends() {
                     ))}
             </div>
             <br />
-            <h1 style={{ margin: "10px", textDecoration: "underline" }}>
-                {friendsWannabes && friendsWannabes.length} people want to be
-                your friend:
-            </h1>
+            {friendsWannabes && (
+                <>
+                    {friendsWannabes.length == 0 && (
+                        <h2
+                            style={{
+                                margin: "10px",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            You have no friend requests.
+                        </h2>
+                    )}
+                    {friendsWannabes.length > 0 && (
+                        <h1
+                            style={{
+                                margin: "10px",
+                                textDecoration: "underline"
+                            }}
+                        >
+                            {friendsWannabes && friendsWannabes.length} people
+                            want to be your friend:
+                        </h1>
+                    )}
+                </>
+            )}
+
             <div className="friendsWannabes">
                 {friendsWannabes &&
                     friendsWannabes.map(friend => (

@@ -479,6 +479,7 @@ app.get("/news/", (req, res) => {
             country: "us"
         })
         .then(response => {
+            // console.log("news response: ", response);
             res.json(response);
         });
 });

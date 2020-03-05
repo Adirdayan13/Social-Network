@@ -8,6 +8,7 @@ import Pictures from "./pictures";
 import OtherProfile from "./otherprofile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
+import News from "./news";
 import { Chat } from "./chat";
 
 import { Link } from "react-router-dom";
@@ -81,27 +82,31 @@ export default class App extends React.Component {
                         </div>
 
                         <div className="r-header">
-                            <Link to="/friends">
+                            <Link className="news-link" to="/newscomp">
+                                <i className="far fa-newspaper"></i>
+                                <p>News</p>
+                            </Link>
+                            <Link className="friend-link" to="/friends">
                                 <i className="fas fa-users"></i>
                                 <p> Friends</p>
                             </Link>
-                            <Link to="/users">
+                            <Link className="users-link" to="/users">
                                 <i className="fas fa-search"></i>
                                 <p>Search</p>
                             </Link>
-                            <Link to="/mypictures">
+                            <Link className="mypictures-link" to="/mypictures">
                                 <i className="far fa-images"></i>
                                 <p>Album</p>
                             </Link>
-                            <Link to="/chat">
+                            <Link className="chat-link" to="/chat">
                                 <i className="far fa-comments"></i>
                                 <p>Chat</p>
                             </Link>
-                            <Link to="/edit">
+                            <Link className="edit-link" to="/edit">
                                 <i className="fas fa-user-edit"></i>
                                 <p>Edit</p>
                             </Link>
-                            <Link to="/">
+                            <Link className="logout-link" to="/">
                                 <i className="fas fa-sign-out-alt"></i>
                                 <p onClick={e => this.logout(e)}>Log out</p>
                             </Link>
@@ -237,6 +242,7 @@ export default class App extends React.Component {
                                 )}
                             />
                         )}
+                        <Route exact path="/newscomp/" component={News} />
                     </div>
                 </BrowserRouter>
             </div>

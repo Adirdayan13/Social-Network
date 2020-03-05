@@ -10,7 +10,7 @@ export default class News extends React.Component {
         axios
             .get("/news")
             .then(results => {
-                // console.log("results from news: ", results.data.articles);
+                console.log("results from news: ", results.data);
                 this.setState({ news: results.data.articles });
             })
             .catch(err => {
@@ -50,68 +50,81 @@ export default class News extends React.Component {
             <>
                 {this.state.news && (
                     <div className="allnewsmain">
-                        <p
-                            className="news-feed"
-                            style={{
-                                textAlign: "center",
-                                color: "red",
-                                textDecoration: "underline"
-                            }}
-                        >
-                            News Feed
-                        </p>
-                        <label htmlFor="language">Choose language:</label>
-                        <select
-                            name="language"
-                            id="language"
-                            onChange={e => this.handleChange(e)}
-                        >
-                            <option name="us" value="us">
-                                English
-                            </option>
-                            <option name="il" value="il">
-                                Hebrew
-                            </option>
-                            <option name="fr" value="fr">
-                                French
-                            </option>
-                            <option name="de" value="de">
-                                Deutch
-                            </option>
-                            <option name="in" value="in">
-                                Hindi
-                            </option>
-                            <option name="pt" value="pt">
-                                Portuguese
-                            </option>
-                            <option name="cn" value="cn">
-                                Mandarin
-                            </option>
-                            <option name="ru" value="ru">
-                                Russian
-                            </option>
-                        </select>
+                        <div className="news-header">
+                            <p
+                                className="news-feed"
+                                style={{
+                                    textAlign: "center",
+                                    color: "red",
+                                    textDecoration: "underline"
+                                }}
+                            >
+                                News Feed
+                            </p>
+                            <label htmlFor="language">Choose language:</label>
+                            <select
+                                name="language"
+                                id="language"
+                                onChange={e => this.handleChange(e)}
+                            >
+                                <option name="us" value="us">
+                                    English
+                                </option>
+                                <option name="il" value="il">
+                                    Hebrew
+                                </option>
+                                <option name="fr" value="fr">
+                                    French
+                                </option>
+                                <option name="de" value="de">
+                                    Deutch
+                                </option>
+                                <option name="in" value="in">
+                                    Hindi
+                                </option>
+                                <option name="pt" value="pt">
+                                    Portuguese
+                                </option>
+                                <option name="cn" value="cn">
+                                    Mandarin
+                                </option>
+                                <option name="ru" value="ru">
+                                    Russian
+                                </option>
+                            </select>
 
-                        <label htmlFor="category">Choose category:</label>
-                        <select
-                            name="category"
-                            id="category"
-                            onChange={e => this.handleChange(e)}
+                            <label htmlFor="category">Choose category:</label>
+                            <select
+                                name="category"
+                                id="category"
+                                onChange={e => this.handleChange(e)}
+                            >
+                                <option>Technology</option>
+                                <option>Business</option>
+                                <option>Entertainment</option>
+                                <option>Science</option>
+                                <option>Health</option>
+                                <option>Sports</option>
+                            </select>
+                        </div>
+                        <div
+                            className={
+                                location.pathname == "/newscomp"
+                                    ? "newscomp"
+                                    : "allnews"
+                            }
                         >
-                            <option>Technology</option>
-                            <option>Business</option>
-                            <option>Entertainment</option>
-                            <option>Science</option>
-                            <option>Health</option>
-                            <option>Sports</option>
-                        </select>
-                        <div className="allnews">
                             {this.state.news.map((singleNews, key) => (
-                                <div className="news" key={key}>
+                                <div
+                                    className="news"
+                                    style={{ margin: "10px" }}
+                                    key={key}
+                                >
                                     <p className="news-title">
                                         <br />
                                         {singleNews.title}
                                     </p>
+                                    <br />
                                     <p style={{ fontFamily: "auto" }}>
                                         {singleNews.description}
                                         <br />
@@ -123,6 +136,18 @@ export default class News extends React.Component {
                                     >
                                         Read full article
                                     </a>
+                                    <br />
+                                    {location.pathname == "/newscomp" && (
+                                        <div className="news-img">
+                                            <br />
+                                            <img
+                                                style={{
+                                                    width: "90%"
+                                                }}
+                                                src={singleNews.urlToImage}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

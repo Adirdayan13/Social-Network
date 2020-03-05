@@ -12,6 +12,9 @@ export default function ProfilePic(props) {
     return (
         <>
             <div className="profile-pic-div">
+                <p style={{ marginRight: "10px" }}>
+                    {first} {last}
+                </p>
                 <Link to="/upload">
                     <img
                         className="profile-pic"
@@ -20,10 +23,6 @@ export default function ProfilePic(props) {
                     />
                 </Link>
             </div>
-
-            <p style={{ marginRight: "10px" }}>
-                {first} {last}
-            </p>
         </>
     );
 }
