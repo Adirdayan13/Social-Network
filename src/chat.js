@@ -35,15 +35,16 @@ export const Chat = ({ myId }) => {
                 <br />
                 {onlineUsers &&
                     onlineUsers[0].map(user => (
-                        <img
-                            key={user.id}
-                            className="chat-pic"
-                            src={
-                                user.picture_url
-                                    ? user.picture_url
-                                    : "/pictures/default.png"
-                            }
-                        />
+                        <a key={user.id} href={"user/" + user.id}>
+                            <img
+                                className="chat-pic"
+                                src={
+                                    user.picture_url
+                                        ? user.picture_url
+                                        : "/pictures/default.png"
+                                }
+                            />
+                        </a>
                     ))}
             </div>
             <div className="chat-container" ref={elemRef}>
@@ -55,7 +56,7 @@ export const Chat = ({ myId }) => {
                             return (
                                 <div className="chat-msgs" key={msg.id}>
                                     {msg.user_id === myId && (
-                                        <div className="me-chat">
+                                        <div className="me-chat" key={msg.id}>
                                             <img
                                                 className="chat-pic"
                                                 src={

@@ -15,7 +15,7 @@ export default class OtherProfile extends React.Component {
             .then(results => {
                 // console.log("results from getUserById: ", results);
                 if (this.props.match.params.id == results.data.currentId) {
-                    this.props.history.push("/");
+                    this.props.history.goBack();
                 } else {
                     this.setState({
                         userInfo: results.data.userInfo,

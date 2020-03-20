@@ -10,7 +10,7 @@ export default class News extends React.Component {
         axios
             .get("/news")
             .then(results => {
-                console.log("results from news: ", results.data);
+                // console.log("results from news: ", results.data);
                 this.setState({ news: results.data.articles });
             })
             .catch(err => {
@@ -20,13 +20,13 @@ export default class News extends React.Component {
 
     handleChange(e) {
         let value = e.target.value;
-        console.log("value: ", value);
+        // console.log("value: ", value);
         this.setState(
             {
                 [e.target.name]: e.target.value
             },
             () => {
-                console.log("this.state from handle change: ", this.state);
+                // console.log("this.state from handle change: ", this.state);
                 axios
                     .post("/news/" + value, {
                         country: this.state.language,
