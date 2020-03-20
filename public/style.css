@@ -83,16 +83,10 @@ button {
 }
 
 .connected-users {
-    width: 140px;
-    transform: translate(-440px, -250px);
-    border: 1px solid black;
     text-align: center;
     padding: 5px;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    margin: 1%;
+    text-align: center;
 }
 
 .connected-users-main {

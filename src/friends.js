@@ -25,7 +25,6 @@ export default function Friends() {
     useEffect(() => {
         dispatch(getStatus());
     }, []);
-
     return (
         <div className="friends-main">
             {acceptedFriends && (
@@ -52,8 +51,8 @@ export default function Friends() {
                                 textDecoration: "underline"
                             }}
                         >
-                            Your {acceptedFriends && acceptedFriends.length}{" "}
-                            friends
+                            You have {acceptedFriends && acceptedFriends.length}{" "}
+                            {acceptedFriends.length > 1 ? "friends" : "friend"}
                         </h2>
                     )}
                 </>
@@ -70,7 +69,11 @@ export default function Friends() {
                                 style={{ cursor: "pointer" }}
                                 onClick={() => showProfile(friend.id)}
                                 className="friends-pic"
-                                src={friend.picture_url}
+                                src={
+                                    friend.picture_url
+                                        ? friend.picture_url
+                                        : "/pictures/default.png"
+                                }
                             />
                             <br />
 
@@ -121,7 +124,11 @@ export default function Friends() {
                                 style={{ cursor: "pointer" }}
                                 onClick={() => showProfile(friend.id)}
                                 className="friends-pic"
-                                src={friend.picture_url}
+                                src={
+                                    friend.picture_url
+                                        ? friend.picture_url
+                                        : "/pictures/default.png"
+                                }
                             />
                             <br />
                             <button

@@ -32,6 +32,7 @@ export const Chat = ({ myId }) => {
                 }
             >
                 <h3 style={{ margin: 0 }}>Online users:</h3>
+                <br />
                 {onlineUsers &&
                     onlineUsers[0].map(user => (
                         <img
