@@ -134,7 +134,7 @@ app.post("/register", (req, res) => {
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("*************************** POST upload");
     let email = req.session.email;
-    const imageUrl = s3Url + req.file.filename;
+    const imageUrl = s3Url + "lol" + req.file.filename;
     if (req.file) {
         db.updateImage(email, imageUrl)
             .then(function() {

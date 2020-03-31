@@ -1,5 +1,6 @@
 const aws = require("aws-sdk");
 const fs = require("fs");
+const sharp = require("sharp");
 
 let secrets;
 if (process.env.NODE_ENV == "production") {
@@ -19,24 +20,34 @@ exports.upload = (req, res, next) => {
         res.sendStatus(500);
         return;
     }
-    const { filename, mimetype, size, path } = req.file;
+    let contents = fs.readFileSync(`./uploads/${req.file.filename}`);
 
-    s3.putObject({
-        Bucket: "spicedling",
-        ACL: "public-read",
-        Key: filename,
-        Body: fs.createReadStream(path),
-        ContentType: mimetype,
-        ContentLength: size
-    })
-        .promise()
-        .then(() => {
-            console.log("it worked");
-            next();
-            fs.unlink(path, () => {});
+    sharp(contents)
+        .rotate()
+        .resize(null, 2000)
+        .toFile(`./uploads/lol${req.file.filename}`)
+        .then(results => {
+            console.log("results: ", results);
+            const { filename, mimetype, size, path } = req.file;
+
+            s3.putObject({
+                Bucket: "spicedling",
+                ACL: "public-read",
+                Key: filename,
+                Body: fs.createReadStream(path),
+                ContentType: mimetype,
+                ContentLength: size
+            })
+                .promise()
+                .then(() => {
+                    console.log("it worked");
+                    next();
+                    fs.unlink(path, () => {});
+                })
+                .catch(err => {
+                    console.log("error in putObject: ", err);
+                    res.sendStatus(500);
+                });
         })
-        .catch(err => {
-            console.log("error in putObject: ", err);
-            res.sendStatus(500);
-        });
+        .catch(err => console.log("err: ", err));
 };
