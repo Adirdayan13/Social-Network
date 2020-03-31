@@ -57,14 +57,16 @@ export const Chat = ({ myId }) => {
                                 <div className="chat-msgs" key={msg.id}>
                                     {msg.user_id === myId && (
                                         <div className="me-chat" key={msg.id}>
-                                            <img
-                                                className="chat-pic"
-                                                src={
-                                                    msg.picture_url
-                                                        ? msg.picture_url
-                                                        : "/pictures/default.png"
-                                                }
-                                            />
+                                            <a href={"user/" + msg.user_id}>
+                                                <img
+                                                    className="chat-pic"
+                                                    src={
+                                                        msg.picture_url
+                                                            ? msg.picture_url
+                                                            : "/pictures/default.png"
+                                                    }
+                                                />
+                                            </a>
                                             <span className="first-last-chat">
                                                 {msg.first} {msg.last}
                                             </span>{" "}
@@ -82,14 +84,16 @@ export const Chat = ({ myId }) => {
                                     )}
                                     {msg.user_id != myId && (
                                         <div className="otheruser-chat">
-                                            <img
-                                                className="chat-pic"
-                                                src={
-                                                    msg.picture_url
-                                                        ? msg.picture_url
-                                                        : "/pictures/default.png"
-                                                }
-                                            />
+                                            <a href={"user/" + msg.user_id}>
+                                                <img
+                                                    className="chat-pic"
+                                                    src={
+                                                        msg.picture_url
+                                                            ? msg.picture_url
+                                                            : "/pictures/default.png"
+                                                    }
+                                                />
+                                            </a>
                                             <span className="first-last-chat">
                                                 {msg.first} {msg.last}
                                             </span>{" "}
