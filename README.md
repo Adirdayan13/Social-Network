@@ -5,6 +5,6 @@ Live chat, live news (multi language) , albums and more.
 
 Built with React.JS
 
-Website hosted on Heroku and avaliable <a style="text-decoration: underline"href="http://adirsocialnetwork.herokuapp.com">here</a>.
+Website hosted on Heroku and avaliable [here](http://adirsocialnetwork.herokuapp.com)
 
 ![](gif.gif)
