@@ -74,7 +74,7 @@ const diskStorage = multer.diskStorage({
 const uploader = multer({
     storage: diskStorage,
     limits: {
-        fileSize: 2097152
+        fileSize: 5097152
     }
 });
 
@@ -148,12 +148,13 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.post("/upload-album", uploader.single("file"), s3.upload, (req, res) => {
+    const title = req.body.title;
     const user_id = req.session.userId;
-    const imageUrl = s3Url + "url" + req.file.filename;
+    const imageUrl = s3Url + "lol" + req.file.filename;
     if (req.file) {
-        db.addPictureToAlbums(user_id, imageUrl)
-            .then(() => {
-                res.json(imageUrl);
+        db.addPictureToAlbums(user_id, imageUrl, title)
+            .then(result => {
+                res.json(result.rows[0]);
             })
             .catch(err => {
                 console.log("error from upload-album: ", err);

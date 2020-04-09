@@ -133,10 +133,12 @@
         min-height: 100%;
         margin-top: 10%;
     }
-    .accepted-friends {
+    .accepted-friends,
+    .friendsWannabes {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        flex-wrap: wrap;
         align-items: center;
     }
     .r-header > .profile-and-bio,
@@ -184,9 +186,10 @@
         margin-left: 5px;
         border: 1px solid black;
         padding: 5px;
-        width: 50%;
+        width: 40%;
         border-radius: 20px;
         background-color: #2196f336;
+        margin: 3%;
     }
     .friends-pic {
         width: 80%;

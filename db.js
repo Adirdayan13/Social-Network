@@ -73,16 +73,16 @@ exports.updateProfile = function(id, email, first, last) {
     );
 };
 
-exports.addPictureToAlbums = function(user_id, picture) {
-    return db.query(`INSERT INTO pictures (user_id, picture) VALUES ($1, $2)`, [
-        user_id,
-        picture
-    ]);
+exports.addPictureToAlbums = function(user_id, picture, title) {
+    return db.query(
+        `INSERT INTO pictures (user_id, picture, title) VALUES ($1, $2, $3) RETURNING *`,
+        [user_id, picture, title || null]
+    );
 };
 
 exports.getPicture = function(user_id) {
     return db.query(
-        `SELECT id, picture FROM pictures WHERE user_id = $1 ORDER BY id DESC`,
+        `SELECT * FROM pictures WHERE user_id = $1 ORDER BY id DESC`,
         [user_id]
     );
 };
@@ -186,12 +186,3 @@ exports.onlineUsers = onlineUserId => {
         )
         .then(({ rows }) => rows);
 };
-
-// exports.deleteOnlineUsers = userId => {
-//     return db.quert(
-//         `DELETE id, first, last, picture_url
-//         FROM users
-//         WHERE id = ANY ($1)`,
-//         [userId]
-//     );
-// };

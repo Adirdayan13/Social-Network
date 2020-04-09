@@ -21,7 +21,6 @@ export default function FriendButton(props) {
                     .get("/pictures/" + props.recipient_id + ".json")
                     .then(results => {
                         setAlbumExist(results.data);
-                        console.log("albumExist: ", albumExist);
                     })
                     .catch(err => {
                         console.log("Error from pictures/recipient_id: ", err);
@@ -33,7 +32,6 @@ export default function FriendButton(props) {
     }, [picture]);
 
     const handleClick = function() {
-        console.log("data from const sendRequest: ", friendOrNot);
         if (friendOrNot.btnText == "Cancel friend request") {
             axios
                 .post("/friends-status/cancel/" + props.recipient_id + ".json")
